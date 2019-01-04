@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇复习（学习）算法题目，包括以下题目：  螺旋打印矩阵 原地转置矩阵（方阵） 反转单向和双向链表 之字形打印矩阵 行列有序的矩阵中找数 判断单链表是否回文 荷兰国旗问题的链表形式 复制含有随机指针节点的链表 单链表相交的一系列问题  螺旋打印矩阵题目见LeetCode。 这道题目从局部的细节来看可能很复杂，比如到了什么地方下标该加加，什么地方下标该减减，什么地方该往左，什么地方该往右……但是如果">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法复习四">
+<meta property="og:url" content="http://yoursite.com/2018/12/22/算法复习四/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="本篇复习（学习）算法题目，包括以下题目：  螺旋打印矩阵 原地转置矩阵（方阵） 反转单向和双向链表 之字形打印矩阵 行列有序的矩阵中找数 判断单链表是否回文 荷兰国旗问题的链表形式 复制含有随机指针节点的链表 单链表相交的一系列问题  螺旋打印矩阵题目见LeetCode。 这道题目从局部的细节来看可能很复杂，比如到了什么地方下标该加加，什么地方下标该减减，什么地方该往左，什么地方该往右……但是如果">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/12/22/算法复习四/1546520249649.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/22/算法复习四/1546520301704.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/22/算法复习四/1546520328236.png">
+<meta property="og:updated_time" content="2019-01-04T12:02:01.856Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法复习四">
+<meta name="twitter:description" content="本篇复习（学习）算法题目，包括以下题目：  螺旋打印矩阵 原地转置矩阵（方阵） 反转单向和双向链表 之字形打印矩阵 行列有序的矩阵中找数 判断单链表是否回文 荷兰国旗问题的链表形式 复制含有随机指针节点的链表 单链表相交的一系列问题  螺旋打印矩阵题目见LeetCode。 这道题目从局部的细节来看可能很复杂，比如到了什么地方下标该加加，什么地方下标该减减，什么地方该往左，什么地方该往右……但是如果">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/22/算法复习四/1546520249649.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/22/算法复习四/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>算法复习四 | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/22/算法复习四/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法复习四
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-22 16:54:32" itemprop="dateCreated datePublished" datetime="2018-12-22T16:54:32+08:00">2018-12-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-01-04 20:02:01" itemprop="dateModified" datetime="2019-01-04T20:02:01+08:00">2019-01-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇复习（学习）算法题目，包括以下题目：</p>
+<ul>
+<li>螺旋打印矩阵</li>
+<li>原地转置矩阵（方阵）</li>
+<li>反转单向和双向链表</li>
+<li>之字形打印矩阵</li>
+<li>行列有序的矩阵中找数</li>
+<li>判断单链表是否回文</li>
+<li>荷兰国旗问题的链表形式</li>
+<li>复制含有随机指针节点的链表</li>
+<li>单链表相交的一系列问题</li>
+</ul>
+<h1 id="螺旋打印矩阵"><a href="#螺旋打印矩阵" class="headerlink" title="螺旋打印矩阵"></a>螺旋打印矩阵</h1><p>题目见<a href="https://leetcode-cn.com/problems/spiral-matrix/" target="_blank" rel="noopener">LeetCode</a>。</p>
+<p>这道题目从局部的细节来看可能很复杂，比如到了什么地方下标该加加，什么地方下标该减减，什么地方该往左，什么地方该往右……但是如果我们从全局来考虑，这道题目就简单很多：我们不需要考虑到每一圈该怎么打印，只需要考虑一个圈该怎么打印，只要我们每次将要打印的圈往里缩，得到的结果就是螺旋矩阵。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 按照螺旋顺序打印矩阵中从(t_row, t_col)到(d_row, d_col)的矩阵外围的所有数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; external_matrix(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix, <span class="keyword">int</span> t_row, <span class="keyword">int</span> t_col,</span><br><span class="line">                                <span class="keyword">int</span> d_row, <span class="keyword">int</span> d_col)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">        <span class="keyword">int</span> row = t_row, col = t_col;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (t_row == d_row)  <span class="comment">// 如果矩阵只有一行</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (col &lt;= d_col)</span><br><span class="line">                ret.push_back(matrix[row][col++]);</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (t_col == d_col)  <span class="comment">// 如果矩阵只有一列</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (row &lt;= d_row)</span><br><span class="line">                ret.push_back(matrix[row++][col]);</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (t_row == d_row &amp;&amp; t_col == d_col)</span><br><span class="line">            <span class="keyword">return</span> &#123;matrix[t_row][t_col]&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (col &lt; d_col)     <span class="comment">// 从左到右</span></span><br><span class="line">            ret.push_back(matrix[row][col++]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (row &lt; d_row)     <span class="comment">// 从上往下</span></span><br><span class="line">            ret.push_back(matrix[row++][col]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (col &gt; t_col)     <span class="comment">// 从右往左</span></span><br><span class="line">            ret.push_back(matrix[row][col--]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (row &gt; t_row)     <span class="comment">// 从下往上</span></span><br><span class="line">            ret.push_back(matrix[row--][col]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix.size() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">int</span> t_row = <span class="number">0</span>, t_col = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> d_row = matrix.size()<span class="number">-1</span>, d_col = matrix[<span class="number">0</span>].size()<span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (t_row &lt;= d_row &amp;&amp; t_col &lt;= d_col)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> one_line = external_matrix(matrix, t_row++, t_col++, d_row--, d_col--);</span><br><span class="line">            ret.insert(ret.end(), one_line.begin(), one_line.end());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="原地旋转矩阵"><a href="#原地旋转矩阵" class="headerlink" title="原地旋转矩阵"></a>原地旋转矩阵</h1><p>给定一个方阵，将其旋转九十度后返回，要求时间$O(N)$，空间$O(1)$。矩阵旋转实际上就是交换矩阵的各个元素。按照上一题的思路，我们可以先交换外围的四条边上的元素，在交换里面的元素，这样一一进行下去，直到到达最里面。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * 将以(t_row, t_col)为左上角，(d_row, d_col)为右上角的正方形的边旋转九十度</span></span><br><span class="line"><span class="comment">	 * t_row == t_col, d_row == d_col，其实不需要五个参数，只需要三个就够了</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rotate_edge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix, <span class="keyword">int</span> t_row, <span class="keyword">int</span> t_col, <span class="keyword">int</span> d_row, <span class="keyword">int</span> d_col)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; d_col - t_col; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> temp = matrix[t_row][t_col+i];</span><br><span class="line">			matrix[t_row][t_col + i] = matrix[d_row - i][t_col];</span><br><span class="line">			matrix[d_row - i][t_col] = matrix[d_row][d_col - i];</span><br><span class="line">			matrix[d_row][d_col - i] = matrix[t_row + i][d_col];</span><br><span class="line">			matrix[t_row + i][d_col] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; rotate_matrix(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> t_row = <span class="number">0</span>, t_col = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> d_row = matrix.size()<span class="number">-1</span>, d_col = matrix.size()<span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (t_row &lt; d_row)</span><br><span class="line">			rotate_edge(matrix, t_row++, t_col++, d_row--, d_col--);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> matrix;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="反转单向和双向链表"><a href="#反转单向和双向链表" class="headerlink" title="反转单向和双向链表"></a>反转单向和双向链表</h1><p>如果链表长度为N，时间复杂度要求为O(N),额外的空间复杂度要求为O(1)。</p>
+<p>单链表：对单链表来说，我们可以遍历一遍链表，每次都将头结点后面的那个节点插到头结点前面，然后更新头结点的值。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	ListNode *next;</span><br><span class="line">	ListNode(<span class="keyword">int</span> x) : val(x), next(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">NULL</span> || head-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">			<span class="keyword">return</span> head;</span><br><span class="line">		ListNode *prev = head;</span><br><span class="line">		ListNode *cur = head-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (cur != <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			prev-&gt;next = cur-&gt;next;</span><br><span class="line">			cur-&gt;next = head;</span><br><span class="line">			head = cur;</span><br><span class="line">			cur = prev-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> head;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>反转双向链表就更简单了，只需要一个头结点，一个尾结点，不断的交换头尾结点即可，和数组很类似。</p>
+<h1 id="之字型打印矩阵"><a href="#之字型打印矩阵" class="headerlink" title="之字型打印矩阵"></a>之字型打印矩阵</h1><p>给定一个矩阵matrix，按照“之”字形的方式打印这个矩阵。例如：</p>
+<script type="math/tex; mode=display">\left[ \begin{array}{ccc}
+1 & 2 & 3 & 4\\
+5 & 6 & 7 & 8\\
+9 & 10 & 11 & 12
+\end{array} 
+\right ]</script><p>之字形打印的结果为：1，2，5，9，6，3，4，7，10，11，8，12。要求额外的空间复杂度为$O(1)$。同上面的矩阵题目类似，如果陷入到局部的行列坐标变换中，可能弄得十分复杂。我们可以将思维抽象出来，按照之字形打印矩阵实际上是按照反对角线的方式打印矩阵，只不过每次的方向不一样（从坐下往右上和从右上往左下）。那么我们可以定义一个函数，它按照给定的方向和给定的坐标打印矩阵中坐标处对角线元素，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; print_diagonal(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix, <span class="keyword">int</span> ld_row, <span class="keyword">int</span> ld_col, <span class="keyword">int</span> rt_row, <span class="keyword">int</span> rt_col, <span class="keyword">bool</span> direction)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">		<span class="keyword">if</span> (direction)	<span class="comment">// 从左下到右上</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> cur_row = ld_row, cur_col = ld_col;</span><br><span class="line">			<span class="keyword">while</span> (cur_row &gt;= rt_row &amp;&amp; cur_col &lt;= rt_col)</span><br><span class="line">				ret.emplace_back(matrix[cur_row--][cur_col++]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>  <span class="comment">// 从右上到左下</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> cur_row = rt_row, cur_col = rt_col;</span><br><span class="line">			<span class="keyword">while</span> (cur_row &lt;= ld_row &amp;&amp; cur_col &gt;= ld_col)</span><br><span class="line">				ret.emplace_back(matrix[cur_row++][cur_col--]);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; zigzag_matrix(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">		<span class="keyword">if</span> (matrix.size() == <span class="number">0</span> || matrix[<span class="number">0</span>].size() == <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">return</span> ret;</span><br><span class="line">		<span class="keyword">int</span> ld_row = <span class="number">0</span>, ld_col = <span class="number">0</span>, rt_row = <span class="number">0</span>, rt_col = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> row_size = matrix.size(), col_size = matrix[<span class="number">0</span>].size();</span><br><span class="line">		<span class="keyword">bool</span> direction = <span class="literal">true</span>;	<span class="comment">// 一开始是从左下到右上</span></span><br><span class="line">		<span class="keyword">while</span> (rt_row != row_size || ld_col != col_size)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">auto</span> temp = print_diagonal(matrix, ld_row, ld_col, rt_row, rt_col, direction);</span><br><span class="line">			ret.insert(ret.end(), temp.begin(), temp.end());</span><br><span class="line">			(ld_row + <span class="number">1</span> == row_size) ? ld_col += <span class="number">1</span> : ld_row += <span class="number">1</span>;  <span class="comment">// 判断坐标需要向下走还是向右走</span></span><br><span class="line">			(rt_col + <span class="number">1</span> == col_size) ? rt_row += <span class="number">1</span> : rt_col += <span class="number">1</span>;</span><br><span class="line">			direction = !direction;  <span class="comment">// 每次要更换方向</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="行列有序的矩阵中找数"><a href="#行列有序的矩阵中找数" class="headerlink" title="行列有序的矩阵中找数"></a>行列有序的矩阵中找数</h1><p>给定一个有$N \times M$的整形矩阵matrix和一个整数K，matrix的每一行和每一列都是排好序的。实现一个函数判断K是否在matrix中。如果每行每列的去寻找，时间复杂度为$O(M\times N)$。如果利用好行列有序的信息，从matrix的右上角或者左下角cur开始搜索，如果cur &gt; k 说明只能在左边搜，如果cur &lt; k 说明只能在下边搜，如果cur = k 返回true，如果越界则没有找到，返回false。时间复杂度为$O(M+N)$。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">is_contained_in_sorted_matrix</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (matrix.size() == <span class="number">0</span> || matrix[<span class="number">0</span>].size() == <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> row_size = matrix.size(), col_size = matrix[<span class="number">0</span>].size();</span><br><span class="line">		<span class="keyword">int</span> cur_row = <span class="number">0</span>, cur_col = col_size - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> num = matrix[cur_row][cur_col];</span><br><span class="line">			<span class="keyword">if</span> (num == key)</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (num &lt; key)</span><br><span class="line">				cur_row++;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (num &gt; key)</span><br><span class="line">				cur_col--;</span><br><span class="line">			<span class="keyword">if</span> (cur_col == <span class="number">-1</span> || cur_row == row_size)</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="判断单链表是否回文"><a href="#判断单链表是否回文" class="headerlink" title="判断单链表是否回文"></a>判断单链表是否回文</h1><p>题目见<a href="https://leetcode-cn.com/problems/palindrome-linked-list/" target="_blank" rel="noopener">LeetCode</a>。要求空间复杂度$O(1)$，时间复杂度$O(N)$。这道题最简单的解决办法就是利用一个数组，按顺序保存链表中的每个节点， 然后再判断数组是否为回文的。但是这样做的空间复杂度为$O(N)$。要做到$O(1)$的空间复杂度，我们不能额外的开辟数组空间。我们知道回文链表的特点就是对称，那么要判断单链表是否回文就可以用两个指针指向对称的节点，看里面的信息是否一样。即对称的位置是否有对称的信息。由于是单向链表，不能同时用两个指针从头尾向内部遍历取值比较，那么我们可以将对称点之后的链表逆置，使其指向对称点，这样就能作比较了。具体说来就是利用快慢指针找到中间位置，然后修改中间位置之后的链表节点，使其指向它的原来的前驱节点；然后再利用两个指针分别指向头和尾，判断链表是否回文。最后还要记得将链表修改回去。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(ListNode* head)</span> </span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">NULL</span> || head-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="comment">// 以下利用快慢指针找到链表的中间位置和结尾位置</span></span><br><span class="line">		ListNode *slow, *fast, *end;</span><br><span class="line">		slow = fast = head;</span><br><span class="line">		<span class="keyword">while</span> (fast-&gt;next &amp;&amp; fast-&gt;next-&gt;next)</span><br><span class="line">		&#123;</span><br><span class="line">			fast = fast-&gt;next-&gt;next; </span><br><span class="line">			slow = slow-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		end = fast-&gt;next ? fast-&gt;next : fast;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 以下逆转后半部分链表</span></span><br><span class="line">		ListNode *prev = slow;</span><br><span class="line">		ListNode *cur = slow-&gt;next;</span><br><span class="line">		ListNode *next = cur-&gt;next;</span><br><span class="line">		slow-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cur-&gt;next = prev;</span><br><span class="line">			prev = cur;</span><br><span class="line">			cur = next;</span><br><span class="line">			<span class="keyword">if</span> (next == <span class="literal">NULL</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			next = next-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 对比对称位置的链表元素</span></span><br><span class="line">		ListNode *start = head, *finish = end;</span><br><span class="line">		<span class="keyword">bool</span> ret = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">while</span> (start != finish &amp;&amp; start != <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (start-&gt;val != finish-&gt;val)</span><br><span class="line">				ret = <span class="literal">false</span>;</span><br><span class="line">			start = start-&gt;next;</span><br><span class="line">			finish = finish-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 将后半部分链表恢复</span></span><br><span class="line">		prev = end;</span><br><span class="line">		cur = end-&gt;next;</span><br><span class="line">		next = cur-&gt;next;</span><br><span class="line">		end-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cur-&gt;next = prev;</span><br><span class="line">			prev = cur;</span><br><span class="line">			cur = next;</span><br><span class="line">			<span class="keyword">if</span> (cur == <span class="literal">NULL</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			next = next-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="荷兰国旗问题的链表形式"><a href="#荷兰国旗问题的链表形式" class="headerlink" title="荷兰国旗问题的链表形式"></a>荷兰国旗问题的链表形式</h1><p>给定一个链表和一个数，将链表中对于给定数的节点放在左边，等于给定数的节点放在中间，大于给定数的节点放在右边。要求具有稳定性，还要求空间复杂度为$O(1)$，时间复杂度为$O(N)$。首先，如果没有空间复杂度和稳定性的要求，那么直接将链表节点放在数组中，再对数组中的这些节点应用经典的<a href="http://imty.site/2018/12/08/%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/#more" target="_blank" rel="noopener">荷兰国旗问题</a>，很简单的就能解决这个问题。但是，现在要求稳定性和$O(1)$的空间复杂度，就不能这么干了。这道题的解决思路其实很简单，用三个变量：<code>less</code>、<code>equal</code>、<code>greater</code>，开始都为空；遍历一遍链表，找到第一个小于、等于、大于给定值的节点，分别用<code>less</code>、<code>equal</code>和<code>greater</code>指向这三个节点，然后做第二遍遍历，每次遇到一个符合要求的节点就将它们放到相应的链表的最后；最后，再将这三个链表串起来，得到最后的结果。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">partition_list</span><span class="params">(ListNode* head, <span class="keyword">int</span> num)</span> </span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		ListNode *less, *equal, *greater;</span><br><span class="line">		less = equal = greater = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="comment">// 第一遍遍历，找到第一个小于、等于、大于给定数的节点</span></span><br><span class="line">		ListNode *p = head;</span><br><span class="line">		<span class="keyword">while</span> (p)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (less &amp;&amp; equal &amp;&amp; greater)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">if</span> (p-&gt;val &lt; num &amp;&amp; less == <span class="literal">NULL</span>)</span><br><span class="line">				less = p;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (p-&gt;val == num &amp;&amp; equal == <span class="literal">NULL</span>)</span><br><span class="line">				equal = p;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (p-&gt;val &gt; num &amp;&amp; greater == <span class="literal">NULL</span>)</span><br><span class="line">				greater = p;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 第二遍遍历，将每个节点放到合适的位置</span></span><br><span class="line">		ListNode *less_end = less, *equal_end = equal, *greater_end = greater;</span><br><span class="line">		p = head;</span><br><span class="line">		<span class="keyword">while</span> (p)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (p == less || p == equal || p == greater)</span><br><span class="line">			&#123;</span><br><span class="line">				p = p-&gt;next;</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (p-&gt;val &lt; num)</span><br><span class="line">			&#123;</span><br><span class="line">				less_end-&gt;next = p;</span><br><span class="line">				less_end = p;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (p-&gt;val == num)</span><br><span class="line">			&#123;</span><br><span class="line">				equal_end-&gt;next = p;</span><br><span class="line">				equal_end = p;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				greater_end-&gt;next = p;</span><br><span class="line">				greater_end = p;</span><br><span class="line">			&#125;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (less_end)</span><br><span class="line">			less_end-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="keyword">if</span> (equal_end)</span><br><span class="line">			equal_end-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="keyword">if</span> (greater_end)</span><br><span class="line">			greater_end-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 连接三个链表，注意边界条件，可能存在某条链表为空</span></span><br><span class="line">		<span class="keyword">if</span> (less_end)</span><br><span class="line">		&#123;</span><br><span class="line">			less_end-&gt;next = equal;</span><br><span class="line">			equal_end = equal ? equal_end : less_end;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (equal_end)</span><br><span class="line">			equal_end-&gt;next = greater;</span><br><span class="line">		<span class="keyword">return</span> less ? less : (equal ? equal : greater);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="复制含有随机指针节点的链表"><a href="#复制含有随机指针节点的链表" class="headerlink" title="复制含有随机指针节点的链表"></a>复制含有随机指针节点的链表</h1><p>一种特殊的链表节点类描述如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	ListNode *next;</span><br><span class="line">	ListNode *rand;</span><br><span class="line">	ListNode(<span class="keyword">int</span> x) : val(x), next(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>Node</code> 中的 <code>value</code> 是节点值，<code>next</code> 指针和正常链表中的 <code>next</code> 指针的意义一样，都指向下一个节点，<code>rand</code>指针是<code>Node</code>类中新增的指针，这个指针可能指向链表中的任意一个节点，也可能指向 <code>NULL</code>。</p>
+<p>给定一个由<code>Node</code> 节点类型组成的无环单链表的头节点<code>head</code>，请实现一个函数完成这个链表中所有结构的复制，并返回复制的新链表的头节点。例如：链表<code>1-&gt;2-&gt;3-&gt;NULL</code>。假设 <code>1</code> 的<code>rand</code> 指针指向 <code>3</code>，<code>2</code>的<code>rand</code>指针指向<code>NULL</code>，3 的 <code>rand</code> 指针指向<code>1</code>。复制后的链表应该也是这种结构，比如， <code>1&#39;-2&#39;-&gt;3&#39;-&gt;NULL</code>，<code>1&#39;</code> 的 <code>rand</code>指针指向<code>3</code>，<code>2&#39;</code>的 <code>rand</code> 指针指向<code>NULL</code>，<code>3&#39;</code> 的 <code>rand</code> 指针指向<code>1&#39;</code>，最后返回<code>1&#39;</code>。要求时间复杂度为$O(N)$，空间复杂度为$O(1)$。</p>
+<p>如果不指定空间复杂度为$O(1)$，可以利用哈希表，哈希表的<code>key</code>为原始节点，<code>value</code>为拷贝后的节点。第一遍遍历时先生成拷贝好之后的节点，并且在哈希表中将<code>key</code>和<code>value</code>设置好；第二遍遍历时设置好<code>next</code>指针，并利用原始节点的<code>rand</code>指针指向的节点作为<code>key</code>，在哈希表中查找对应的<code>value</code>（拷贝后的节点）。这样两遍过后就完全拷贝了这个链表。这个算法的空间复杂度为$O(N)$，时间复杂度也为$O(N)$。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	ListNode *next;</span><br><span class="line">	ListNode *rand;</span><br><span class="line">	ListNode() = <span class="keyword">default</span>;</span><br><span class="line">	ListNode(<span class="keyword">int</span> x) : val(x), next(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> ListNode &amp;lhs, <span class="keyword">const</span> ListNode &amp;rhs)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> lhs.val == rhs.val;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">template</span> &lt;&gt;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hash</span>&lt;ListNode&gt;</span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="built_in">std</span>::<span class="keyword">size_t</span> <span class="keyword">operator</span>()(<span class="keyword">const</span> ListNode &amp;key) <span class="keyword">const</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> hash&lt;<span class="keyword">int</span>&gt;()(key.val);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 以上为ListNode这个自定义类型实现相等运算符和hash函数</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">copy_random_list</span><span class="params">(ListNode* head)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">unordered_map</span>&lt;ListNode*, ListNode*&gt; <span class="built_in">map</span>;</span><br><span class="line">		ListNode *p = head;</span><br><span class="line">		ListNode *copy;</span><br><span class="line">		<span class="keyword">while</span> (p)</span><br><span class="line">		&#123;</span><br><span class="line">			copy = <span class="keyword">new</span> ListNode(p-&gt;val);</span><br><span class="line">			<span class="built_in">map</span>[p] = copy;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p = head;</span><br><span class="line">		<span class="keyword">while</span> (p)</span><br><span class="line">		&#123;</span><br><span class="line">			copy = <span class="built_in">map</span>[p];</span><br><span class="line">			copy-&gt;next = <span class="built_in">map</span>[p-&gt;next];</span><br><span class="line">			copy-&gt;rand = <span class="built_in">map</span>[p-&gt;rand];</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">map</span>[head];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果指定空间复杂度为$O(1)$，那我们不能使用哈希表。我们可以这样做：首先遍历一遍节点，生成每个节点的拷贝节点，并且将每个节点的<code>next</code>指针指向拷贝节点，拷贝节点的<code>next</code>指向原来的<code>next</code>指针指向节点。然后再遍历一遍，这次遍历时一次拿出两个节点，第一个节点为原始节点，第二个节点为拷贝节点，将拷贝节点的<code>rand</code>指针指向原始节点的<code>rand</code>指针的下一个节点。最后再将原始节点和拷贝节点断开。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">copy_random_list</span><span class="params">(ListNode* head)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">		ListNode *p = head;</span><br><span class="line">		<span class="comment">// 第一遍遍历，连接原始节点和拷贝节点</span></span><br><span class="line">		<span class="keyword">while</span> (p)</span><br><span class="line">		&#123;</span><br><span class="line">			ListNode *copy = <span class="keyword">new</span> ListNode(p-&gt;val);</span><br><span class="line">			ListNode *next = p-&gt;next;</span><br><span class="line">			p-&gt;next = copy;</span><br><span class="line">			copy-&gt;next = next;</span><br><span class="line">			p = next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 第二遍遍历，设置好拷贝节点的rand指针</span></span><br><span class="line">		p = head;</span><br><span class="line">		ListNode *q = p-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			q-&gt;rand = p-&gt;rand ? p-&gt;rand-&gt;next : <span class="literal">NULL</span>;</span><br><span class="line">			p = q-&gt;next;</span><br><span class="line">			<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			q = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 第三遍遍历，设置好原始节点和拷贝节点的next指针</span></span><br><span class="line">		ListNode *new_head = head-&gt;next;</span><br><span class="line">		p = head;</span><br><span class="line">		q = p-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (p &amp;&amp; q)</span><br><span class="line">		&#123;</span><br><span class="line">			p-&gt;next = q-&gt;next;</span><br><span class="line">			q-&gt;next = p-&gt;next ? p-&gt;next-&gt;next : <span class="literal">NULL</span>;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">			q = q-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> new_head;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="单链表相交的一系列问题"><a href="#单链表相交的一系列问题" class="headerlink" title="单链表相交的一系列问题"></a>单链表相交的一系列问题</h1><h2 id="判断单链表是否有环"><a href="#判断单链表是否有环" class="headerlink" title="判断单链表是否有环"></a>判断单链表是否有环</h2><p>给定一个单链表的头结点，判断该链表是否有环，如果有环，返回入环的第一个节点，如果无环，返回<code>NULL</code>。如果允许用额外空间，我们可以用一个<code>hashset</code>保存链表中每个节点，遍历链表时判断节点是否在<code>hashset</code>中出现过，第一次在<code>hashset</code>中出现两次的节点就是入环的第一个节点，否则无环。</p>
+<p>如果不允许使用额外空间，我们可以采用快慢指针的做法。慢指针一次走一步，快指针一次走两步。如果快指针走的过程中遇到了<code>NULL</code>，则链表肯定无环。否则快指针和慢指针肯定会在环上相遇，此时，将块指针指向开头，让其一次走一步，慢指针也同样一次走一步。这样快慢指针相交的位置就是入环的节点。也就是说有如下定理：<strong>相遇点到入环点的距离=头指针到入环点的距离</strong>。证明如下：设入环点到快慢指针相遇的节点的距离为$x$，环的长度为$r$，慢指针共走了$s$步，则快指针走了$2s$步，另外，如果快指针要追上慢指针的话快指针至少比慢指针多走了$n\times r$步（$n \ge1$，即起码比慢指针多走了一个圈)。那我们有如下等式：$s=a+x,2s=a+nr+x$;由此可以推出$a=nr-x$。也就是说相遇点到入环点的距离等于头节点到入环点的距离。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode* <span class="title">circle_entrance_node</span><span class="params">(ListNode* head)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">		ListNode *slow, *fast;</span><br><span class="line">		slow = fast = head;</span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (fast-&gt;next == <span class="literal">NULL</span> || fast-&gt;next-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">			slow = slow-&gt;next;</span><br><span class="line">			fast = fast-&gt;next-&gt;next;</span><br><span class="line">			<span class="keyword">if</span> (slow == fast)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		fast = head;</span><br><span class="line">		<span class="keyword">while</span> (fast != slow)</span><br><span class="line">		&#123;</span><br><span class="line">			fast = fast-&gt;next;</span><br><span class="line">			slow = slow-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> fast;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="判断无环链表是否相交"><a href="#判断无环链表是否相交" class="headerlink" title="判断无环链表是否相交"></a>判断无环链表是否相交</h2><p>给定两个无环单链表，判断这两个链表是否相交，如果相交，返回相交的第一个节点。首先可以确定的是，对于单链表来说，两个链表相交只可能出现 Y 形的结果。如果这道题不指定空间复杂度，可以使用<code>hashset</code>，先遍历第一个链表，将所有节点加到<code>hashset</code>中，再遍历第二个链表，判断每个节点在<code>hashset</code>中是否出现，第一个出现两次的节点就是两个链表相交的第一个节点。否则不想交。</p>
+<p>如果指定空间复杂度为$O(1)$，那我们不能使用<code>hashset</code>了。我们这样做：首先遍历两个链表，得到两个链表的长度$l_1$、$l_2$和最后一个节点$end_1、end_2$，如果最后一个节点不等，那么两个链表肯定不想交。如果两个链表的最后一个节点相等，令两个指针<code>p</code>、<code>q</code>分别指向两个链表的头，让较长的那个链表先走$|l_1-l_2|$步，然后两个链表同时前进，相交的那个位置就是两个链表第一次相交的节点。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 无环单链表相交的第一个节点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">no_circle_joint_node</span><span class="params">(ListNode *head_1, ListNode *end_1, </span></span></span><br><span class="line"><span class="function"><span class="params">                               ListNode *head_2, ListNode *end_2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head_1 == <span class="literal">NULL</span> || head_2 == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    ListNode *p, *q;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;  <span class="comment">// 两个链表长度的差值</span></span><br><span class="line">    p = head_1;</span><br><span class="line">    q = head_2;</span><br><span class="line">    <span class="keyword">while</span> (p-&gt;next != end_1)</span><br><span class="line">    &#123;</span><br><span class="line">        n++;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (q-&gt;next != end_2)</span><br><span class="line">    &#123;</span><br><span class="line">        n--;</span><br><span class="line">        q = q-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (p != q)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    p = n &gt; <span class="number">0</span> ? head_1 : head_2;	<span class="comment">// p指向长链表</span></span><br><span class="line">    q = p == head_1 ? head_2 : head_1;  <span class="comment">// q指向短链表</span></span><br><span class="line">    n = <span class="built_in">abs</span>(n);</span><br><span class="line">    <span class="keyword">while</span> (n != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        n--;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (p != q)</span><br><span class="line">    &#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        q = q-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p;  <span class="comment">// 返回第一个相交的节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断有环单链表是否相交"><a href="#判断有环单链表是否相交" class="headerlink" title="判断有环单链表是否相交"></a>判断有环单链表是否相交</h2><p>给定两个有环的单链表，如果相交，返回第一个相交的节点，否则返回<code>NULL</code>。</p>
+<p>两个有环单链表只有三种拓扑结构：</p>
+<ol>
+<li><p>两个单链表各自成环，不相交；</p>
+<p><img src="/2018/12/22/算法复习四/1546520249649.png" alt="1546520249649"></p>
+</li>
+<li><p>两个单链表先相交，再共享一个环；</p>
+<p><img src="/2018/12/22/算法复习四/1546520301704.png" alt="1546520301704"></p>
+</li>
+<li><p>两个链表共享环，但入环节点不一样。</p>
+<p><img src="/2018/12/22/算法复习四/1546520328236.png" alt="1546520328236"></p>
+</li>
+</ol>
+<p>我们只需要两个单链表的头指针<code>head_1</code>、<code>head_2</code>和两个有环单链表的入环节点<code>loop_1</code>和<code>loop_2</code>就能区分出这三种情况。</p>
+<ul>
+<li>如果<code>loop_1 == loop_2</code>，一定是第二种情况，在这种情况下，将<code>head_1</code>到<code>loop_1</code>作为一条无环单链表，将<code>head_2</code>到<code>loop_2</code>作为另一条无环单链表，这两条无环单链表的第一个相交节点即为所求；</li>
+<li>如果<code>loop_1 != loop_2</code>，令<code>p = loop_1</code>，<code>p</code>一直前进，如果过程中与<code>loop_2</code>相等了，则为第三种拓扑结构，<code>loop_1</code>和<code>loop_2</code>任意返回一个都能满足题目要求；如果<code>p</code>一直到回到<code>loop_1</code>都没和<code>loop_2</code>相等，那么表示为第一种拓扑结构，不相交。</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 有环单链表相交的第一个节点</span></span><br><span class="line"><span class="function">ListNode *<span class="title">circle_joint_node</span><span class="params">(ListNode *head_1, ListNode *loop_1, </span></span></span><br><span class="line"><span class="function"><span class="params">                            ListNode *head_2, ListNode *loop_2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (loop_1 == loop_2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> no_circle_joint_node(head_1, loop_1, head_2, loop_2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        ListNode *p = loop_1-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (p != loop_1)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (p == loop_2)</span><br><span class="line">                <span class="keyword">return</span> loop_1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断两个单链表是否相交"><a href="#判断两个单链表是否相交" class="headerlink" title="判断两个单链表是否相交"></a>判断两个单链表是否相交</h2><p>给定两个单链表，有可能有环，也可能无环，判断其是否相交，如果相交返回第一个相交的节点。有了上面的基础这道题就很简单了：先判断两个链表是否都有环，如果一个有环一个无环，则不可能相交。如果两个链表都无环，直接执行上面的判断两个无环单链表是否相交的函数，否则执行判断两个有环单链表是否相交的函数。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">intersection_node</span><span class="params">(ListNode *head_1, ListNode *head_2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ListNode *loop_1 = circle_entrance_node(head_1);</span><br><span class="line">    ListNode *loop_2 = circle_entrance_node(head_2);</span><br><span class="line">    <span class="keyword">if</span> (loop_1 != <span class="literal">NULL</span> &amp;&amp; loop_2 != <span class="literal">NULL</span>)  <span class="comment">// 两个链表都有环</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> circle_joint_node(head_1, loop_1, head_2, loop_2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (loop_1 == <span class="literal">NULL</span> &amp;&amp; loop_2 == <span class="literal">NULL</span>)  <span class="comment">// 两个链表都无环</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> no_circle_joint_node(head_1, <span class="literal">NULL</span>, head_2, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/13/算法复习三/" rel="next" title="算法复习三">
+                <i class="fa fa-chevron-left"></i> 算法复习三
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#螺旋打印矩阵"><span class="nav-number">1.</span> <span class="nav-text">螺旋打印矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原地旋转矩阵"><span class="nav-number">2.</span> <span class="nav-text">原地旋转矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反转单向和双向链表"><span class="nav-number">3.</span> <span class="nav-text">反转单向和双向链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#之字型打印矩阵"><span class="nav-number">4.</span> <span class="nav-text">之字型打印矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行列有序的矩阵中找数"><span class="nav-number">5.</span> <span class="nav-text">行列有序的矩阵中找数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#判断单链表是否回文"><span class="nav-number">6.</span> <span class="nav-text">判断单链表是否回文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#荷兰国旗问题的链表形式"><span class="nav-number">7.</span> <span class="nav-text">荷兰国旗问题的链表形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复制含有随机指针节点的链表"><span class="nav-number">8.</span> <span class="nav-text">复制含有随机指针节点的链表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单链表相交的一系列问题"><span class="nav-number">9.</span> <span class="nav-text">单链表相交的一系列问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断单链表是否有环"><span class="nav-number">9.1.</span> <span class="nav-text">判断单链表是否有环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断无环链表是否相交"><span class="nav-number">9.2.</span> <span class="nav-text">判断无环链表是否相交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断有环单链表是否相交"><span class="nav-number">9.3.</span> <span class="nav-text">判断有环单链表是否相交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断两个单链表是否相交"><span class="nav-number">9.4.</span> <span class="nav-text">判断两个单链表是否相交</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
