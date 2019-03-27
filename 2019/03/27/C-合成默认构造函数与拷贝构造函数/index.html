@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="合成默认构造函数的真相默认构造函数 C++标准规定，如果构造函数没有参数（nullary），或者构造函数的所有参数都有缺省值（default value），都算作缺省构造函数（default constructor）。            ——维基百科  我以前存在这这样的误解：如果程序员没有显式的定义任何构造函数，那么编译器会替程序员合成一个默认构造函数。比如定义下面的类： 123456cla">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++合成默认构造函数与拷贝构造函数">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/C-合成默认构造函数与拷贝构造函数/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="合成默认构造函数的真相默认构造函数 C++标准规定，如果构造函数没有参数（nullary），或者构造函数的所有参数都有缺省值（default value），都算作缺省构造函数（default constructor）。            ——维基百科  我以前存在这这样的误解：如果程序员没有显式的定义任何构造函数，那么编译器会替程序员合成一个默认构造函数。比如定义下面的类： 123456cla">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-27T04:57:27.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++合成默认构造函数与拷贝构造函数">
+<meta name="twitter:description" content="合成默认构造函数的真相默认构造函数 C++标准规定，如果构造函数没有参数（nullary），或者构造函数的所有参数都有缺省值（default value），都算作缺省构造函数（default constructor）。            ——维基百科  我以前存在这这样的误解：如果程序员没有显式的定义任何构造函数，那么编译器会替程序员合成一个默认构造函数。比如定义下面的类： 123456cla">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/27/C-合成默认构造函数与拷贝构造函数/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>C++合成默认构造函数与拷贝构造函数 | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/C-合成默认构造函数与拷贝构造函数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++合成默认构造函数与拷贝构造函数
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-27 12:56:32 / 修改时间：12:57:27" itemprop="dateCreated datePublished" datetime="2019-03-27T12:56:32+08:00">2019-03-27</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="合成默认构造函数的真相"><a href="#合成默认构造函数的真相" class="headerlink" title="合成默认构造函数的真相"></a>合成默认构造函数的真相</h1><h2 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h2><blockquote>
+<p>C++标准规定，如果构造函数没有参数（nullary），或者构造函数的所有参数都有缺省值（default value），都算作缺省构造函数（default constructor）。            ——维基百科</p>
+</blockquote>
+<p>我以前存在这这样的<strong>误解</strong>：如果程序员没有显式的定义任何构造函数，那么编译器会替程序员合成一个默认构造函数。比如定义下面的类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>那么<code>Foo</code>的默认构造函数会被合成出来。但实际上是怎样的呢？《<em>深度探索C++对象模型</em>》一书中（下文简称为书中）提到，<strong><em>C++ Annotated Reference Manual</em></strong> (ARM)中说：“default constructor……会在需要的时候被产生出来”。那么什么是“需要的时候”呢？是我们认为的“如果没有显式定义任何构造函数”的情况吗？接下来就解释下什么是需要的时候。</p>
+<h2 id="编译器合成默认构造函数的几种情况"><a href="#编译器合成默认构造函数的几种情况" class="headerlink" title="编译器合成默认构造函数的几种情况"></a>编译器合成默认构造函数的几种情况</h2><p>书中提到，<strong>C++ Standard</strong>中说：</p>
+<blockquote>
+<p>对于class X，如果用户没有声明任何constructor，那么会有一个default constructor被隐式（implicit）声明出来。一个被隐式声明出来的default constructor是一个trival（无用的） constructor。</p>
+</blockquote>
+<p>我的理解是default constructor分为两种，一种是上面提到的trival default constructor，还有一种是nontrival default constructor。trival default constructor只是被隐式的声明出来，并不会合成到类中；而nontrival default constructor才<strong>可能</strong>会真正的合成到类中，产生实际的代码。为什么上面说是可能呢？因为如果程序员的代码中并没有用到default constructor，那么编译器也是不会产生出default constructor的。</p>
+<p>那么什么情况下编译器会合成出一个nontrival 的default constructor呢？下面就介绍一下会产生nontrival default constructor的几种情况：</p>
+<ol>
+<li><p>类中含有带有default constructor的Member Class Object</p>
+<p>在下面的程序片段中，编译器为 class Bar 合成一个 default constructor：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Foo();</span><br><span class="line">    Foo(<span class="keyword">int</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Foo foo;  <span class="comment">// 注意，是内含，而不是继承！</span></span><br><span class="line">    <span class="keyword">char</span> *str;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>被合成的 Bar 的default constructor内含必要的代码，能够调用 class Foo 的default constructor来处理 Bar 中的<em>foo</em>成员，<strong>但它并不产生任何代码来初始化<em>str</em></strong>。例如，合成的default constructor可能看起来像下面这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> Bar::Bar()</span><br><span class="line">&#123;</span><br><span class="line">    foo.Foo::Foo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，编译器只会初始化<em>foo</em>，不会初始化<em>str</em>。初始化<em>str</em>是程序员的责任。我们现在假设程序员已经通过下面的default constructor提供了str的初始化操作：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Bar::Bar()</span><br><span class="line">&#123;</span><br><span class="line">    str = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是编译器还需要初始化<em>foo</em>，但是编译器已经没法定义第二个default constructor了，此时该怎么办呢？编译器会扩张现有的constructor，在其中安插一些代码，使得user code被执行之前先执行必要的default constructor。继续上面的例子，扩张后的default constructor可能看起来像这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Bar::Bar()</span><br><span class="line">&#123;</span><br><span class="line">    foo.Foo::Foo();  <span class="comment">// 编译器添加的代码</span></span><br><span class="line">    str = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一种情况：如果有多个class member object都需要执行constructor，那么怎么办？C++要求以“成员变量在class中声明的顺序来调用各个constructor”。也就是说如果有以下的classes：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dopey</span> &#123;</span><span class="keyword">public</span>: Dopey(); ... &#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sneezy</span> &#123;</span><span class="keyword">public</span>: Sneezy(<span class="keyword">int</span>); Sneezy(); ... &#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bashful</span> &#123;</span><span class="keyword">public</span>: Bashful(); ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SnowWhilte</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Dopye dopey;</span><br><span class="line">    Sneezy sneezy;</span><br><span class="line">    Bashful bashful;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> mumble;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果<em>SnowWhite</em>没有定义default constructor，就会有一个nontrival default constructor被合成出来，依序调用<em>Dopey、Sneezy、Bashful</em>的default constructor。然而如果用户定义了下面的default constructor：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SnowWhite::SnowWhite() : Sneezy(<span class="number">1024</span>)</span><br><span class="line">&#123;</span><br><span class="line">    mumble = <span class="number">2048</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么上述constructor会被编译器扩张为下面的样子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SnowWhite::SnowWhite() : Sneezy(<span class="number">1024</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 以下三行为编译器安插的代码</span></span><br><span class="line">    dopey.Dopey::Dopey();</span><br><span class="line">    sneezy.Sneezy::Sneezy(<span class="number">1024</span>);</span><br><span class="line">    bashful.Bashful::Bashful();</span><br><span class="line">    </span><br><span class="line">    mumble = <span class="number">2048</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类继承自带有default constructor的Base Class</p>
+<p>类似的道理，如果一个没有任何constructor的class派生自一个“带有default constructor”的base class，那么这个derived class的default constructor会被视为nontrival，因此需要被合成出来。同样，如果设计者提供了多个constructor，那么编译器还是会扩张现有的每一个constructor，将调用base class的代码安插在程序代码中。</p>
+</li>
+<li><p>类中含有virtual function</p>
+<p>如果类中含有virtual function，那么在编译期间会进行如下两个行动：1. 产生一个virtual function table；2. 在每个class object内，会产生一个额外的vptr，内含相关的virtual function table的地址。</p>
+</li>
+<li><p>带有一个虚基类的Class</p>
+<p><strong><em>TODO</em></strong></p>
+<p>需要修正偏移量？</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h1 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h1><h2 id="拷贝构造函数何时被调用"><a href="#拷贝构造函数何时被调用" class="headerlink" title="拷贝构造函数何时被调用"></a>拷贝构造函数何时被调用</h2><h2 id="编译器何时合成拷贝构造函数"><a href="#编译器何时合成拷贝构造函数" class="headerlink" title="编译器何时合成拷贝构造函数"></a>编译器何时合成拷贝构造函数</h2><h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>《<a href="https://book.douban.com/subject/1091086/" target="_blank" rel="noopener">深度探索C++对象模型</a>》</li>
+<li><a href="https://en.cppreference.com/w/cpp/language/default_constructor" target="_blank" rel="noopener">default constructor</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/27/C-后台开发面试题汇总/" rel="next" title="C++后台开发面试题汇总">
+                <i class="fa fa-chevron-left"></i> C++后台开发面试题汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#合成默认构造函数的真相"><span class="nav-number">1.</span> <span class="nav-text">合成默认构造函数的真相</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#默认构造函数"><span class="nav-number">1.1.</span> <span class="nav-text">默认构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译器合成默认构造函数的几种情况"><span class="nav-number">1.2.</span> <span class="nav-text">编译器合成默认构造函数的几种情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷贝构造函数"><span class="nav-number">2.</span> <span class="nav-text">拷贝构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝构造函数何时被调用"><span class="nav-number">2.1.</span> <span class="nav-text">拷贝构造函数何时被调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译器何时合成拷贝构造函数"><span class="nav-number">2.2.</span> <span class="nav-text">编译器何时合成拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
