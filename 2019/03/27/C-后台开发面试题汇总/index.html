@@ -115,7 +115,7 @@
 <meta property="og:description" content="C/C++ 语言基础0. C++变量内存布局首先是一个Linux进程的虚拟内存：见CSAPP 3e P580 图9-26然后是典型的ELF可重定位目标文件：见CSAPP 3e P467 图7-3一个由C/C++编译的程序占用的内存分为以下几个部分：  栈区（stack）：由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 堆区（heap）：一般由程序员分配释放">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/home/tang/learn/images/%E5%90%88%E6%88%90%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0.md">
-<meta property="og:updated_time" content="2019-03-27T04:55:13.383Z">
+<meta property="og:updated_time" content="2019-03-27T13:15:43.129Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++后台开发面试题汇总">
 <meta name="twitter:description" content="C/C++ 语言基础0. C++变量内存布局首先是一个Linux进程的虚拟内存：见CSAPP 3e P580 图9-26然后是典型的ELF可重定位目标文件：见CSAPP 3e P467 图7-3一个由C/C++编译的程序占用的内存分为以下几个部分：  栈区（stack）：由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 堆区（heap）：一般由程序员分配释放">
@@ -394,7 +394,7 @@
                 
               
 
-              <time title="创建时间：2019-03-27 12:50:05 / 修改时间：12:55:13" itemprop="dateCreated datePublished" datetime="2019-03-27T12:50:05+08:00">2019-03-27</time>
+              <time title="创建时间：2019-03-27 12:50:05 / 修改时间：21:15:43" itemprop="dateCreated datePublished" datetime="2019-03-27T12:50:05+08:00">2019-03-27</time>
             
 
             
@@ -626,11 +626,17 @@
 </ul>
 <p>TCP连接是双向的，因此在四次挥手中，前两次挥手用于断开一个方向的连接，后两次挥手用于断开另一方向的连接。 </p>
 <ul>
-<li>第一次挥手 若A认为数据发送完成，则它需要向B发送连接释放请求。该请求只有报文头，头中携带的主要参数为： FIN=1，seq=u。此时，A将进入FIN-WAIT-1状态。 PS1：FIN=1表示该报文段是一个连接释放请求。 PS2：seq=u，u-1是A向B发送的最后一个字节的序号。</li>
-<li>第二次挥手 B收到连接释放请求后，会通知相应的应用程序，告诉它A向B这个方向的连接已经释放。此时B进入CLOSE-WAIT状态，并向A发送连接释放的应答，其报文头包含： ACK=1，seq=v，ack=u+1。 PS1：ACK=1：除TCP连接请求报文段以外，TCP通信过程中所有数据报的ACK都为1，表示应答。 PS2：seq=v，v-1是B向A发送的最后一个字节的序号。 PS3：ack=u+1表示希望收到从第u+1个字节开始的报文段，并且已经成功接收了前u个字节。A收到该应答，进入FIN-WAIT-2状态，等待B发送连接释放请求。 第二次挥手完成后，A到B方向的连接已经释放，B不会再接收数据，A也不会再发送数据。但B到A方向的连接仍然存在，B可以继续向A发送数据。</li>
-<li>第三次挥手 当B向A发完所有数据后，向A发送连接释放请求，请求头：FIN=1，ACK=1，seq=w，ack=u+1。B便进入LAST-ACK状态。</li>
-<li>第四次挥手 A收到释放请求后，向B发送确认应答，此时A进入TIME-WAIT状态。该状态会持续2MSL时间，若该时间段内没有B的重发请求的话，就进入CLOSED状态，撤销TCP。当B收到确认应答后，也便进入CLOSED状态，撤销TCP。</li>
-<li>为什么需要time_wait的时间： 这样可让TCP再次发送最后的ACK以防这个ACK丢失(另一端超时并重发最后的FIN)这种2MSL等待的另一个结果是这个TCP连接在2MSL等待期间，定义这个连接的插口(客户的IP地址和端口号，服务器的IP地址和端口号)不能再被使用。这个连接只能在2MSL结束后才能再被使用。</li>
+<li><p>第一次挥手 若A认为数据发送完成，则它需要向B发送连接释放请求。该请求只有报文头，头中携带的主要参数为： FIN=1，seq=u。此时，A将进入FIN-WAIT-1状态。 PS1：FIN=1表示该报文段是一个连接释放请求。 PS2：seq=u，u-1是A向B发送的最后一个字节的序号。</p>
+</li>
+<li><p>第二次挥手 B收到连接释放请求后，会通知相应的应用程序，告诉它A向B这个方向的连接已经释放。此时B进入CLOSE-WAIT状态，并向A发送连接释放的应答，其报文头包含： ACK=1，seq=v，ack=u+1。 PS1：ACK=1：除TCP连接请求报文段以外，TCP通信过程中所有数据报的ACK都为1，表示应答。 PS2：seq=v，v-1是B向A发送的最后一个字节的序号。 PS3：ack=u+1表示希望收到从第u+1个字节开始的报文段，并且已经成功接收了前u个字节。A收到该应答，进入FIN-WAIT-2状态，等待B发送连接释放请求。 第二次挥手完成后，A到B方向的连接已经释放，B不会再接收数据，A也不会再发送数据。但B到A方向的连接仍然存在，B可以继续向A发送数据。</p>
+</li>
+<li><p>第三次挥手 当B向A发完所有数据后，向A发送连接释放请求，请求头：FIN=1，ACK=1，seq=w，ack=u+1。B便进入LAST-ACK状态。</p>
+</li>
+<li><p>第四次挥手 A收到释放请求后，向B发送确认应答，此时A进入TIME-WAIT状态。该状态会持续2MSL时间，若该时间段内没有B的重发请求的话，就进入CLOSED状态，撤销TCP。当B收到确认应答后，也便进入CLOSED状态，撤销TCP。</p>
+</li>
+<li><p>为什么需要time_wait的时间： 1. 可靠的实现TCP全双工连接的终止：这样可让TCP再次发送最后的ACK以防这个ACK丢失(另一端超时并重发最后的FIN)。2. 允许老的重复分节在网络中消逝。</p>
+<p>这种2MSL等待的另一个结果是这个TCP连接在2MSL等待期间，定义这个连接的插口(客户的IP地址和端口号，服务器的IP地址和端口号)不能再被使用。这个连接只能在2MSL结束后才能再被使用。</p>
+</li>
 </ul>
 <h2 id="3-http协议1-0-1-1-和-2-0有什么异同？"><a href="#3-http协议1-0-1-1-和-2-0有什么异同？" class="headerlink" title="3. http协议1.0 1.1 和 2.0有什么异同？"></a>3. http协议1.0 1.1 和 2.0有什么异同？</h2><h2 id="4-http协议有什么缺陷？"><a href="#4-http协议有什么缺陷？" class="headerlink" title="4. http协议有什么缺陷？"></a>4. http协议有什么缺陷？</h2><h2 id="5-使用http协议请求文件中的某一段该如何处理，请求的偏移量超过了文件大小会返回什么"><a href="#5-使用http协议请求文件中的某一段该如何处理，请求的偏移量超过了文件大小会返回什么" class="headerlink" title="5. 使用http协议请求文件中的某一段该如何处理，请求的偏移量超过了文件大小会返回什么"></a>5. 使用http协议请求文件中的某一段该如何处理，请求的偏移量超过了文件大小会返回什么</h2><h2 id="6-TCP滑动窗口机制"><a href="#6-TCP滑动窗口机制" class="headerlink" title="6. TCP滑动窗口机制"></a>6. TCP滑动窗口机制</h2><h2 id="7-dns协议"><a href="#7-dns协议" class="headerlink" title="7. dns协议"></a>7. dns协议</h2><h2 id="8-ip包在路由器的传播过程"><a href="#8-ip包在路由器的传播过程" class="headerlink" title="8. ip包在路由器的传播过程"></a>8. ip包在路由器的传播过程</h2><h2 id="9-ARP协议"><a href="#9-ARP协议" class="headerlink" title="9. ARP协议"></a>9. ARP协议</h2><h2 id="10-TCP-拥塞控制原理"><a href="#10-TCP-拥塞控制原理" class="headerlink" title="10. TCP 拥塞控制原理"></a>10. TCP 拥塞控制原理</h2><h2 id="11-什么是SYN攻击，如何防范？"><a href="#11-什么是SYN攻击，如何防范？" class="headerlink" title="11. 什么是SYN攻击，如何防范？"></a>11. 什么是SYN攻击，如何防范？</h2><p>SYN Flood攻击是一种典型的拒绝服务型（Denial of Service）攻击。所谓拒绝服务型攻击就是通过进行攻击，使受害主机或网络不能够良好的提供服务，从而间接达到攻击的目的。</p>
 <p>SYN Flood攻击利用的是IPv4中TCP协议的三次握手（Three-Way Handshake）过程进行的攻击。TCP协议规定，一端向另一端发起TCP连接时，它需要首先发送SYN 包到对方，对方收到后发送一个SYN+ACK包回来，发起方再发送 ACK包回去，这样三次握手就结束了。我们把TCP连接的发起方叫作”TCP客户机（TCP Client）”，TCP连接的接收方叫作”TCP服务器（TCP Server）”。值得注意的是在TCP服务器收到TCP SYN request包时，在发送TCP SYN+ACK包回TCP客户机前，TCP服务器要先分配好一个数据区专门服务于这个即将形成的TCP连接。一般把收到SYN包而还未收到ACK包时的连接状态称为半开连接（Half-open Connection）。</p>
