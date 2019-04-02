@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553737633997.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553737887469.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553739179845.png">
-<meta property="og:updated_time" content="2019-04-02T08:45:19.896Z">
+<meta property="og:updated_time" content="2019-04-02T08:49:43.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++后台开发面试题汇总">
 <meta name="twitter:description" content="C/C++ 语言基础0. C++变量内存布局首先是一个Linux进程的虚拟内存（参考自CSAPP）：  然后是典型的ELF可重定位目标文件（同样来自CSAPP）：  一个由C/C++编译的程序占用的内存分为以下几个部分：  栈区（stack）：由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 堆区（heap）：一般由程序员分配释放，若程序员不释放，程序结束时">
@@ -417,7 +417,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-02 16:45:19" itemprop="dateModified" datetime="2019-04-02T16:45:19+08:00">2019-04-02</time>
+                <time title="修改时间：2019-04-02 16:49:43" itemprop="dateModified" datetime="2019-04-02T16:49:43+08:00">2019-04-02</time>
               
             
           </span>
@@ -500,11 +500,11 @@
 <p>输出结果：</p>
 <p><img src="/2019/03/27/C-后台开发面试题汇总/合成默认构造函数与拷贝构造函数.png" alt="合成默认构造函数与拷贝构造函数"></p>
 <p>注意，<code>reinterpret_cast</code>转型之后对象的地址是不会变的，而使用<code>static_cast</code>转型后对象的地址可能发生了改变，这是多个基类在子类中的地址不同导致的。</p>
-<h2 id="3-指针与引用的区别与联系"><a href="#3-指针与引用的区别与联系" class="headerlink" title="3. 指针与引用的区别与联系"></a>3. 指针与引用的区别与联系</h2></li>
+</li>
 </ul>
 </li>
 </ul>
-<p><strong>相同点</strong>：</p>
+<h2 id="3-指针与引用的区别与联系"><a href="#3-指针与引用的区别与联系" class="headerlink" title="3. 指针与引用的区别与联系"></a>3. 指针与引用的区别与联系</h2><p><strong>相同点</strong>：</p>
 <ol>
 <li>都是地址的概念；指针指向一块内存，它的内容是所指内存的地址；而引用则是某块内存的别名。</li>
 </ol>
@@ -693,9 +693,9 @@
 <li><p>进入慢启动过程<br>在收到3个duplicate ACK时就开启重传，而不用等到超时<br>sshthresh = cwnd = cwnd /2<br>进入快速恢复算法——Fast Recovery </p>
 </li>
 <li><p>快速恢复：至少收到了3个Duplicated Acks，说明网络也不那么糟糕，可以快速恢复。<br>cwnd = sshthresh/2<br>重传Duplicated ACKs指定的数据包<br>如果每收到一个新的 Ack，那么cwnd = cwnd +1 进入了拥塞避免的算法了。</p>
-<h2 id="11-什么是SYN攻击，如何防范？"><a href="#11-什么是SYN攻击，如何防范？" class="headerlink" title="11. 什么是SYN攻击，如何防范？"></a>11. 什么是SYN攻击，如何防范？</h2></li>
+</li>
 </ol>
-<p>SYN Flood攻击是一种典型的拒绝服务型（Denial of Service）攻击。所谓拒绝服务型攻击就是通过进行攻击，使受害主机或网络不能够良好的提供服务，从而间接达到攻击的目的。</p>
+<h2 id="11-什么是SYN攻击，如何防范？"><a href="#11-什么是SYN攻击，如何防范？" class="headerlink" title="11. 什么是SYN攻击，如何防范？"></a>11. 什么是SYN攻击，如何防范？</h2><p>SYN Flood攻击是一种典型的拒绝服务型（Denial of Service）攻击。所谓拒绝服务型攻击就是通过进行攻击，使受害主机或网络不能够良好的提供服务，从而间接达到攻击的目的。</p>
 <p>SYN Flood攻击利用的是IPv4中TCP协议的三次握手（Three-Way Handshake）过程进行的攻击。TCP协议规定，一端向另一端发起TCP连接时，它需要首先发送SYN 包到对方，对方收到后发送一个SYN+ACK包回来，发起方再发送 ACK包回去，这样三次握手就结束了。我们把TCP连接的发起方叫作”TCP客户机（TCP Client）”，TCP连接的接收方叫作”TCP服务器（TCP Server）”。值得注意的是在TCP服务器收到TCP SYN request包时，在发送TCP SYN+ACK包回TCP客户机前，TCP服务器要先分配好一个数据区专门服务于这个即将形成的TCP连接。一般把收到SYN包而还未收到ACK包时的连接状态称为半开连接（Half-open Connection）。</p>
 <p>在最常见的SYN Flood攻击中，攻击者在短时间内发送大量的TCP SYN包给受害者，这时攻击者是TCP客户机，受害者是TCP服务器。根据上面的描述，受害者会为每个TCP SYN包分配一个特定的数据区，只要这些SYN包具有不同的源地址（这一点对于攻击者来说是很容易伪造的）。这将给TCP服务器系统造成很大的系统负担，最终导致系统不能正常工作。</p>
 <p>SYN Cookie是对TCP服务器端的三次握手协议作一些修改，专门用来防范SYN Flood攻击的一种手段。它的原理是，在TCP服务器收到TCP SYN包并返回TCP SYN+ACK包时，不分配一个专门的数据区，而是根据这个SYN包计算出一个cookie值。在收到TCP ACK包时，TCP服务器在根据那个cookie值检查这个TCP ACK包的合法性。如果合法，再分配专门的数据区进行处理未来的TCP连接。</p>
