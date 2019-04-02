@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553737633997.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553737887469.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/C-后台开发面试题汇总/1553739179845.png">
-<meta property="og:updated_time" content="2019-04-02T08:49:43.016Z">
+<meta property="og:updated_time" content="2019-04-02T09:35:54.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++后台开发面试题汇总">
 <meta name="twitter:description" content="C/C++ 语言基础0. C++变量内存布局首先是一个Linux进程的虚拟内存（参考自CSAPP）：  然后是典型的ELF可重定位目标文件（同样来自CSAPP）：  一个由C/C++编译的程序占用的内存分为以下几个部分：  栈区（stack）：由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 堆区（heap）：一般由程序员分配释放，若程序员不释放，程序结束时">
@@ -417,7 +417,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-02 16:49:43" itemprop="dateModified" datetime="2019-04-02T16:49:43+08:00">2019-04-02</time>
+                <time title="修改时间：2019-04-02 17:35:54" itemprop="dateModified" datetime="2019-04-02T17:35:54+08:00">2019-04-02</time>
               
             
           </span>
@@ -538,16 +538,22 @@
 <li><code>protected</code>:父类对象内部、子类对象内部可以访问，父类对象外部、子类对象外部都不可访问。</li>
 <li><code>private</code>：父类对象内部可以访问，其他都不可以访问。</li>
 </ul>
-<p>访问对象 | public | protected | private</p>
-<ul>
-<li>| :-: | :-: | :-: |<br>父类     | 可见   | 可见      | 可见<br>子类     | 可见   | 可见      | 不可见<br>父类外部 | 可见   | 不可见    | 不可见<br>子类外部 | 可见   | 不可见    | 不可见</li>
-</ul>
 </li>
+</ol>
+</li>
+</ul>
+<pre><code> 访问对象 | public | protected | private
+ - | :-: | :-: | :-: |
+ 父类     | 可见   | 可见      | 可见
+ 子类     | 可见   | 可见      | 不可见
+ 父类外部 | 可见   | 不可见    | 不可见
+ 子类外部 | 可见   | 不可见    | 不可见
+</code></pre><ol>
 <li><p>继承方式<br>三种继承方式不影响子类对父类的访问权限，子类对父类只看父类的访问控制权。继承方式是为了控制子类(也称派生类)的调用方(也叫用户)对父类(也称基类)的访问权限。<code>public</code>、<code>protected</code>、<code>private</code>三种继承方式，相当于把父类的<code>public</code>访问权限在子类中变成了对应的权限。 如<code>protected</code>继承，把父类中的<code>public</code>成员在本类中变成了<code>protected</code>的访问控制权限；<code>private</code>继承，把父类的<code>public</code>成员和<code>protected</code>成员在本类中变成了<code>private</code>访问控制权。</p>
 <p>ps.友元是类级别的，不存在继承的问题。</p>
 </li>
 </ol>
-</li>
+<ul>
 <li><p>多态：多态性可以简单地概括为“一个接口，多种方法”，程序在运行时才决定调用的函数，它是面向对象编程领域的核心概念。多态(polymorphism)，字面意思多种形状。</p>
 <ol>
 <li><p>静态多态：静态多态也称为静态绑定或早绑定。编译器在编译期间完成的，编译器根据函数实参的类型(可能会进行隐式类型转换)，可推断出要调用那个函数，如果有对应的函数就调用该函数，否则出现编译错误。</p>
