@@ -436,6 +436,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/05/算法复习一/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/05/算法复习一/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -615,6 +625,9 @@ O(N^d) & & {d > log_ba}\\
           </div>
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -944,6 +957,31 @@ O(N^d) & & {d > log_ba}\\
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz',
+        appKey: 'm8j90AEPPX5XX9lYPTH2CkkY',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
 
 
 
