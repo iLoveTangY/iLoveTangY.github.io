@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇复习（学习）了以下内容：  KMP算法 Manacher算法 BFPRT算法  这几个算法都是比较难的算法，以后要多多回顾。 KMP算法原理要理解一个算法首先需要理解这个算法是用来解决什么问题。KMP算法主要是用来对字符串匹配进行加速的。假设我们有ABAABAABAAAAA这个文本字符串和BAAAA这个模式字符串，要在文本字符串中找到模式字符串第一次出现的位置，暴力的字符串匹配过程如下：  两">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法复习七">
+<meta property="og:url" content="http://yoursite.com/2019/04/10/算法复习七/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="本篇复习（学习）了以下内容：  KMP算法 Manacher算法 BFPRT算法  这几个算法都是比较难的算法，以后要多多回顾。 KMP算法原理要理解一个算法首先需要理解这个算法是用来解决什么问题。KMP算法主要是用来对字符串匹配进行加速的。假设我们有ABAABAABAAAAA这个文本字符串和BAAAA这个模式字符串，要在文本字符串中找到模式字符串第一次出现的位置，暴力的字符串匹配过程如下：  两">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554971914256.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972207935.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972324326.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972599468.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972683078.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972781823.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972871363.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554972959155.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1554973900277.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555135999619.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555136232622.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555145343375.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555145306530.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555145748435.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555145952482.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555146697723.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555147088722.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/算法复习七/1555407606061.png">
+<meta property="og:updated_time" content="2019-04-18T07:48:57.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法复习七">
+<meta name="twitter:description" content="本篇复习（学习）了以下内容：  KMP算法 Manacher算法 BFPRT算法  这几个算法都是比较难的算法，以后要多多回顾。 KMP算法原理要理解一个算法首先需要理解这个算法是用来解决什么问题。KMP算法主要是用来对字符串匹配进行加速的。假设我们有ABAABAABAAAAA这个文本字符串和BAAAA这个模式字符串，要在文本字符串中找到模式字符串第一次出现的位置，暴力的字符串匹配过程如下：  两">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/10/算法复习七/1554971914256.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/10/算法复习七/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>算法复习七 | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/10/算法复习七/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法复习七
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-10 15:34:10" itemprop="dateCreated datePublished" datetime="2019-04-10T15:34:10+08:00">2019-04-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-18 15:48:57" itemprop="dateModified" datetime="2019-04-18T15:48:57+08:00">2019-04-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇复习（学习）了以下内容：</p>
+<ul>
+<li>KMP算法</li>
+<li>Manacher算法</li>
+<li>BFPRT算法</li>
+</ul>
+<p>这几个算法都是比较难的算法，以后要多多回顾。</p>
+<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>要理解一个算法首先需要理解这个算法是用来解决什么问题。KMP算法主要是用来对字符串匹配进行加速的。假设我们有<code>ABAABAABAAAAA</code>这个文本字符串和<code>BAAAA</code>这个模式字符串，要在文本字符串中找到模式字符串第一次出现的位置，<strong>暴力的字符串匹配</strong>过程如下：</p>
+<ul>
+<li>两个指针<code>i</code>和<code>j</code>分别指向文本字符串的开头和模式字符串的开头，另有一个指针<code>k</code>指向<code>i</code>；</li>
+<li>当<code>k</code>和<code>j</code>所指的字符相同时即<code>k</code>和<code>j</code>同时前进一步，如果<code>j</code>到了模式字符串的结尾，那么表示找到了一个匹配，此时返回<code>i</code>即为第一次出现的位置；</li>
+<li>如果<code>k</code>和<code>j</code>所指字符不同，那么<code>i</code>要前进一步，<code>k</code>要退回到新的<code>i</code>，<code>j</code>也要退回到模式字符串的开头，这样一直到找到了一个匹配或者到文本字符串的结尾。</li>
+</ul>
+<p>假设文本字符串的长度为$N$，模式字符串的长度为$M$，那么暴力算法的复杂度为$O(N \times M)$。为了提高字符串匹配的速度，Knuth、Morris和Pratt三位大牛就发明了KMP算法，KMP算法的核心思想就是当匹配失败时，我们的指向文本字符串的指针不回退，只有指向模式字符串的指针做一定的回退操作。</p>
+<p>为了讲清楚KMP算法，我们需要先了解两个概念：</p>
+<ol>
+<li><p>以某个<strong>字符</strong>结尾的前缀和后缀的概念。</p>
+<p>以<code>BAAAA</code>这个模式串为例，第二个<code>A</code>（下标为2）的前缀有两个：<code>B</code>(str[0])和<code>BA</code>(str[0],str[1])，同样，后缀也是两个<code>A</code>(str[1])和<code>BA</code>(str[0],str[1])</p>
+</li>
+<li><p>某个字符的公共最长前后缀</p>
+<p>顾名思义，公共最长前缀就是某个字符的前缀和后缀相同并且最长的那个前缀和后缀。但是这里我们要加个限定条件，计算公共前缀和后缀时前缀和后缀不能包含最长的那个前缀和后缀，也即完全相同的那个前缀和后缀。比如，有字符串<code>BABBABA</code>，那么最后一个字符<code>A</code>的公共最长前后缀就应该是<code>BAB</code>，对于前缀来说就是str[0,1,2]，对于后缀来说就是str[3,4,5]。注意，不能是<code>BABBAB</code>，因为上面说了，不能包含完全相同的那个前缀和后缀。</p>
+</li>
+</ol>
+<p>在对字符串做匹配之前，我们先对模式串的每个字符计算出公共最长前后缀的长度，存入数组中，然后开始做匹配。还是以上面的字符串为例：文本串为<code>BABBAABABBBBABBABA</code>，模式串为<code>BABBABA</code>。</p>
+<ol>
+<li><p>对模式串<code>BABBABA</code>计算每个字符的公共最长前后缀的长度存入一个<code>next</code>数组中，这里我们先人工计算出来，后面会讲如何快速的计算<code>next</code>数组。</p>
+<p>我们规定，<code>next[0]=-1</code>，这是一个边界条件；然后很明显，<code>next[1]=0</code>，因为我们规定了最长公共前后缀不能包括前后缀完全相同的那个；<code>next[2]=0</code>；<code>next[3]=1</code>，公共最长前后缀为<code>B</code>；<code>next[4]=1</code>，公共最长前后缀同样为<code>B</code>；<code>next[5]=2</code>，公共最长前后缀为<code>BA</code>；<code>next[6]=3</code>，公共最长前后缀为<code>BAB</code>。因此，我们的整个<code>next</code>数组为<code>[-1, 0, 0, 1, 1, 2, 3]</code>。</p>
+</li>
+<li><p>定义一个<code>i</code>指针指向文本串的开头，定义一个<code>j</code>指针指向模式串的开头，从这里开始，我们的<code>i</code>指针就只前进不后退了。如果<code>i</code>和<code>j</code>对应的字符匹配，则<code>i</code>和<code>j</code>都往后挪一位，如果失配，则<code>j=next[j]</code>，而<code>i</code>继续停留在当前位置，重复这个过程直到文本字符串结尾或者找到完全匹配。</p>
+<p><img src="/2019/04/10/算法复习七/1554971914256.png" alt="1554971914256"></p>
+<p>模式串中位置5失配，那么<code>i</code>不动，<code>j=next[j]=next[5]=2</code>，所以接下来的状态如下图所示：</p>
+<p><img src="/2019/04/10/算法复习七/1554972207935.png" alt="1554972207935"></p>
+<p>此时<code>i</code>和<code>j</code>又失配，故<code>i</code>不动，<code>j=next[j]=next[2]=0</code>，接下来状态如图：</p>
+<p><img src="/2019/04/10/算法复习七/1554972324326.png" alt="1554972324326"></p>
+<p>此时<code>i</code>和<code>j</code>继续失配，<code>i</code>不动，<code>j=next[j]=next[0]=-1</code>，<strong>当<code>j=-1</code>时表示<code>i</code>此时需要往后加一了</strong>，并且将<code>j</code>重新设置为0，接下来状态如下图：</p>
+<p><img src="/2019/04/10/算法复习七/1554972599468.png" alt="1554972599468"></p>
+<p>此时<code>i</code>和<code>j</code>匹配，<code>i</code>和<code>j</code>一直往前知道失配的位置：</p>
+<p><img src="/2019/04/10/算法复习七/1554972683078.png" alt="1554972683078"></p>
+<p>此时<code>i</code>和<code>j</code>失配，<code>i</code>不动，<code>j=next[j]=next[4]=1</code>，接下来状态如图：</p>
+<p><img src="/2019/04/10/算法复习七/1554972781823.png" alt="1554972781823"></p>
+<p><code>i</code>和<code>j</code>继续失配，<code>i</code>不动，<code>j=next[j]=next[1]=0</code>，接下来状态如图：</p>
+<p><img src="/2019/04/10/算法复习七/1554972871363.png" alt="1554972871363"></p>
+<p><code>i</code>和<code>j</code>继续失配，但此时<code>j=next[j]=next[0]=-1</code>，故<code>i=i+1</code>，<code>j=0</code>，此时状态如下图：</p>
+<p><img src="/2019/04/10/算法复习七/1554972959155.png" alt="1554972959155"></p>
+<p>此时匹配，<code>i</code>和<code>j</code>一直往前，知道匹配结束。</p>
+</li>
+</ol>
+<p>这就是整个KMP算法匹配的流程。但是为什么这样做是对的呢？接下来通过一种不严格的方式来理解一下KMP算法。假设失配时的状态如下图：</p>
+<p><img src="/2019/04/10/算法复习七/1554973900277.png" alt="1554973900277"></p>
+<p>上面一行为文本字符串，下面一行为模式串，分别在位置<code>i</code>和位置<code>j</code>处失配。<code>s</code>为位置<code>j</code>的字符的公共最长后缀对应的第一个字符。在这种失配的情况下，我们可以断定如果以<code>i&#39;</code>到<code>s</code>之间的某个字符为起始位置来和模式串匹配是一定会失败的。为什么可以这么说呢？<strong>假设我们在位置<code>i&#39;</code>到<code>s</code>之间有个<code>s&#39;</code>可以和模式串中的<code>0</code>到<code>j</code>的部分匹配起来</strong>，那么在模式串中从<code>s&#39;</code>对应的位置到<code>j</code>的位置一定和从<code>0</code>到<code>s</code>对应的位置之后的某个位置相同（<code>s&#39;</code>到<code>i</code>的部分已经和模式串中<code>s&#39;</code>到<code>j</code>的字符串匹配上了，并且我们已经假设<code>s&#39;</code>到<code>i</code>的部分可以和模式串中从<code>0</code>到模式串中<code>s</code>对应的位置之后的某个位置的字符串能够匹配）。这样就找到了一个<code>j</code>的比公共最长前后缀更长的一个公共前后缀了，这可就不科学了。因此，我们可以断定<code>s</code>是第一个可能和模式串匹配上的位置，并且由于<code>s</code>到<code>i</code>已经和<code>j</code>的最长公共前缀匹配上了，所以我们可以直接将<code>j</code>定位到公共最长前缀的结束位置开始匹配。</p>
+<p>接下来就剩最后一个问题了，如何能快速计算出<code>next</code>数组的值呢？接下来得分两种情况来讨论。</p>
+<p>假设要计算<code>i</code>的<code>next</code>数组的值，那么可以分为以下两种情况：</p>
+<ol>
+<li><p>模式串中位置<code>i-1</code>处的值和位置<code>i</code>处的字符的最长前缀的下一个字符相同：</p>
+<p><img src="/2019/04/10/算法复习七/1555135999619.png" alt="1555135999619"></p>
+<p>在上图中，位置<code>i</code>的字符为<code>d</code>，位置<code>i-1</code>处的字符为<code>b</code>，<code>b</code>的最长前缀的下一个字符也为<code>b</code>。那么我们可以肯定位置<code>i</code>处的字符的公共最长前后缀的长度为位置<code>i-1</code>处字符的公共最长前后缀的长度加一，即<code>next[i]=next[i-1]+1</code>。</p>
+</li>
+<li><p>模式串中位置<code>i-1</code>处的值和位置<code>i</code>处的字符的最长前缀的下一个字符不同：</p>
+<p><img src="/2019/04/10/算法复习七/1555136232622.png" alt="1555136232622"></p>
+<p>在这种<code>c</code>和<code>b</code>不相等的情况下，<code>next[i]</code>的值应该是多少呢？我们说应该是继续递归的比较<code>c</code>的公共最长前缀的下一个字符和<code>b</code>是否相等，如果相等则<code>next[i]</code>就是此时的公共最长前缀的长度加一，否则继续递归进行这个过程。为什么这样是正确的呢？因为我们求<code>next[i]</code>的过程实际上就是相当于拿位置<code>i</code>的某个后缀（文本串）去和模式串的某个前缀（模式串）匹配，根据<code>next</code>数组的定义，当失配时我们应该将模式串的指针<code>j</code>跳到<code>next[j]</code>的位置，这个过程实际上相当于模式串的自我匹配。</p>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>理解了KMP算法的原理之后实现起来就比较简单了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; get_next_array(<span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (pattern.size() &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next(pattern.size());</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pattern.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>)</span><br><span class="line">            next[i] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">1</span>)</span><br><span class="line">            next[i] == <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (j &gt;= <span class="number">0</span> &amp;&amp; pattern[i - <span class="number">1</span>] != pattern[next[j]]) <span class="comment">// 递归求解next[i]</span></span><br><span class="line">                j = next[j];</span><br><span class="line">            next[i] = (j &gt;= <span class="number">0</span>) ? (next[j] + <span class="number">1</span>) : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">index_of</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str, <span class="keyword">const</span> <span class="built_in">string</span> &amp;pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str.size() &lt; pattern.size())</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">auto</span> next = get_next_array(pattern);</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; <span class="comment">// i 指向文本串，j 指向模式串</span></span><br><span class="line">    <span class="keyword">int</span> len_str = str.size(), len_pattern = pattern.size();</span><br><span class="line">    <span class="keyword">while</span> (i &lt; len_str &amp;&amp; j &lt; len_pattern)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (str[i] == pattern[j]) <span class="comment">// 如果两个字符能够匹配上</span></span><br><span class="line">        &#123;</span><br><span class="line">            i++;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (next[j] == <span class="number">-1</span>) <span class="comment">// 如果模式串已经退到了开头</span></span><br><span class="line">            i++;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            j = next[j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> j == len_pattern ? i - j : <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>给定字符串<code>s</code>，求解含有两个<code>s</code>的最短字符串。例如给定<code>s=&#39;aba&#39;</code>，那么包含两个<code>s</code>的最短字符串就是<code>ababa</code>，只要在<code>s</code>后面添上<code>ba</code>即可。</p>
+<p>假设字符串长度为<code>i</code>，我们可以求解<code>next[i]</code>位置的值（注意，是最后一个位置后一个位置），这样相当于求出了<code>s[i]</code>位置的公共最长前后缀，然后我们将<code>s</code>中最长公共前缀之后的部分都添加到字符串的末尾就形成了所求的字符串。例如，有字符串<code>s=abctabc</code>，我们可以求出<code>next[7]=3</code>，因此，我们把<code>index=3</code>以后的所有字符都加到已有字符的末尾，则得到<code>abctabctabc</code>。</p>
+<h1 id="Manacher算法"><a href="#Manacher算法" class="headerlink" title="Manacher算法"></a>Manacher算法</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>给定一个字符串，求这个字符串的最长回文子串。例如给定字符串<code>s=abcbata</code>，则最长回文子串为<code>abcba</code>。我们先想想用这道题该怎么做。采用暴力法，我们可以以每个字符为回文中心，往外扩张，直到不是扩张到的字符串不是回文串。对每个字符这样做，求出最长的回文串。这样对奇回文（回文中心落在字符上）没有问题，但是没办法求出偶回文（回文中心落在两个字符中间）。为了解决这个问题，我们可以在字符串的每个字符中间和首尾插入一个特殊字符，这样就将所有的偶回文都变成了奇回文（可以自己画一画），然后再以每个字符为回文中心求出回文串。这样就得到了一个$O(N^2)$的算法，还是速度太慢。Manacher算法就是解决这个问题的一个$O(N)$的算法。</p>
+<p>Manacher算法的预处理步骤还是跟暴力做法一样，每个字符之间插入一个特殊字符，只是对求回文串的长度这个过程进行了加速。整个算法流程如下：</p>
+<ol>
+<li>首先定义一个辅助数组<code>p</code>，里面存放以字符串中每个位置的字符为中心的回文直径，比如<code>#a#b#c#b#a#</code>的回文直径就是11。</li>
+<li>辅助数组中最大的元素除2就是给定字符串的最长回文子串。</li>
+</ol>
+<p>没错！就是这么简单！可问题是如何快速的求出辅助数组<code>p</code>的值…我们绘出以下这张图来辅助理解：</p>
+<p><img src="/2019/04/10/算法复习七/1555145343375.png" alt="1555145343375"></p>
+<p>令<code>i</code>为现在所求的位置；<code>L</code>是回文直径左边界，<code>R</code>是目前的回文直径右边界，其回文中心为<code>c</code>，<code>i</code>关于<code>c</code>的对称点为<code>i&#39;</code>，接下来要做的就是求出<code>p[i]</code>。接下来我们根据<code>i</code>的位置分情况讨论求<code>p[i]的</code>几种情况：</p>
+<ol>
+<li><p>$i&gt;R$，即下图的情况：</p>
+<p><img src="/2019/04/10/算法复习七/1555145306530.png" alt="1555145306530"></p>
+<p>没有什么求解<code>p[i]</code>的好办法，只能以<code>i</code>位置为中心，一位一位的往外扩，求出新的R（最大的回文直径右边界）和L；</p>
+</li>
+<li><p>$i&lt;R$并且$L_{i‘} == L$，即下图的情况：</p>
+<p><img src="/2019/04/10/算法复习七/1555145748435.png" alt="1555145748435"></p>
+<p>同样也没有什么好办法，只能暴力往外扩张，求出新的R和L；</p>
+</li>
+<li><p>$i&lt;R$并且$L_{i’}&gt;L$，即下图的情况：</p>
+<p><img src="/2019/04/10/算法复习七/1555145952482.png" alt="1555145952482"></p>
+<p>那么可以断定<code>p[i] = p[i&#39;]</code>，为什么这么说呢？请参看下图：</p>
+<p><img src="/2019/04/10/算法复习七/1555146697723.png" alt="1555146697723"></p>
+<p>假设<code>p[i]</code>有个更长的回文直径为<code>d+m == c+n</code>，<code>m</code>和<code>n</code>为新增的部分，那么根据对称性，<code>m</code>范围内的字符串应该等于<code>q</code>范围内的字符串，并且<code>n</code>范围内的字符串应该等于<code>p</code>范围内的字符串，另外<code>m</code>范围内的字符串应该等于<code>n</code>范围内的字符串，这样由<code>m==n</code>，<code>m==q</code>，<code>n==p</code>可以推出<code>p==q</code>，也就是说<code>i&#39;</code>应该有个更长的回文直径，这和我们的假设不符。</p>
+</li>
+<li><p>$i&lt;R$且$L_{i’}&lt;L$，即下图的情况：</p>
+<p><img src="/2019/04/10/算法复习七/1555147088722.png" alt="1555147088722"></p>
+<p>我们可以断定<code>p[i]</code>等于<code>R - i</code>，跟上面一种情况类似，我们也可以断定更大的回文直径是不可能的。</p>
+</li>
+</ol>
+<p>接下来分析下Manacher算法的复杂度。从上面的分析可以发现，在3、4两种情况下$O(1)$的时间复杂度就能算出最长回文子串，在1、2两种情况下都是会把<code>R</code>往右挪，并且<code>R</code>只会往右不会往左，因此总的时间复杂度就是$O(N)$。</p>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><p>同样，理解了原理，实现起来也很简单：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">get_manacher_str</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> ret;</span><br><span class="line">    ret += <span class="string">'#'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> c : str)</span><br><span class="line">    &#123;</span><br><span class="line">        ret += c;</span><br><span class="line">        ret += <span class="string">'#'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">longest_palindrome</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> manacher_str = get_manacher_str(str);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; p(manacher_str.size(), <span class="number">0</span>); <span class="comment">// 所有位置的回文半径</span></span><br><span class="line">    <span class="keyword">int</span> R = <span class="number">-1</span>;                            <span class="comment">// 目前回文右边界，一开始时为-1</span></span><br><span class="line">    <span class="keyword">int</span> C = <span class="number">-1</span>;                            <span class="comment">// 最长回文右边界的回文中心</span></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; manacher_str.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 首先2 * C - i就是i'</span></span><br><span class="line">        <span class="comment">// 下面这句话有几种情况：</span></span><br><span class="line">        <span class="comment">// 1. R &lt;= i: 按照分析，是需要暴力往外扩的</span></span><br><span class="line">        <span class="comment">// 2. R &gt; i: 按照分析又有两种情况，a. Li'在L内，此时p[i] = p[2 * C - i]</span></span><br><span class="line">        <span class="comment">//                             b. Li'在L外，此时p[i] = R - i</span></span><br><span class="line">        <span class="comment">//           总体来说，这两种情况可以归为一种, p[i] = min(R - i, p[2 * C - i])</span></span><br><span class="line">        p[i] = R &gt; i ? min(R - i, p[<span class="number">2</span> * C - i]) : <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 下面的while循环就是暴力往外扩，如果是上面的情况1，那么刚开始扩就会停止，如果是情况2，就会扩到不是回文串为止</span></span><br><span class="line">        <span class="keyword">while</span> (i + p[i] &lt; manacher_str.size() &amp;&amp; i - p[i] &gt; <span class="number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (manacher_str[i + p[i]] == manacher_str[i - p[i]])</span><br><span class="line">                ++p[i];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i + p[i] &gt; R) <span class="comment">// 更新右边界和回文中心</span></span><br><span class="line">        &#123;</span><br><span class="line">            R = i + p[i];</span><br><span class="line">            C = i;</span><br><span class="line">        &#125;</span><br><span class="line">        res = max(res, p[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h2><p>给定一个字符串<code>str</code>，在末尾添加最少的字符使其变成回文串。例如给定<code>acbc</code>，那么添加一个<code>a</code>即可。</p>
+<p>了解了Manacher算法的求解过程，解这道题也就简单了。按照Manacher算法求解过程（当然要加上特殊字符），只要有一个回文中心的右边界包含了当前字符串的最右边界，那么把第一个字符开始到左边界为止的所有字符逆序加在字符串末尾即可。例如，有<code>acbc</code>，当我们回文右边界的回文中心来到<code>b</code>这个位置时回文右边界能到最右边的字符<code>c</code>，此时的回文左边界为最左边的<code>c</code>，那么我们把第一个字符开始到左边界位置的所有字符（这里只有一个字符<code>a</code>）逆序加在字符串末尾即可，得到<code>acbca</code>。</p>
+<h1 id="BFPRT算法"><a href="#BFPRT算法" class="headerlink" title="BFPRT算法"></a>BFPRT算法</h1><h2 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h2><p>给定一个数组，在其中求前K大或者前K小的数，也即Top K问题。</p>
+<p>首先，第一个想法就是如果是求前K大的数，可以用最小堆。维护一个大小为K的堆，遍历数组，将每一个元素和堆顶元素比较，如果比堆顶元素大，则将堆顶元素弹出，数组当前元素入栈，这样最后能得到最大的K个元素。时间复杂度为$O(N\times logK)$。</p>
+<p>如果数组内存中放的下，有没有更好的办法？有！回想下之前的文章<a href="./算法复习二.md">算法复习二</a>中，在实现快速排序中我们是先在数组中随机选一个数，然后大于它的放右边，小于它的放左边，等于它的放中间。我们可以利用这个过程来求前k大的数。在快速排序时划分好三个部分之后，我们判断左边数的个数M是否大于K，如果是，则继续在左边的数中递归进行划分，如果，不是则在右边的数中找K-M个数，这个过程同样可以递归进行。这个算法的平均时间复杂度为$O(N)$，但是！！如果是最坏情况（倒霉催的），每次选的数都是最大的数，那么这个算法就退化成了一个$O(N^2)$的算法了。。</p>
+<p>BFPRT算法就是上天派来拯救这种最坏情况的。从上面的分析我们可以看到算法的关键在于如何选取那个切分点。BFPRT这五个人（没错，这就是五个人名的首字母）就想了一点办法来选取这个切分点。具体过程如下：</p>
+<ol>
+<li>将N个元素划分为$N/5$组，每组5个元素</li>
+<li>对每个组排序，找到这5个元素中的中位数</li>
+<li>对于所有的中位数形成的新数组，找出新的中位数，这个数就是切分点。</li>
+</ol>
+<p>为什么说这样选取比较好呢？看下图：</p>
+<p><img src="/2019/04/10/算法复习七/1555407606061.png" alt="1555407606061"></p>
+<p>假设青色是我们找到的每个组的中位数，红色是我们找到的这些中位数中的中位数。总共的组数是$N/5$，那么组中的中位数比最后找到的中位数大的组数就应该是$N/5/2=N/10$，这些组中又起码有三个数比中位数大，那么总共大于等于中位数的元素个数就起码是$3N/10$。可以证明这个算法的最坏时间复杂度为$O(N)$，具体证明参见算法导论§9.3。</p>
+<h2 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_kth_by_bfprt</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="keyword">int</span> k)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">median_of_medians</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span></span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; partition(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="keyword">int</span> piv);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从arr中[begin, end]通过插入排序的方式找到中位数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_median</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = begin + <span class="number">1</span>; i &lt;= end; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &gt;= begin &amp;&amp; temp &lt; arr[j])</span><br><span class="line">        &#123;</span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr[(begin + end) &gt;&gt; <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 将数组元素五个五个划分成组，取中位数形成一组，再取中位数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">median_of_medians</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num = end - begin + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> offset = num % <span class="number">5</span> == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; median_arr(num / <span class="number">5</span> + offset, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; median_arr.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> start = begin + i * <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">int</span> finish = start + <span class="number">4</span>;</span><br><span class="line">        median_arr[i] = get_median(arr, start, min(finish, end));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过BFPRT算法获得中位数</span></span><br><span class="line">    <span class="keyword">return</span> get_kth_by_bfprt(median_arr, <span class="number">0</span>, median_arr.size() - <span class="number">1</span>, median_arr.size() / <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_swap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">    arr[i] = arr[j];</span><br><span class="line">    arr[j] = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; partition(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="keyword">int</span> piv)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> less = begin, greater = end;</span><br><span class="line">    <span class="keyword">int</span> index = begin;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (index &lt;= greater)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[index] == piv)</span><br><span class="line">            ++index;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (arr[index] &gt; piv)</span><br><span class="line">            my_swap(arr, greater--, index);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            my_swap(arr, less++, index++);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;less, greater&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在 arr 中从[begin, end]范围内找到第k小的数, k是相对于整个数组而言的，不是相对于begin而言的</span></span><br><span class="line"><span class="comment"> * k从0开始</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_kth_by_bfprt</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (begin == end)</span><br><span class="line">        <span class="keyword">return</span> arr[begin];</span><br><span class="line">    <span class="keyword">int</span> median = median_of_medians(arr, begin, end); <span class="comment">// 得到用来做划分的数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> ret = partition(arr, begin, end, median); <span class="comment">// 返回的是等于区间的开始位置和结束位置</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (k &gt;= ret[<span class="number">0</span>] &amp;&amp; k &lt;= ret[<span class="number">1</span>]) <span class="comment">// 如果落在等于区间里面</span></span><br><span class="line">        <span class="keyword">return</span> arr[k];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (k &lt; ret[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> get_kth_by_bfprt(arr, begin, ret[<span class="number">0</span>] - <span class="number">1</span>, k);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> get_kth_by_bfprt(arr, ret[<span class="number">1</span>] + <span class="number">1</span>, end, k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/27/C-合成默认构造函数与拷贝构造函数/" rel="next" title="C++合成默认构造函数与拷贝构造函数">
+                <i class="fa fa-chevron-left"></i> C++合成默认构造函数与拷贝构造函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KMP算法"><span class="nav-number">1.</span> <span class="nav-text">KMP算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">1.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Manacher算法"><span class="nav-number">2.</span> <span class="nav-text">Manacher算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理-1"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-1"><span class="nav-number">2.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用-1"><span class="nav-number">2.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BFPRT算法"><span class="nav-number">3.</span> <span class="nav-text">BFPRT算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理-2"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-2"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
