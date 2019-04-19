@@ -109,39 +109,39 @@
   <meta name="description" content="本篇主要复习（学习）了以下内容：  哈希函数与哈希表 并查集 前缀树 贪心策略 递归与动态规划  哈希函数与哈希表哈希函数与哈希表在一般的存储结构（线性表、树等）中，元素在结构中的位置是相对随机的，因此如果要查找某个元素都需要进行一系列和元素的比较，差的时间复杂度在$O(N)$，好的时间复杂度也在$O(logN)$级别。而理想情况下我们想要$O(1)$的时间复杂度，也就是说我们希望得到一个元素能够">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法复习六">
-<meta property="og:url" content="http://yoursite.com/2019/01/18/算法复习六/index.html">
+<meta property="og:title" content="哈希,贪心与动态规划">
+<meta property="og:url" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/index.html">
 <meta property="og:site_name" content="EnochTang">
 <meta property="og:description" content="本篇主要复习（学习）了以下内容：  哈希函数与哈希表 并查集 前缀树 贪心策略 递归与动态规划  哈希函数与哈希表哈希函数与哈希表在一般的存储结构（线性表、树等）中，元素在结构中的位置是相对随机的，因此如果要查找某个元素都需要进行一系列和元素的比较，差的时间复杂度在$O(N)$，好的时间复杂度也在$O(logN)$级别。而理想情况下我们想要$O(1)$的时间复杂度，也就是说我们希望得到一个元素能够">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-509993a49d447b378273e455a095de3c_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-4fab60735dfae0bf511709e9d337789b_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-4ebcb8c23bb64a60896bde87dd546214_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-9cdb1adc37eb1a54c114232120da1485_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-d499324a9aa067915bbb3f5f3416b032_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-0368841e5020dd07f1e67f449b49a1ba_r.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/20150509003807271">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/haffman.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/compute_tree.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_1.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_2.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_3.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_1-1550732637567.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_2-1550733188946.png">
-<meta property="og:image" content="http://yoursite.com/2019/01/18/算法复习六/dp_3-1550734420930.png">
-<meta property="og:updated_time" content="2019-02-21T08:06:34.843Z">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-509993a49d447b378273e455a095de3c_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-4fab60735dfae0bf511709e9d337789b_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-4ebcb8c23bb64a60896bde87dd546214_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-9cdb1adc37eb1a54c114232120da1485_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-d499324a9aa067915bbb3f5f3416b032_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-0368841e5020dd07f1e67f449b49a1ba_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/20150509003807271">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/haffman.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/compute_tree.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_1-1550732637567.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_2-1550733188946.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_3-1550734420930.png">
+<meta property="og:updated_time" content="2019-04-19T01:00:25.300Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法复习六">
+<meta name="twitter:title" content="哈希,贪心与动态规划">
 <meta name="twitter:description" content="本篇主要复习（学习）了以下内容：  哈希函数与哈希表 并查集 前缀树 贪心策略 递归与动态规划  哈希函数与哈希表哈希函数与哈希表在一般的存储结构（线性表、树等）中，元素在结构中的位置是相对随机的，因此如果要查找某个元素都需要进行一系列和元素的比较，差的时间复杂度在$O(N)$，好的时间复杂度也在$O(logN)$级别。而理想情况下我们想要$O(1)$的时间复杂度，也就是说我们希望得到一个元素能够">
-<meta name="twitter:image" content="http://yoursite.com/2019/01/18/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/01/18/算法复习六/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/">
 
 
 
@@ -151,7 +151,7 @@
   };
 </script>
 
-  <title>算法复习六 | EnochTang</title>
+  <title>哈希,贪心与动态规划 | EnochTang</title>
   
 
 
@@ -367,7 +367,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/18/算法复习六/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/18/哈希,贪心与动态规划/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EnochTang">
@@ -384,7 +384,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">算法复习六
+          <h1 class="post-title" itemprop="name headline">哈希,贪心与动态规划
               
             
           </h1>
@@ -426,7 +426,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-21 16:06:34" itemprop="dateModified" datetime="2019-02-21T16:06:34+08:00">2019-02-21</time>
+                <time title="修改时间：2019-04-19 09:00:25" itemprop="dateModified" datetime="2019-04-19T09:00:25+08:00">2019-04-19</time>
               
             
           </span>
@@ -458,8 +458,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/01/18/算法复习六/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/18/算法复习六/" itemprop="commentCount"></span>
+                <a href="/2019/01/18/哈希,贪心与动态规划/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/18/哈希,贪心与动态规划/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -467,7 +467,7 @@
 
           
           
-             <span id="/2019/01/18/算法复习六/" class="leancloud_visitors" data-flag-title="算法复习六">
+             <span id="/2019/01/18/哈希,贪心与动态规划/" class="leancloud_visitors" data-flag-title="哈希,贪心与动态规划">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -534,25 +534,25 @@
 <h2 id="一致性哈希"><a href="#一致性哈希" class="headerlink" title="一致性哈希"></a>一致性哈希</h2><h3 id="使用普通Hash的问题"><a href="#使用普通Hash的问题" class="headerlink" title="使用普通Hash的问题"></a>使用普通Hash的问题</h3><p>假如我们有大量的数据，一台服务器放不下的数据，还有4台服务器。为了利用起来这些服务器，我们决定将每条数据经过hash函数的运算后放置在相应的服务器上，比如采用<code>hash(data) % 4</code>这个函数。这样在查找这些数据时只需要经过同样的哈希运算就能找到存放数据的服务器。</p>
 <p>但是这种普通的hash方式存在问题：假如我们新加入了一台服务器或者有一台服务器失效了，那么所有的数据都需要重新进行哈希！我们应该想办法不让这种情况发生，但是由于上述Hash算法本身的缘故，使用取模法进行缓存时，这种情况是无法避免的，为了解决这些问题，Hash一致性算法（一致性Hash算法）诞生了！</p>
 <h3 id="一致性哈希的神秘面纱"><a href="#一致性哈希的神秘面纱" class="headerlink" title="一致性哈希的神秘面纱"></a>一致性哈希的神秘面纱</h3><p>一致性Hash算法也是使用取模的方法，只是，刚才描述的取模法是对服务器的数量进行取模，而一致性Hash算法是对$2^{32}$取模，什么意思呢？简单来说，一致性Hash算法将整个哈希值空间组织成一个虚拟的圆环，如假设某哈希函数H的值空间为$0$~$2^{32}-1​$（即哈希值是一个32位无符号整形），整个哈希环如下：</p>
-<p><img src="/2019/01/18/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-fd44ab71c834f3fe458a6f76f3997f98_r.jpg" alt="preview"></p>
 <p>整个空间按顺时针方向组织，圆环的正上方的点代表0，0点右侧的第一个点代表1，以此类推，2、3、4、5、6……直到$2^{32}-1$，也就是说0点左侧的第一个点代表$2^{32}-1$， 0和$2^{32}-1$在零点中方向重合，我们把这个由$2^{32}$个点组成的圆环称为Hash环。</p>
 <p>下一步将各个服务器使用Hash进行一个哈希，具体可以选择服务器的IP或主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置，这里假设将上文中四台服务器使用IP地址哈希后在环空间的位置如下：</p>
-<p><img src="/2019/01/18/算法复习六/v2-509993a49d447b378273e455a095de3c_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-509993a49d447b378273e455a095de3c_r.jpg" alt="preview"></p>
 <p>接下来使用如下算法定位数据访问到相应服务器：将数据key使用相同的函数Hash计算出哈希值，并确定此数据在环上的位置，从此位置沿环顺时针“行走”，第一台遇到的服务器就是其应该定位到的服务器！</p>
 <p>例如我们有Object A、Object B、Object C、Object D四个数据对象，经过哈希计算后，在环空间上的位置如下：</p>
-<p><img src="/2019/01/18/算法复习六/v2-4fab60735dfae0bf511709e9d337789b_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-4fab60735dfae0bf511709e9d337789b_r.jpg" alt="preview"></p>
 <p>根据一致性Hash算法，数据A会被定为到Node A上，B被定为到Node B上，C被定为到Node C上，D被定为到Node D上。</p>
 <h3 id="一致性哈希算法的容错性和可扩展性"><a href="#一致性哈希算法的容错性和可扩展性" class="headerlink" title="一致性哈希算法的容错性和可扩展性"></a>一致性哈希算法的容错性和可扩展性</h3><p>现假设Node C不幸宕机，可以看到此时对象A、B、D不会受到影响，只有C对象被重定位到Node D。一般的，在一致性Hash算法中，如果一台服务器不可用，则受影响的数据仅仅是此服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它不会受到影响，如下所示：</p>
-<p><img src="/2019/01/18/算法复习六/v2-4ebcb8c23bb64a60896bde87dd546214_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-4ebcb8c23bb64a60896bde87dd546214_r.jpg" alt="preview"></p>
 <p>下面考虑另外一种情况，如果在系统中增加一台服务器Node X，如下图所示：</p>
-<p><img src="/2019/01/18/算法复习六/v2-9cdb1adc37eb1a54c114232120da1485_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-9cdb1adc37eb1a54c114232120da1485_r.jpg" alt="preview"></p>
 <p>此时对象Object A、B、D不受影响，只有对象C需要重定位到新的Node X ！一般的，在一致性Hash算法中，如果增加一台服务器，则受影响的数据仅仅是新服务器到其环空间中前一台服务器（即沿着逆时针方向行走遇到的第一台服务器）之间数据，其它数据也不会受到影响。</p>
 <p>综上所述，一致性Hash算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。</p>
 <h3 id="一致性哈希算法的数据倾斜问题"><a href="#一致性哈希算法的数据倾斜问题" class="headerlink" title="一致性哈希算法的数据倾斜问题"></a>一致性哈希算法的数据倾斜问题</h3><p>一致性Hash算法在服务节点太少时，容易因为节点分部不均匀而造成数据倾斜（被缓存的对象大部分集中缓存在某一台服务器上）问题，例如系统中只有两台服务器，其环分布如下：</p>
-<p><img src="/2019/01/18/算法复习六/v2-d499324a9aa067915bbb3f5f3416b032_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-d499324a9aa067915bbb3f5f3416b032_r.jpg" alt="preview"></p>
 <p>此时必然造成大量数据集中到Node A上，而只有极少量会定位到Node B上。为了解决这种数据倾斜问题，一致性Hash算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以在服务器IP或主机名的后面增加编号来实现。</p>
 <p>例如上面的情况，可以为每台服务器计算三个虚拟节点，于是可以分别计算 “Node A#1”、“Node A#2”、“Node A#3”、“Node B#1”、“Node B#2”、“Node B#3”的哈希值，于是形成六个虚拟节点：</p>
-<p><img src="/2019/01/18/算法复习六/v2-0368841e5020dd07f1e67f449b49a1ba_r.jpg" alt="preview"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/v2-0368841e5020dd07f1e67f449b49a1ba_r.jpg" alt="preview"></p>
 <p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Node A#1”、“Node A#2”、“Node A#3”三个虚拟节点的数据均定位到Node A上。这样就解决了服务节点少时数据倾斜的问题。在实际应用中，通常将虚拟节点数设置为32甚至更大，因此即使很少的服务节点也能做到相对均匀的数据分布。</p>
 <p>以上参考<a href="https://zhuanlan.zhihu.com/p/34985026" target="_blank" rel="noopener">知乎专栏</a>。</p>
 <h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><h2 id="并查集的数据结构"><a href="#并查集的数据结构" class="headerlink" title="并查集的数据结构"></a>并查集的数据结构</h2><blockquote>
@@ -574,7 +574,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[0, 1, 1, 1, | 1, 0, 1, 1]</span><br><span class="line"> [1, 0, 1, 1, | 1, 1, 0, 1]</span><br><span class="line"> -------------+------------</span><br><span class="line"> [1, 1, 0, 0, | 0, 1, 1, 0]</span><br><span class="line"> [0, 1, 1, 0, | 1, 1, 0, 1]]</span><br></pre></td></tr></table></figure>
 <p>先记录下边界信息（哪些位置处于边界）。每个部分在一台机器上用上面的经典解法来计算岛的个数，并利用并查集的方式合并这些边界。最后再汇总这些信息计算岛的个数。例如上面的矩阵，我们在合并时首先考虑位置<code>[1][0]</code>和位置<code>[2][0]</code>，两个都是1，并且目前不在同一个集合里，那么将这两个位置合并到同一个集合里，岛的数量减1，再考虑<code>[1][1]</code>和<code>[2][1]</code>位置，不是都为1，那么直接下一个……这样一直下去就能得到岛的数量。</p>
 <h1 id="前缀树"><a href="#前缀树" class="headerlink" title="前缀树"></a>前缀树</h1><p><strong>Trie树</strong>，又叫<strong>字典树</strong>、<strong>前缀树（Prefix Tree）</strong>、<strong>单词查找树</strong> 或 <strong>键树</strong>，是一种多叉树结构。如下图：</p>
-<p><img src="/2019/01/18/算法复习六/20150509003807271" alt="img"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/20150509003807271" alt="img"></p>
 <p>上图是一棵Trie树，表示了关键字集合{“a”, “to”, “tea”, “ted”, “ten”, “i”, “in”, “inn”} 。从上图可以归纳出Trie树的基本性质：</p>
 <ol>
 <li>根节点不包含字符，除根节点外的每一个子节点都包含一个字符。</li>
@@ -590,7 +590,7 @@
 <h2 id="切金条"><a href="#切金条" class="headerlink" title="切金条"></a>切金条</h2><p>一块金条切成两半，是需要花费和长度数值一样的铜板的。比如长度为20的金条，不管切成长度多大的两半，都要花费20个铜板。一群人想整分整块金条，怎么分最省铜板？</p>
 <p>例如,给定数组{10,20,30}，代表一共三个人，整块金条长度为10+20+30=60. 金条要分成10,20,30三个部分。如果，先把长度60的金条分成10和50，花费60 再把长度50的金条分成20和30，花费50一共花费110铜板。但是如果先把长度60的金条分成30和30，花费60 再把长度30金条分成10和20，花费30 一共花费90铜板。输入一个数组，返回分割的最小代价。</p>
 <p>这是个标准的哈夫曼编码的问题。最后要得到的结果就是所有的叶结点，合并两个叶结点的代价是两个叶结点加起来的和。最终我们要将所有的叶结点合并成一棵树。比如上面提到的<code>{10, 20, 30}</code>，最后得到的结果就是先合并<code>10</code>和<code>20</code>，得到一个<code>30</code>的父节点，再将这个<code>30</code>的父节点和另外一个<code>30</code>的叶结点合并，得到<code>60</code>这个根节点。最后形成的树就是这个样子：</p>
-<p><img src="/2019/01/18/算法复习六/haffman.png" alt="haffman"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/haffman.png" alt="haffman"></p>
 <p>在实现时我们可以利用小根堆，先将所有的叶结点放入小根堆中，然后每次从小根堆中取出两个最小的节点，将它们合并，再将合并后的节点继续放入小根堆，再取出两个节点……重复这个过程直到小根堆中只剩一个元素。在这个过程中合并时产生的代价的和就是最小代价，代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">less_money</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;ivec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; p_q;  <span class="comment">// 小根堆</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> i : ivec)</span><br><span class="line">		p_q.push(i);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> cur = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (p_q.size() &gt; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cur = p_q.top();</span><br><span class="line">		p_q.pop();</span><br><span class="line">		cur += p_q.top();</span><br><span class="line">		p_q.pop();</span><br><span class="line">		sum += cur;</span><br><span class="line">		p_q.push(cur);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="项目收益最大化"><a href="#项目收益最大化" class="headerlink" title="项目收益最大化"></a>项目收益最大化</h2><p>输入： 参数1，正数数组<code>costs</code> ；参数2，正数数组<code>profits</code>； 参数3，正数<code>k</code>； 参数4，正数<code>m</code></p>
@@ -628,7 +628,7 @@
 </ol>
 <p>还是看上面的两道题目：</p>
 <h3 id="求最小路径和"><a href="#求最小路径和" class="headerlink" title="求最小路径和"></a>求最小路径和</h3><p>我们令$f(m,n)$表示从位置(m, n)到右下角的路径和，则上面的递归版本的计算过程是如下样子的：</p>
-<p><img src="/2019/01/18/算法复习六/compute_tree.png" alt="compute_tree"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/compute_tree.png" alt="compute_tree"></p>
 <p>可以看到，有很多的重复计算，比如$f(1,1)$。这样递归版本的时间复杂度就很高。当然，为了降低复杂度，你可以将已经计算过的值保存下来，比如将$f(1,1)$保存到一个<code>map</code>中，后续用到它的时候直接查就好，这就是记忆化搜索的方式。这里我们介绍动态规划的方式。</p>
 <p>并不是所有有重复计算的递归都能改成动态规划。一个递归方式若要能改成动态规划，还需满足一个条件——无后效性。所谓无后效性，是指如果在某个阶段上过程的状态已知，则从此阶段以后过程的发展变化仅与此阶段的状态有关，而与过程在此阶段以前的阶段所经历过的状态无关。具体到这道题来说就是$f(1,1)$的值和到达$f(1,1)$的路径无关：$f(1,1)$的值只和后面的值有关，而和是通过$f(0,1)$到达$f(1,1)$还是通过$f(1,0)$到达$f(1,1)$无关。在满足了无后效性的条件之后从递归改成动态规划就是一个高度套路化的过程：</p>
 <ol>
@@ -639,21 +639,21 @@
 <p>在这道题中，假设我们的矩阵为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[3, 1, 0, 2],</span><br><span class="line"> [4, 3, 2, 1],</span><br><span class="line"> [5, 2, 1, 0]]</span><br></pre></td></tr></table></figure>
 <p>我们的二维dp表开始时为空（完成了上面所说过程的第一步）：</p>
-<p><img src="/2019/01/18/算法复习六/dp_1.png" alt="dp_1"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_1.png" alt="dp_1"></p>
 <p>随后，我们从代码中可以发现如果<code>(i, j)</code>为<code>(2, 3)</code>时返回值为<code>matrix[2][3] = 0</code>，这就是一个最基本的BaseCase；还有当<code>i = 2</code>（处于最后一行）时返回值应该是矩阵当前位置的值<code>matrix[2][j]</code>加上右边位置的路径和<code>dp[2][j+1]</code>（dp表中右边位置的值）；同理，当<code>j = 3</code>（处于最后一列）时返回值应该是矩阵当前位置的值<code>matrix[i][3]</code>加上下面位置的路径和<code>dp[i+1][j]</code>（dp表中下面的位置）。因此可以如下填充dp表（完成上面所说过程的第二步）：</p>
-<p><img src="/2019/01/18/算法复习六/dp_2.png" alt="dp_2"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_2.png" alt="dp_2"></p>
 <p>最后，观察代码，发现最后的递推逻辑为矩阵的当前值加上当前位置右边和下边路径和的最小值<code>matrix[i][j]+min(dp[i+1][j], dp[i][j+1])</code>。依此填充dp表中的剩余项（完成上面所说过程的第三步）：</p>
-<p><img src="/2019/01/18/算法复习六/dp_3.png" alt="dp_3"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_3.png" alt="dp_3"></p>
 <p>最后，只要取出<code>dp[0][0]</code>处的值就得到了从<code>[0][0]</code>处到右下角的最短路径和。代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">min_path_cost</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> row = matrix.size();</span><br><span class="line">	<span class="keyword">int</span> col = matrix[<span class="number">0</span>].size();</span><br><span class="line">	<span class="comment">// 构造二维dp表</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col; ++j)</span><br><span class="line">			temp.push_back(<span class="number">0</span>);</span><br><span class="line">		dp.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 第一种BaseCase</span></span><br><span class="line">	dp[row - <span class="number">1</span>][col - <span class="number">1</span>] = matrix[row - <span class="number">1</span>][col - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 第二种BaseCase:</span></span><br><span class="line">	<span class="comment">// 1. 最后一行赋值</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = col - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">		dp[row - <span class="number">1</span>][i] = dp[row - <span class="number">1</span>][i + <span class="number">1</span>] + matrix[row - <span class="number">1</span>][i];</span><br><span class="line">	<span class="comment">// 2. 最后一列赋值</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = row - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">		dp[i][col - <span class="number">1</span>] = dp[i + <span class="number">1</span>][col - <span class="number">1</span>] + matrix[i][col - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 最后一步，填充dp表中剩余项</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = row - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = col - <span class="number">2</span>; j &gt;= <span class="number">0</span>; --j)</span><br><span class="line">			dp[i][j] = matrix[i][j] + min(dp[i + <span class="number">1</span>][j], dp[i][j + <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="能否得到目标数字"><a href="#能否得到目标数字" class="headerlink" title="能否得到目标数字"></a>能否得到目标数字</h3><p>我们按照上面同样的思路来分析，递归代码的函数中同样出现了两个变量<code>i</code>和<code>sum</code>。这里<code>i</code>的取值范围为<code>[0, arr.size()]</code>，注意可以取到<code>arr.size()</code>，而<code>sum</code>的取值范围应该是<code>[0, acculate(arr.begin(), arr.end())]</code>，也就是从0到数组累加和。我们同样以下面这个例子来建立dp表：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr = &#123;1, 2, 3&#125;; aim = 5;</span><br></pre></td></tr></table></figure>
 <p>那么我们可以建立如下一张空的二维dp表：</p>
-<p><img src="/2019/01/18/算法复习六/dp_1-1550732637567.png" alt="dp_1"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_1-1550732637567.png" alt="dp_1"></p>
 <p>然后根据BaseCase填充dp表：当<code>i</code>处于最后一行时，只有当<code>sum == aim</code>时为<code>true</code>，其他全为<code>false</code>。填充dp表如下：</p>
-<p><img src="/2019/01/18/算法复习六/dp_2-1550733188946.png" alt="dp_2"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_2-1550733188946.png" alt="dp_2"></p>
 <p>最后是递推过程：<code>dp[i][sum] = dp[i+1][sum] || dp[i+1][sum+arr[i]]</code>。据此来填充dp表：</p>
-<p><img src="/2019/01/18/算法复习六/dp_3-1550734420930.png" alt="dp_3"></p>
+<p><img src="/2019/01/18/哈希,贪心与动态规划/算法复习六/dp_3-1550734420930.png" alt="dp_3"></p>
 <p>最后，返回<code>(0, 0)</code>位置处的值。具体代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">can_sum_to_aim</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr, <span class="keyword">int</span> aim)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 第一步：构造dp表，初始所有元素为false</span></span><br><span class="line">	<span class="keyword">int</span> sum = accumulate(arr.begin(), arr.end(), <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> sz = arr.size();</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">deque</span>&lt;<span class="keyword">bool</span>&gt;&gt; dp;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= sz; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">deque</span>&lt;<span class="keyword">bool</span>&gt; temp;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= sum; ++j)</span><br><span class="line">			temp.push_back(<span class="literal">false</span>);</span><br><span class="line">		dp.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 第二步：根据BaseCase填充dp表</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= sum; ++j)</span><br><span class="line">		dp[sz][j] = (j == aim);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 第三步：根据递推关系填充dp表</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> row = sz - <span class="number">1</span>; row &gt;= <span class="number">0</span>; --row)</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt;= sum; ++col)</span><br><span class="line">			dp[row][col] = dp[row + <span class="number">1</span>][col] || (col + arr[row] &gt; sum ? <span class="literal">false</span> : dp[row + <span class="number">1</span>][col + arr[row]]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码中使用<code>deque&lt;bool&gt;</code>而不是<code>vector&lt;bool&gt;</code>的原因见此：<a href="https://www.cnblogs.com/wpcockroach/p/3179572.html" target="_blank" rel="noopener">说一说vector<bool></bool></a>。</p>
@@ -693,8 +693,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/07/算法复习五/" rel="next" title="算法复习五">
-                <i class="fa fa-chevron-left"></i> 算法复习五
+              <a href="/2019/01/07/二叉树相关/" rel="next" title="二叉树相关">
+                <i class="fa fa-chevron-left"></i> 二叉树相关
               </a>
             
           </div>
