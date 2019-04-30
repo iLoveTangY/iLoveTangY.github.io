@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="单调栈单调栈预热之滑动窗口最大值题目描述见LeetCode滑动窗口最大值。 当然，这道题可以用暴力法求解——对每个窗口遍历求最大值，假设数组长度为$N$，窗口长度为$K$，整体时间复杂度为$O(N\times K)$。但是我们希望找到一种时间复杂度$O(N)$的解法，根据提示，似乎我们可以使用队列来实现。 假设我们能保证队首元素一定是窗口内的最大值这道题就好办了。要做到队首都是窗口内最大值也很简单">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调栈">
+<meta property="og:url" content="http://yoursite.com/2019/04/27/单调栈/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="单调栈单调栈预热之滑动窗口最大值题目描述见LeetCode滑动窗口最大值。 当然，这道题可以用暴力法求解——对每个窗口遍历求最大值，假设数组长度为$N$，窗口长度为$K$，整体时间复杂度为$O(N\times K)$。但是我们希望找到一种时间复杂度$O(N)$的解法，根据提示，似乎我们可以使用队列来实现。 假设我们能保证队首元素一定是窗口内的最大值这道题就好办了。要做到队首都是窗口内最大值也很简单">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556520808051.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556520895663.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556521081915.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556521229680.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556521308987.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556521388974.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556521460425.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556527491230.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556527811359.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556527875387.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/单调栈/1556606883330.png">
+<meta property="og:updated_time" content="2019-04-30T09:20:53.264Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单调栈">
+<meta name="twitter:description" content="单调栈单调栈预热之滑动窗口最大值题目描述见LeetCode滑动窗口最大值。 当然，这道题可以用暴力法求解——对每个窗口遍历求最大值，假设数组长度为$N$，窗口长度为$K$，整体时间复杂度为$O(N\times K)$。但是我们希望找到一种时间复杂度$O(N)$的解法，根据提示，似乎我们可以使用队列来实现。 假设我们能保证队首元素一定是窗口内的最大值这道题就好办了。要做到队首都是窗口内最大值也很简单">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/27/单调栈/1556520808051.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/27/单调栈/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>单调栈 | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/27/单调栈/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单调栈
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-27 16:52:34" itemprop="dateCreated datePublished" datetime="2019-04-27T16:52:34+08:00">2019-04-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-30 17:20:53" itemprop="dateModified" datetime="2019-04-30T17:20:53+08:00">2019-04-30</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/27/单调栈/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/27/单调栈/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/04/27/单调栈/" class="leancloud_visitors" data-flag-title="单调栈">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><h2 id="单调栈预热之滑动窗口最大值"><a href="#单调栈预热之滑动窗口最大值" class="headerlink" title="单调栈预热之滑动窗口最大值"></a>单调栈预热之滑动窗口最大值</h2><p>题目描述见LeetCode<a href="https://leetcode-cn.com/problems/sliding-window-maximum/" target="_blank" rel="noopener">滑动窗口最大值</a>。</p>
+<p>当然，这道题可以用暴力法求解——对每个窗口遍历求最大值，假设数组长度为$N$，窗口长度为$K$，整体时间复杂度为$O(N\times K)$。但是我们希望找到一种时间复杂度$O(N)$的解法，根据提示，似乎我们可以使用队列来实现。</p>
+<p>假设我们能保证队首元素一定是窗口内的最大值这道题就好办了。要做到队首都是窗口内最大值也很简单，我们以<code>[3, 2, 5, 4, 6, 1, 7, 8, 9]</code>，窗口大小3为例。首先创建一个空队列，队列中不光要保存元素的值还要保存元素的索引（如果元素在数组中那么保存索引就够了）。首先将窗口大小个（这里是3个）元素入队，入队过程中要保证队列元素是从大到小的顺序排列：首先将<code>3</code>入队；然后将<code>2</code>入队，因为<code>2</code>小于<code>3</code>，因此<code>2</code>可以直接入队；然后将<code>5</code>入队，<code>5</code>比<code>2</code>大，如果直接入队则不满足从大到小的规则了，因此我们先将<code>2</code>弹出，然后<code>5</code>比<code>3</code>大，<code>3</code>也要弹出，直到队列为空，将<code>5</code>加入队列，此时队列中只有一个元素<code>5</code>。这时窗口大小为3，取出窗口内的最大值也即是队首元素<code>5</code>。如下图：</p>
+<p><img src="/2019/04/27/单调栈/1556520808051.png" alt="1556520808051"></p>
+<p>然后窗口向右移动一位，<code>4</code>进入窗口，加入队列，可以放在<code>5</code>的后面，<code>3</code>移出窗口，由于<code>3</code>不是队首元素，因此队列中元素不会有变化：</p>
+<p><img src="/2019/04/27/单调栈/1556520895663.png" alt="1556520895663"></p>
+<p>窗口内最大值还是下标2处的<code>5</code>。接下来接下来<code>2</code>移出队列，<code>2</code>不为队首元素，队列元素无变化；<code>6</code>加入队列，由于<code>6</code>大于<code>4</code>，<code>4</code>要被弹出，<code>6</code>大于<code>5</code>，<code>5</code>也要被弹出，然后将<code>6</code>加入队列中：</p>
+<p><img src="/2019/04/27/单调栈/1556521081915.png" alt="1556521081915"></p>
+<p>此时窗口内最大值为下标4处的<code>6</code>。接下来窗口继续右移一位，<code>5</code>移出队列，队列元素没有变化，<code>1</code>加入队列，可以直接加到队尾：</p>
+<p><img src="/2019/04/27/单调栈/1556521229680.png" alt="1556521229680"></p>
+<p>此时窗口内最大值继续为下标4处的6。接下来<code>4</code>移出窗口，<code>7</code>加入窗口：</p>
+<p><img src="/2019/04/27/单调栈/1556521308987.png" alt="1556521308987"></p>
+<p>此时窗口内最大值为下标6处的元素<code>7</code>。接下来<code>6</code>移出窗口，<code>8</code>加入窗口：</p>
+<p><img src="/2019/04/27/单调栈/1556521388974.png" alt="1556521388974"></p>
+<p>窗口内最大值为下标7处的<code>8</code>,。接下来<code>1</code>移出窗口，<code>9</code>加入窗口：</p>
+<p><img src="/2019/04/27/单调栈/1556521460425.png" alt="1556521460425"></p>
+<p>窗口内最大值为下标8处的<code>9</code>。然后窗口滑到最右了，结束。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; maxSlidingWindow(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; max_queue;     <span class="comment">// 只需要保存下标即可，不需要保存值</span></span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;  <span class="comment">// 窗口的左右边界</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="keyword">while</span> (right &lt; nums.size())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (!max_queue.empty() &amp;&amp; nums[max_queue.back()] &lt;= nums[right])</span><br><span class="line">            max_queue.pop_back();  <span class="comment">// 弹出栈中所有比当前元素小的</span></span><br><span class="line">        max_queue.push_back(right);</span><br><span class="line">        <span class="keyword">if</span> (right - left + <span class="number">1</span> == k)</span><br><span class="line">        &#123;</span><br><span class="line">            res.push_back(nums[max_queue.front()]);</span><br><span class="line">            <span class="keyword">if</span> (left == max_queue.front())</span><br><span class="line">                max_queue.pop_front();</span><br><span class="line">            left++;</span><br><span class="line">        &#125;</span><br><span class="line">        right++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单调栈预热之子数组最大值减去最小值小于等于NUM的子数组数量"><a href="#单调栈预热之子数组最大值减去最小值小于等于NUM的子数组数量" class="headerlink" title="单调栈预热之子数组最大值减去最小值小于等于NUM的子数组数量"></a>单调栈预热之子数组最大值减去最小值小于等于<code>NUM</code>的子数组数量</h2><p>给定数组<code>arr</code>和整数<code>num</code>，共返回有多少个子数组满足如下情况： $max(arr[i..j])-min(arr[i..j])=num$ $max(arr[i..j])$表示子数组$arr[i..j]$中的最大值，$min(arr[i..j])$表示子数组$arr[i..j]$中的最小值。</p>
+<p>要求：如果数组长度为$N$，请实现时间复杂度为$O(N)$的解法。</p>
+<p>很明显，这道题不指定时间复杂度的话暴力解法就OK了。遍历每个子数组，获取最大值和最小值，再判断是否等于<code>NUM</code>。想想时间复杂度，子数组的个数为$N^2$个，再加上遍历的时间复杂度，整体时间复杂度为$O(N^3)$，这是不能接受的。</p>
+<p>我们可以利用上面提到的滑动窗口内的最大值结构得到一个$O(N)$的解法。我们首先得意识到下面两件事：</p>
+<ol>
+<li>如果一个子数组满足最大值减去最小值等于<code>NUM</code>，那么其内部的所有子数组也都满足条件；</li>
+<li>如果一个子数组已经不满足最大值减去最小值等于<code>NUM</code>了，那么其外部的所有子数组也都不满足条件了。</li>
+</ol>
+<p>这两个条件应该很容易理解。</p>
+<p>有了上面两个条件了，我们就能求解这道题了。我们维护两个双端队列，分别表示当前窗口内的最大值和最小值，然后窗口的左边界从下标0开始，右边界也从下标0开始。首先左边界不动，右边界一直往右增长，一直增长到当前窗口内的最大值减去最小值大于<code>NUM</code>。此时根据条件1和2，我们可以断定窗口内从下标0开始的所有子数组都是满足条件的。然后将窗口的左边界值加1，增长右边界一直到当前窗口内的最大值和最小值不满足条件，同样可以断定窗口内从左边界起的所有子数组都是满足条件的……</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_subarr_num</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; max_q, min_q;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; arr.size())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (!max_q.empty() &amp;&amp; arr[max_q.back()] &lt;= arr[right])</span><br><span class="line">            max_q.pop_back();</span><br><span class="line">        max_q.push_back(right);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!min_q.empty() &amp;&amp; arr[min_q.back()] &gt;= arr[right])</span><br><span class="line">            min_q.pop_back();</span><br><span class="line">        min_q.push_back(right);</span><br><span class="line">        <span class="comment">// 以上为窗口内最大值和最小值的结构更新</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (arr[max_q.front()] - arr[min_q.front()] &gt; num || right == arr.size())</span><br><span class="line">        &#123;</span><br><span class="line">            res += right - left;  <span class="comment">// 直接可以得出以left开头的满足条件的子数组数量</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (left == min_q.front())</span><br><span class="line">                min_q.pop_front();</span><br><span class="line">            <span class="keyword">if</span> (left == max_q.front())</span><br><span class="line">                max_q.pop_front();</span><br><span class="line">            </span><br><span class="line">            left++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (right &lt; arr.size())</span><br><span class="line">            right++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单调栈-1"><a href="#单调栈-1" class="headerlink" title="单调栈"></a>单调栈</h2><p>有了上面的铺垫，我们可以摆出单调栈的原理了。</p>
+<p>假设给定一个数组，我们如何确定离每个数左右两边最近的比它大的值呢？也就是说假设有一个数组<code>[3, 2, 5, 4, 6]</code>，我们如何快速的求出数组每个左右两边最近的比它大的值呢？对于第一个数<code>3</code>来说，左边没有比它大的，右边第一个比它大的是<code>5</code>；对<code>2</code>来说，左边第一个比它大的是<code>3</code>，右边第一个比它大的是<code>5</code>……</p>
+<p>既然标题叫单调栈，肯定是要用到栈的啦。对于这道题，我们维护一个单调递减的栈，将元素数组元素一一压入栈中，当有元素压入不满足单调递减的规则时我们对弹出的元素进行结算。具体过程我们以上面提到的数组为例展示。</p>
+<p>首先，因为栈为空，我们将元素<code>3</code>压入栈中；然后是第二个元素<code>2</code>，因为<code>2</code>比<code>3</code>小，可以直接压入栈中，此时栈中元素如下：</p>
+<p><img src="/2019/04/27/单调栈/1556527491230.png" alt="1556527491230"></p>
+<p>接下来轮到<code>5</code>了，<code>5</code>比<code>2</code>大，如果压入不满足递减的规则，因此要将<code>2</code>弹出，弹出<code>2</code>时我们就能确定<code>2</code>的左右两边离它最近的比它大的元素了：左边离它最近的比它大的元素就是栈中<code>2</code>的下面的元素，右边离它最近的比它大的元素就是导致它弹出的元素<code>5</code>，对<code>3</code>来说也是一样，但是由于<code>3</code>在栈中没有位于它下面的元素，因此<code>3</code>，没有左边离它最近的比它大的元素。压入<code>5</code>后栈中元素如下：</p>
+<p><img src="/2019/04/27/单调栈/1556527811359.png" alt="1556527811359"></p>
+<p>然后压入<code>4</code>，可以直接压入：</p>
+<p><img src="/2019/04/27/单调栈/1556527875387.png" alt="1556527875387"></p>
+<p>然后是<code>6</code>，<code>6</code>的压入导致<code>4</code>和<code>5</code>都被弹出，<code>4</code>的左边离它最近的比它大的元素为<code>5</code>，右边离它最近的比它大的元素为导致它弹出的<code>6</code>；同样，由于栈中<code>5</code>的下面没有元素，因此<code>5</code>没有左边离它最近的比它大的元素，右边离<code>5</code>最近的比它大的元素是导致它弹出的<code>6</code>。最后，再弹出栈中的元素，栈中的所有元素都没有右边离它最近的比它大的，左边离它最近的比它大的都是栈中位于它下面的值。单调栈的具体实现代码参见下面的应用部分。</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="构造数组的MaxTree"><a href="#构造数组的MaxTree" class="headerlink" title="构造数组的MaxTree"></a>构造数组的MaxTree</h3><p>一个数组的MaxTree定义如下：</p>
+<ul>
+<li>数组必须没有重复元素</li>
+<li>MaxTree是一棵二叉树，数组的每一个值对应一个二叉树节点</li>
+<li>包括MaxTree树在内且在其中的每一棵子树上，值最大的节点都是树的根节点</li>
+</ul>
+<p>要求时间复杂度为$O(N)$。</p>
+<p>根据MaxTree的定义，我们很容易想到二叉堆。只要将数组建成一个二叉堆，然后将二叉堆构建成树即可，整体时间复杂度为$O(N)$。</p>
+<p>另外，我们还可以使用单调栈来解这道题。对于一个元素来说，它的父节点一定是左右两边离它最近的比它大的元素中较小的那个，比如有<code>[3, 6, 2, 4, 1]</code>，<code>3</code>的父节点就应该是<code>6</code>，因为<code>3</code>只有<code>6</code>一个离它最近比它大的；<code>2</code>的父节点就应该是<code>4</code>，因为<code>2</code>的左边离它最近的比它大的是<code>6</code>，<code>2</code>的右边离它最近的比它大的是<code>4</code>，较小的是<code>4</code>，因此选择<code>4</code>作为父节点；以此类推……</p>
+<p>为什么这样做可行？首先，如果我们生成的是一棵二叉树，那么一定是满足值最大的节点都是树的根节点这个要求的，因为我们总是将值较小的节点放在值较大的节点的下面。然后，如何证明我们会生成一棵树而不是一个森林？因为数组无重复元素，那么一定只存在一个最大值，其他所有的节点一定都会挂在它的下面，所以除了最大值之外的所有节点都有归属，因此一定只有一个头节点，所以不会形成森林。那么如何证明生成的树一定是个二叉树而不会是多叉树呢？也就是说我们如何证明一个节点最多只有两个孩子？以下图为例，我们可以证明<code>a</code>的左侧最多只有一个节点会挂在<code>a</code>的下面，右侧也最多只有一个节点会挂在<code>a</code>的下面：</p>
+<p><img src="/2019/04/27/单调栈/1556606883330.png" alt="1556606883330"></p>
+<p>我们利用反证法来证明这一点：对于<code>a</code>的右侧，假设会有两个节点<code>b</code>和<code>c</code>挂在<code>a</code>的下面，那么<code>b</code>和<code>c</code>一定都小于<code>a</code>，如果<code>b</code>小于<code>c</code>，根据我们形成树的规则：</p>
+<blockquote>
+<p> 对于一个元素来说，它的父节点一定是左右两边离它最近的比它大的元素中较小的那个。</p>
+</blockquote>
+<p><code>b</code>一定不会挂在<code>a</code>的下面，而是会挂在<code>c</code>的下面（因为<code>c</code>小于<code>a</code>）。同样，如果<code>b</code>大于<code>c</code>，那么<code>c</code>一定不会挂在<code>a</code>的下面，而是会<code>b</code>和<code>c</code>的右边离它最近的比它大的数中较小的那个下面。这样，我们就证明了对于<code>a</code>的右侧一定不会有超过一个节点挂在<code>a</code>的下面，同理，我们也能证明<code>a</code>的左侧也只有一个节点会挂在<code>a</code>的下面。这样，我们形成的树就一定是一棵二叉树。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> val_;</span><br><span class="line">    TreeNode* left_;</span><br><span class="line">    TreeNode* right_;</span><br><span class="line"></span><br><span class="line">    TreeNode(<span class="keyword">int</span> val)</span><br><span class="line">        : val_(val), left_(<span class="literal">NULL</span>), right_(<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">TreeNode* <span class="title">get_max_tree</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, TreeNode*&gt; m;</span><br><span class="line">    <span class="keyword">int</span> max_ele = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// 先遍历一遍，将所有树节点生成出来，并找到最大的元素（根节点）</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        TreeNode* cur_node = <span class="keyword">new</span> TreeNode(arr[i]);</span><br><span class="line">        m[arr[i]] = cur_node;</span><br><span class="line">        max_ele = max(max_ele, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (!s.empty() &amp;&amp; arr[s.top()] &lt; arr[i])</span><br><span class="line">        &#123;   <span class="comment">// 弹出结算</span></span><br><span class="line">            <span class="keyword">int</span> ele_index = s.top();  <span class="comment">// 当前需要结算的元素的索引</span></span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">int</span> min_ele;  <span class="comment">// 当前需要结算的元素的左右两边离它最近的比它大的元素中较小的那个</span></span><br><span class="line">            <span class="keyword">if</span> (s.empty())</span><br><span class="line">                min_ele = arr[i];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                min_ele = min(arr[i], arr[s.top()]);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (m[min_ele]-&gt;left_)</span><br><span class="line">                m[min_ele]-&gt;right_ = m[arr[ele_index]];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                m[min_ele]-&gt;left_ = m[arr[ele_index]];</span><br><span class="line">        &#125;</span><br><span class="line">        s.push(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> ele_index = s.top();</span><br><span class="line">        s.pop();</span><br><span class="line">        <span class="keyword">if</span> (!s.empty())  <span class="comment">// 如果栈中还有元素，表示当前节点有父节点</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (m[s.top()]-&gt;left_)</span><br><span class="line">                m[s.top()]-&gt;right_ = m[arr[ele_index]];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                m[s.top()]-&gt;left_ = m[arr[ele_index]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> m[max_ele];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="直方图中最大矩形"><a href="#直方图中最大矩形" class="headerlink" title="直方图中最大矩形"></a>直方图中最大矩形</h3><p>题目描述见<a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener">柱状图中最大的矩形</a>。</p>
+<p>假设给定数组<code>[2, 1, 5, 6, 2, 3]</code>，我们可以发现实际上我们要找的就是每个数左右两边离它最近的比它小的数，当我们找到这两个数之后我们就能计算出<strong>以当前这个数为高的矩形的最大面积</strong>。这样我们就能将每个数的最大矩形面积求出我们就能求出柱状图中的最大矩形。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; heights)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; heights.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (!s.empty() &amp;&amp; heights[s.top()] &gt; heights[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> height = heights[s.top()];</span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">int</span> right_bound = i;</span><br><span class="line">            <span class="keyword">int</span> left_bound = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">if</span> (!s.empty())</span><br><span class="line">                left_bound = s.top();</span><br><span class="line">            res = max(res, (right_bound - left_bound - <span class="number">1</span>) * height);</span><br><span class="line">        &#125;</span><br><span class="line">        s.push(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> height = heights[s.top()];</span><br><span class="line">        s.pop();</span><br><span class="line">        <span class="keyword">int</span> right_bound = heights.size();</span><br><span class="line">        <span class="keyword">int</span> left_bound = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (!s.empty())</span><br><span class="line">            left_bound = s.top();</span><br><span class="line">        res = max(res, (right_bound - left_bound - <span class="number">1</span>) * height);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用单调栈，时间复杂度为$O(N)$。</p>
+<h3 id="最大矩形"><a href="#最大矩形" class="headerlink" title="最大矩形"></a>最大矩形</h3><p>题目描述见<a href="https://leetcode-cn.com/problems/maximal-rectangle/" target="_blank" rel="noopener">最大矩形</a>。</p>
+<p>这道题还是比较难的。有了上一题，我们可以考虑在整个大矩形中以每一行为底时最大矩形的面积，然后在这些面积中求出最大的面积就得到了结果。如何求以每一行为底的最大矩形的面积呢？可以利用上一题的方法。我们以</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{matrix}
+1 & 0 & 1 & 0 & 0 \\
+1 & 0 & 1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 1 & 0
+\end{matrix}
+\right]</script><p>为例。以第一行为低的矩阵的组大矩形面积的求法很简单，只要将第一行看成是个直方图，然后送入上一题的函数中即可求解。第二行怎么求呢？我们可以想办法将第一行和第二行合并成一行然后送入上题的函数求解，为了合并 第一行和第二行，我们将第一行加到第二行上，加的过程中如果第二行对应位置元素为0，那么合并结果对应位置就直接为0（想想这是为啥）。比如上面的矩阵的一二行的合并结果就为<code>[2, 0, 2, 1, 1]</code>，送入上一题的函数求解，然后将一二行合并结果和第三行合并，得到<code>[3, 0, 3, 2, 2]</code>，然后将其与第四行合并，得到<code>[4, 0, 0, 3, 0]</code>。最后得到结果。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maximalRectangle</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; matrix)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (matrix.size() == <span class="number">0</span> || matrix[<span class="number">0</span>].size() == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; num_matrix(matrix.size(), <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(matrix[<span class="number">0</span>].size()));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.size(); ++i)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix[i].size(); ++j)</span><br><span class="line">            num_matrix[i][j] = matrix[i][j] - <span class="string">'0'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; line(num_matrix[<span class="number">0</span>].size(), <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_matrix.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; num_matrix[i].size(); ++j)</span><br><span class="line">            line[j] = num_matrix[i][j] == <span class="number">0</span> ? <span class="number">0</span> : line[j] + num_matrix[i][j];</span><br><span class="line">        res = max(res, largestRectangleArea(line));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总体时间复杂度为$O(N\times M)$，$N\times M$为矩阵元素个数。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/10/KMP,Manacher,BFPRT算法详解/" rel="next" title="KMP,Manacher,BFPRT算法详解">
+                <i class="fa fa-chevron-left"></i> KMP,Manacher,BFPRT算法详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单调栈"><span class="nav-number">1.</span> <span class="nav-text">单调栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单调栈预热之滑动窗口最大值"><span class="nav-number">1.1.</span> <span class="nav-text">单调栈预热之滑动窗口最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单调栈预热之子数组最大值减去最小值小于等于NUM的子数组数量"><span class="nav-number">1.2.</span> <span class="nav-text">单调栈预热之子数组最大值减去最小值小于等于NUM的子数组数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单调栈-1"><span class="nav-number">1.3.</span> <span class="nav-text">单调栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">1.4.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造数组的MaxTree"><span class="nav-number">1.4.1.</span> <span class="nav-text">构造数组的MaxTree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直方图中最大矩形"><span class="nav-number">1.4.2.</span> <span class="nav-text">直方图中最大矩形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大矩形"><span class="nav-number">1.4.3.</span> <span class="nav-text">最大矩形</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz',
+        appKey: 'm8j90AEPPX5XX9lYPTH2CkkY',
+        placeholder: '真的不说点什么吗？n(*≧▽≦*)n',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz",
+                'X-LC-Key': "m8j90AEPPX5XX9lYPTH2CkkY",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
