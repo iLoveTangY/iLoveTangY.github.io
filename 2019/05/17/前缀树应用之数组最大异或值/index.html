@@ -106,25 +106,25 @@
 
 
 
-  <meta name="description" content="为什么要了解文件系统硬链接与软链接、i node 参考资料 《Unix环境高级编程》第四章">
-<meta name="keywords" content="文件系统">
+  <meta name="description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
+<meta name="keywords" content="前缀树,贪心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unix文件系统基本结构">
-<meta property="og:url" content="http://yoursite.com/2019/05/15/Unix文件系统基本结构/index.html">
+<meta property="og:title" content="前缀树应用之数组最大异或值">
+<meta property="og:url" content="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/index.html">
 <meta property="og:site_name" content="EnochTang">
-<meta property="og:description" content="为什么要了解文件系统硬链接与软链接、i node 参考资料 《Unix环境高级编程》第四章">
+<meta property="og:description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-15T12:51:28.998Z">
+<meta property="og:updated_time" content="2019-05-17T08:36:17.229Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Unix文件系统基本结构">
-<meta name="twitter:description" content="为什么要了解文件系统硬链接与软链接、i node 参考资料 《Unix环境高级编程》第四章">
+<meta name="twitter:title" content="前缀树应用之数组最大异或值">
+<meta name="twitter:description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/15/Unix文件系统基本结构/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/">
 
 
 
@@ -134,7 +134,7 @@
   };
 </script>
 
-  <title>Unix文件系统基本结构 | EnochTang</title>
+  <title>前缀树应用之数组最大异或值 | EnochTang</title>
   
 
 
@@ -350,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/Unix文件系统基本结构/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EnochTang">
@@ -367,7 +367,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Unix文件系统基本结构
+          <h1 class="post-title" itemprop="name headline">前缀树应用之数组最大异或值
               
             
           </h1>
@@ -392,7 +392,7 @@
                 
               
 
-              <time title="创建时间：2019-05-15 19:32:30 / 修改时间：20:51:28" itemprop="dateCreated datePublished" datetime="2019-05-15T19:32:30+08:00">2019-05-15</time>
+              <time title="创建时间：2019-05-17 16:31:04 / 修改时间：16:36:17" itemprop="dateCreated datePublished" datetime="2019-05-17T16:31:04+08:00">2019-05-17</time>
             
 
             
@@ -414,7 +414,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Unix-Linux/" itemprop="url" rel="index"><span itemprop="name">Unix/Linux</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -429,8 +429,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/15/Unix文件系统基本结构/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/15/Unix文件系统基本结构/" itemprop="commentCount"></span>
+                <a href="/2019/05/17/前缀树应用之数组最大异或值/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/17/前缀树应用之数组最大异或值/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -438,7 +438,7 @@
 
           
           
-             <span id="/2019/05/15/Unix文件系统基本结构/" class="leancloud_visitors" data-flag-title="Unix文件系统基本结构">
+             <span id="/2019/05/17/前缀树应用之数组最大异或值/" class="leancloud_visitors" data-flag-title="前缀树应用之数组最大异或值">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -469,10 +469,10 @@
       
 
       
-        <h1 id="为什么要了解文件系统"><a href="#为什么要了解文件系统" class="headerlink" title="为什么要了解文件系统"></a>为什么要了解文件系统</h1><p>硬链接与软链接、i node</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li>《Unix环境高级编程》第四章</li>
-</ul>
+        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>见<a href="https://leetcode-cn.com/problems/maximum-xor-of-two-numbers-in-an-array/" target="_blank" rel="noopener">数组中两个数的最大异或值</a>。</p>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。</p>
+<p>代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;TrieNode*&gt; nexts = &#123;<span class="literal">nullptr</span>, <span class="literal">nullptr</span>&#125;;  <span class="comment">// 0, 1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TrieNode* head = <span class="keyword">new</span> TrieNode();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        TrieNode* cur = head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> move = <span class="number">31</span>; move &gt;= <span class="number">0</span>; move--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> path = ((num &gt;&gt; move) &amp; <span class="number">1</span>);                                                      <span class="comment">// 1, 0  得到第move位上的数字，只能是1或者0</span></span><br><span class="line">            cur-&gt;nexts[path] = cur-&gt;nexts[path] == <span class="literal">nullptr</span> ? <span class="keyword">new</span> TrieNode() : cur-&gt;nexts[path];  <span class="comment">// 如果没有分支，建一个出来</span></span><br><span class="line">            cur = cur-&gt;nexts[path];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回Trie中跟num异或起来最大的和</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">max_xor</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        TrieNode* cur = head;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> move = <span class="number">31</span>; move &gt;= <span class="number">0</span>; --move)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> path = ((num &gt;&gt; move) &amp; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">int</span> best = move == <span class="number">31</span> ? path : (path ^ <span class="number">1</span>);  <span class="comment">// 符号为变0，其它位变1</span></span><br><span class="line">            best = cur-&gt;nexts[best] != <span class="literal">nullptr</span> ? best : (best ^ <span class="number">1</span>);</span><br><span class="line">            res |= (path ^ best) &lt;&lt; move;</span><br><span class="line">            cur = cur-&gt;nexts[best];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMaximumXOR</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = INT_MIN;</span><br><span class="line">        Trie t;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> n : nums)</span><br><span class="line">            t.add(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> n : nums)</span><br><span class="line">            res = max(res, t.max_xor(n));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -496,7 +496,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/文件系统/" rel="tag"># 文件系统</a>
+            <a href="/tags/前缀树/" rel="tag"># 前缀树</a>
+          
+            <a href="/tags/贪心/" rel="tag"># 贪心</a>
           
         </div>
       
@@ -509,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/14/最长子数组问题/" rel="next" title="最长子数组问题">
-                <i class="fa fa-chevron-left"></i> 最长子数组问题
+              <a href="/2019/05/16/数组中异或和为0的子数组/" rel="next" title="数组中异或和为0的子数组">
+                <i class="fa fa-chevron-left"></i> 数组中异或和为0的子数组
               </a>
             
           </div>
@@ -518,10 +520,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/16/数组中异或和为0的子数组/" rel="prev" title="数组中异或和为0的子数组">
-                数组中异或和为0的子数组 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -725,7 +723,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要了解文件系统"><span class="nav-number">1.</span> <span class="nav-text">为什么要了解文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
             
 
           </div>
