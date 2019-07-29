@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] TCP的引入对于UDP或者IP这样的协议来说，他们是不可靠。所谓不可靠就是指当有信息丢失时这两个协议没法处理，丢了就是丢了。于是，对于一些对可靠性有要求的应用来说这两个协议都是不可用的了。正是在这种情况下，出现了可靠的传输层协议——TCP。 我们先考虑下如何才能做到可靠传输？所谓可靠传输无非就是确保接收端一定收到数据，并且收到的一定是发送端发送的数据，也就是说实现可靠传输需要处理两个本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EnochTang">
+<meta property="og:url" content="http://yoursite.com/2019/07/29/TCP详解笔记/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="[TOC] TCP的引入对于UDP或者IP这样的协议来说，他们是不可靠。所谓不可靠就是指当有信息丢失时这两个协议没法处理，丢了就是丢了。于是，对于一些对可靠性有要求的应用来说这两个协议都是不可用的了。正是在这种情况下，出现了可靠的传输层协议——TCP。 我们先考虑下如何才能做到可靠传输？所谓可靠传输无非就是确保接收端一定收到数据，并且收到的一定是发送端发送的数据，也就是说实现可靠传输需要处理两个本">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190725203622.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190725205650.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726190902.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726194928.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726200146.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726200806.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729185639.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729190839.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729191512.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729201657.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729202615.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729205401.png">
+<meta property="og:updated_time" content="2019-07-29T13:15:28.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EnochTang">
+<meta name="twitter:description" content="[TOC] TCP的引入对于UDP或者IP这样的协议来说，他们是不可靠。所谓不可靠就是指当有信息丢失时这两个协议没法处理，丢了就是丢了。于是，对于一些对可靠性有要求的应用来说这两个协议都是不可用的了。正是在这种情况下，出现了可靠的传输层协议——TCP。 我们先考虑下如何才能做到可靠传输？所谓可靠传输无非就是确保接收端一定收到数据，并且收到的一定是发送端发送的数据，也就是说实现可靠传输需要处理两个本">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190725203622.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/29/TCP详解笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/29/TCP详解笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-29 21:16:46 / 修改时间：21:15:28" itemprop="dateCreated datePublished" datetime="2019-07-29T21:16:46+08:00">2019-07-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/29/TCP详解笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/29/TCP详解笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/29/TCP详解笔记/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="TCP的引入"><a href="#TCP的引入" class="headerlink" title="TCP的引入"></a>TCP的引入</h1><p>对于UDP或者IP这样的协议来说，他们是不可靠。所谓不可靠就是指当有信息丢失时这两个协议没法处理，丢了就是丢了。于是，对于一些对可靠性有要求的应用来说这两个协议都是不可用的了。正是在这种情况下，出现了可靠的传输层协议——TCP。</p>
+<p>我们先考虑下如何才能做到可靠传输？所谓可靠传输无非就是确保接收端一定收到数据，并且收到的一定是发送端发送的数据，也就是说实现可靠传输需要处理两个本质问题：</p>
+<ul>
+<li>接收方是否已经接收到分组？</li>
+<li>接收方接收到的是不是之前发送的分组？</li>
+</ul>
+<p>如何解决第一个问题？也就是如何发送方如何判断接收方已经接收到分组了呢？很显然，我们可以让接收方在接收到我们发送过去的分组之后回复一个收到的消息，发送方等待接收方回复的确认消息。这种方法称为确认(Acknowledgment)，也就是ACK。然而这又会引入几个问题：(1)发送方对于一个ACK应该等待多长时间？(2)如果ACK丢失了该怎么办？(3)如果分组被接收到了，但是里面有错怎么办？第一个问题其实挺深奥的，正如我们即将看到的，如果等待时间过长，就会降低吞吐量，但如果等待时间过短，又会增加不必要的传输。至于第二个问题，如果一个ACK丢失了，发送方当然没办法简单的区分到底是发送过去的数据丢失还是对方发过来的ACK丢失，因此发送方就直接重发分组就好，这样我们就来到了第二个问题。</p>
+<p>第二个问题其实比较好解决。只要我们发送的分组都带上序列号即可，接收方就能判断是否接收到了重复的分组或者是漏掉了分组。</p>
+<h1 id="TCP连接的建立与终止"><a href="#TCP连接的建立与终止" class="headerlink" title="TCP连接的建立与终止"></a>TCP连接的建立与终止</h1><p>在介绍TCP其他知识前我们先要知道一个TCP连接是怎么建立起来的，又是怎么终止的。一个TCP连接通常由一个4元组构成，分别是两个IP地址与两个端口号，其中通信的每一端都由一对（IP地址，端口号）所唯一标识。</p>
+<p>一个TCP连接通常分为3个阶段：启动、数据传输和终止。接下来我们重点看看启动和终止阶段。</p>
+<h2 id="TCP连接的建立——三次握手"><a href="#TCP连接的建立——三次握手" class="headerlink" title="TCP连接的建立——三次握手"></a>TCP连接的建立——三次握手</h2><p>不管熟不熟悉TCP，想必三次握手与四次挥手一定是听过的。所谓三次握手就是指TCP连接建立时要客户端和服务端总共要发送三个数据包。但是这三个数据包是怎样发送的？建立一条TCP连接是否一定是发送三个数据包呢？接下来我们就来一一探究这两个问题。</p>
+<p>首先是三次握手的过程，如下图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190725203622.png" alt="三次握手过程"></p>
+<p>为了建立一个TCP连接，需要完成以下步骤：</p>
+<ol>
+<li>主动开启者（客户端）发送一个SYN报文段（即在TCP头部中将SYN选项置位），并且携带着客户端的初始序列号（Seq=ISN(c)）。</li>
+<li>服务端也会发送自己的SYN报文段，并且携带着服务端的初始序列号（Seq=ISN(s)），此外，这个数据包中还包含着对客户端SYN报文段的确认（ACK）。</li>
+<li>为了确认服务器的SYN，客户端还需要发送一个对这个报文段的ACK。</li>
+</ol>
+<p>至此，一个连接就完整的建立起来，接下来就可以双向的通过此连接传输数据了。我们先想想，<strong>为什么需要三次握手？</strong>为什么不是两次或者四次握手？</p>
+<p>三次握手的目的是什么？是为了交换一些必要的信息，比如客户端与服务端各自的初始序列号等等。如果采用两次握手，少了客户端发给服务器的最后的那个ACK，那么服务器就没办法确认客户端一定收到了服务端发过去的序列号信息，这样就不能说一个连接已经建立，起码服务器到客户端的连接不一定建立起来了。如果采用四次握手，那么只能将第二个数据包，也就是服务器发送给客户端的SYN+ACK拆成两个来发送，但是这是完全没必要的，因为TCP是一个双向的连接，建立时不允许建立单向的连接，服务器收到一个SYN时就一定需要同样给客户端发送一个请求建立连接的SYN报文（在允许建立连接的情况下），那么服务端就可以将对客户端的ACK确认报文和自己的请求建立连接的SYN报文合并在一起发送，这样能够减少一个数据包的流量，减少网络开销。后面我们会看到，四次挥手之所以是四次，就是因为TCP允许终止一端的连接。</p>
+<p>还记得我们上面的提问吗：建立一条TCP连接是否一定是发送三个数据包呢？</p>
+<p>答案是不一定。在TCP连接的建立过程中存在一种情况：同时打开。虽然两个应用程序同时主动打开连接看起来似乎不大可能，但是在特定的情况下是可以实现的：通信的双方在接收到对方发来的SYN报文段之前必须先发送一个SYN，两个SYN必须经过网络送达对方，并且通信双方都要拥有一个IP地址与端口号，并将其告知对方。上述情况非常少见，但是一旦发生，就可以称为<strong>同时打开</strong>:</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190725205650.png" alt="TCP同时打开"></p>
+<p>我们看到，在这种情况下总共需要传输四个数据包而不是三个（或许可以称之为四次握手？O(∩_∩)O）。注意，在上述过程中，两端的初始序列号被传送了两次。</p>
+<p>这里我们就介绍完了TCP连接建立的过程，但是还有一些概念需要我们厘清。</p>
+<ul>
+<li>SYN报文段：连接建立时发送的SYN字段被置位的报文段，需要占用一个序列号。</li>
+<li>纯ACK报文段：单纯是为了回复发送端数据已收到的报文段，不占用序列号。</li>
+<li>占用序列号的报文段会有计时器，超时如果没有收到确认，则会重传，不占用序列号的报文段没有计时器，不会超时重传。</li>
+</ul>
+<p>当我们知道了这几个概念之后那么问题又来了，如果第三个数据包，也就是那个纯ACK数据包丢失了会怎样？</p>
+<p>我们分两种情况来分析，首先如果服务端一直没有收到客户端发过来的ACK或者任何数据包，那么服务端维持的对于第二个SYN+ACK的计时器就会超时，最终会导致重传第二个包。但是，如果在超时之前服务端收到了客户端发过来的数据，那么服务端就能知道客户端实际上已经收到了我发送的SYN+ACK，只是我没有收到ACK而已，这样同样可以建立连接。</p>
+<h2 id="TCP连接的终止——四次挥手"><a href="#TCP连接的终止——四次挥手" class="headerlink" title="TCP连接的终止——四次挥手"></a>TCP连接的终止——四次挥手</h2><p>接下来，我们来看看一个TCP连接是如何终止的。同样先看图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726190902.png" alt="TCP连接的终止"></p>
+<p>注意，上图有点错误，最后那个ACK的Seq应该是K+1。</p>
+<p>整体流程如下：</p>
+<ol>
+<li>连接的主动关闭者发送一个FIN报文段指明自己想要关闭自己这端的连接，序号为K，同时注意，这个FIN报文段还携带了对上次数据的ACK，确认号为L；</li>
+<li>连接的被动关闭者将K+1作为响应的ACK值，表明成功接收到了主动关闭者发送的FIN，此时上层的应用程序会被告知连接的另一端已经提出了关闭的请求（通常是read返回0）；</li>
+<li>接着，连接的被动关闭者将身份转变为主动关闭者，并发送自己的FIN，注意，该报文的序列号为L，和之前的ACK序列号相同，说明ACK不占序列号；</li>
+<li>为了连接的关闭，最后会发送一个ACK用于确认上一个FIN，序列号应该为K+1而不是K。</li>
+</ol>
+<p>如之前所说，关闭一个TCP连接需要四个报文段，这主要是因为TCP是一个双向的连接，允许半关闭这种状态存在，也就是说当被动关闭者接收到主动关闭者发来的FIN之后并且作出ACK回复之后，被动关闭者在发出FIN之前还能够发送数据，它收到的那个FIN只是表示主动关闭方不打算再发送数据了，但是被动关闭者这端还是可以继续发送数据的。如下图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726194928.png" alt="TCP半关闭操作"></p>
+<h2 id="TCP状态转换图"><a href="#TCP状态转换图" class="headerlink" title="TCP状态转换图"></a>TCP状态转换图</h2><p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726200146.png" alt="TCP状态转换图"></p>
+<p>看上去很复杂，其实主要就是如下的几种状态之间的转换：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190726200806.png" alt="正常的几种状态转换"></p>
+<p>这些状态中最重要的就是TIME_WAIT状态，几乎是面试考试必考。当主动关闭这方发完自己的FIN，收到对方的ACK，并且收到对方的FIN之后就会进入TIME_WAIT状态。在该状态中，TCP将会等待两倍于最大段生存期（Maximum Segment Lifetime, MSL）的时间，然后再进入CLOSED状态。</p>
+<p>TIME_WAIT的存在主要有两个原因：</p>
+<ul>
+<li>优雅的关闭TCP连接，让TCP能够重传最终的ACK以避免出现丢失的情况。注意，重新发送最终的ACK并不是因为TCP重传了ACK（还记得吗？它们不消耗序列号，因此也不会被重传），而是因为通信的另一端重传了它的FIN（FIN是消耗序列号的）。</li>
+<li>处理延迟的重复报文。避免前后两个使用相同四元组（两端的(IP地址，端口号)）的连接中传输的报文受到干扰。</li>
+</ul>
+<p>第一个原因很好理解，那么第二个原因是什么意思呢？我们知道TCP是通过IP地址和端口号的四元组来区分一条TCP连接的，如果一段关闭一个TCP连接后又马上通过同样的IP地址与端口号建立了连接，那么这个新的连接不应该受到上一个连接的干扰，但是如果上一个连接中的报文延迟到新的连接建立后才到达，那么就会对新的连接产生干扰。为了防止这种干扰，TCP规定处于TIME_WAIT状态中的端口是不可用的，只有在TIME_WAIT状态结束后才能复用这个端口。那为什么又是两个MSL而不是一个或者三个呢？这2个MSL中的第一个MSL是为了等自己发出去的最后一个ACK从网络中消失，而第二MSL是为了等在对端收到ACK之前的一刹那可能重传的FIN报文从网络中消失。</p>
+<h1 id="TCP超时与重传"><a href="#TCP超时与重传" class="headerlink" title="TCP超时与重传"></a>TCP超时与重传</h1><p>在最开始时我们提到，TCP通过确认报文段（ACK）来确保接收端已经收到了发送端的数据，当数据丢失时，TCP启动重传操作，重传尚未确认的数据。TCP拥有两套独立的机制来完成重传，一是基于时间，二是基于确认信息的构成。第二种方法通常比第一种更加高效。</p>
+<p>TCP在发送数据时会设置一个计时器，若至计时器超时仍为收到数据确认消息，则会引发相应的超时或者基于计时器的重传操作，计时器超时成为重传超时（RTO），另一种方式的重传称为快速重传，通常发生在没有延时的情况下。接下来我们就比较详细的介绍下这两种重传操作。</p>
+<h2 id="简单的超时重传"><a href="#简单的超时重传" class="headerlink" title="简单的超时重传"></a>简单的超时重传</h2><p>首先是RTO，TCP会为窗口内的每个数据包维护一个定时器，当定时器到期并且没有收到对这个包的确认信息（ACK）时，会重传这个数据包（注意累积ACK机制）。当然，不会无限制的重传下去，在操作系统中有选项可以设置最大重试次数。这个过程非常的清晰明了，唯一的难点在于如何设置重传时间。如果TCP先于RTT开始重传，可能会在网络中引入不必要的重复数据，反之，若延迟至远大于RTT的间隔重传数据，整体网络利用率就会随之下降。由于RTT的测量比较复杂，根据网络资源的不同，它会随时间变化，TCP必须跟踪这些变化并作出调整来维持好的性能。关于如何设置重超时值的研究有很多，这里不再介绍。</p>
+<p>对了，在重传的过程中会使用二进制指数退避算法，也就是说对同一个数据段的超时值会越来越大，对于同一个数据包，第一次超时值可能为两分钟后，当这个数据包再次超时时超时值就会设置为四分钟，如此类推。</p>
+<h2 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h2><p>快速重传机制基于接收端的反馈信息来引发重传，而非重传计时器的超时。因此与超时重传相比，快速重传能够更有效地修复丢包情况。一般来说TCP会同时使用这两种重传机制。</p>
+<p>当有失序的数据到达时，接收端应该立即生成一个重复的ACK（对之前到达的数据的确认），不能延时发送。重复ACK的到达就告诉发送端报文失序或者丢失，当有多个重复的ACK到达时，一般是出现了丢包，因此发送端应该立即重传丢失的数据。</p>
+<p>快速重传算法可概括如下：TCP发送段在接收到至少dupthresh个重复的ACK后，即立马重传可能丢失的数据分组，而不必等到重传计时器超时。由于重复ACK推断的丢包通常和网络拥塞有关，因此快速重传一般会出发拥塞控制机制。</p>
+<h1 id="TCP窗口管理"><a href="#TCP窗口管理" class="headerlink" title="TCP窗口管理"></a>TCP窗口管理</h1><h2 id="延时确认"><a href="#延时确认" class="headerlink" title="延时确认"></a>延时确认</h2><p>在许多情况下，TCP并不对每个到来的数据包都返回ACK，利用TCP的累积确认机制可以允许TCP延迟一段时间发送ACK，以便将ACK和相同方向上需要发送的数据结合发送，这样能显著减少ACK的传输数目，可以一定程度的减轻网络负担。显然，TCP不能任意时长的延时ACK；否则会被对方误认为数据丢失而出现不必要的重传。实践中延时的最大值一般取200ms。Linux中采用了一种动态算法，可以在每个报文段返回一个ACK（称为“快速确认”模式）与传统延时ACK模式间互相切换。</p>
+<h2 id="Nagle算法"><a href="#Nagle算法" class="headerlink" title="Nagle算法"></a>Nagle算法</h2><p>我们知道，不论传输的数据量是大还是小，TCP头部开销和IP头部开销都是免不了的。当我们每次传输的数据很小（比如只有一个字节）时，这些小包（称为微型报）会造成相当高的传输代价。就是说与包的其他部分相比，有效的应用数据所占比例甚微，对广域网来说会加重拥塞，严重影响网络性能。John Nagle提出了一种简单有效的解决方法，称为Nagle算法。</p>
+<p>Nagle算法要求，当一个TCP连接中有在传数据（即那些已经发送但还未经确认的数据），小的报文段（长度小于MSS）就不能被发送，知道所有在传数据都受到ACK。并且，在收到ACK后，TCP需要收集这些小数据，将其整合到一个报文段中发送。该算法的精妙之处在于它实现了自时钟控制：ACK返回越快，数据传输也越快。在相对高延迟的广域网中，更需要减少微型报的数量。Nagle算法做出了一种折中：传输的包数目更少，但是同时传输时延也更长。</p>
+<p>如果将延时确认和Nagle算法直接结合起来使用结果可能会出问题。见下图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729185639.png" alt="延时ACK与Nagle结合"></p>
+<p>从图中可以看到，在接收到来自服务端的两个包以后，客户端并不立即发送ACK，而是处于等待状态，希望有数据能够一同捎带发送（延时确认机制）。而在服务端，由于采用了Nagle算法，直到收到ACK前都不能发送新的数据。这就是说，延时确认机制与Nagle算法的结合导致了某种程度的死锁。幸运的是，这种死锁在延时ACK计时器超时后就会接触，但是无疑，这样会是网络性能变差。因此，在某些情况下，我们可以禁用Nagle算法。</p>
+<h2 id="窗口管理"><a href="#窗口管理" class="headerlink" title="窗口管理"></a>窗口管理</h2><p>每个TCP头部的窗口字段表明接收端可用缓存空间大小，以字节为单位。TCP连接的每一端都可发送数据。连接的收发数据量是通过一组窗口结构来维护的。每个TCP连接的两端都维护一个发送窗口结构（send window structure）和一个接收窗口结构（receive window structure）。下图展示了一个假设的TCP发送窗口结构：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729190839.png" alt="发送窗口结构"></p>
+<p>要注意，TCP是以字节（而不是包）为单位维护其窗口结构。发送段计算其可用窗口大小，即它可以立即发送的数据量。可用串口计算值为提供串口大小减去在传（已发送但未收到确认）的数据值。在上图中就是$SND.UNA+SND.WND-SND.NXT$。</p>
+<p>每个TCP报文段中都包含ACK号和窗口通告信息，TCP发送段可以据此调节窗口结构。窗口的左边界不可能左移。当窗口的左右边界相等时，我们称之为零窗口，此时发送端不能再发送数据，这种情况下需要窗口探测机制发挥作用。</p>
+<p>接收端也维护一个接收窗口，但是结构比较简单：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729191512.png" alt="TCP接收窗口"></p>
+<p>比较简单，在此不做赘述。</p>
+<h2 id="零窗口探测机制与TCP持续计时器"><a href="#零窗口探测机制与TCP持续计时器" class="headerlink" title="零窗口探测机制与TCP持续计时器"></a>零窗口探测机制与TCP持续计时器</h2><p>如果接收端接收缓存已经占满，接收端会通告发送端不能再发送数据，但是如果之后接收端缓存中的数据已经被处理，并且接收端没有数据发送，发送端如何知道自己可以继续发送数据？这样不就会一直处于等待状态？</p>
+<p>为了解决这个问题，当接收端重新获得可用空间时，会给发送端传输窗口更新，告知其可继续发送数据。这样窗口更新通常都不含任何数据（纯ACK），不能保证传输的可靠性。如果一个包含窗口更新的ACK丢失，通信双方就会一直处于等待状态：接收放等待接收数据（已经将窗口设置为非零值），发送放等待收到窗口更新告知其可继续发送。为防止这种死锁的发生，发送端会采用一个持续计时器间歇性地查询接收端，看其窗口是否已经增长。持续计时器会触发窗口探测（window probe）的传输，强制要求接收端发挥ACK（其中包含了窗口大小字段）。窗口探测包含一个字节数据，采用TCP可靠传输（丢失重传），因此可以避免由窗口更新丢失导致的死锁。当TCP持续计时器超时，就会触发窗口探测的发送。</p>
+<h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>路由器因无法处理高速率到达的流量而被迫丢弃数据信息的现象成为拥塞（路由器缓存空间有限）。当路由器处于上述状态时，我们就说出现了拥塞。当出现了拥塞时，若不采取对策，网络性能将大受影响，在最坏情况下，甚至形成拥塞崩溃。为了避免或者在一定程度上环节这种情况，TCP通信的<strong>每一方</strong>实行拥塞控制机制。</p>
+<h2 id="拥塞检测与拥塞窗口"><a href="#拥塞检测与拥塞窗口" class="headerlink" title="拥塞检测与拥塞窗口"></a>拥塞检测与拥塞窗口</h2><p>如前所述，针对丢包情况，TCP所采取的操作是重传，包括超时重传和快速重传。但是当网络处于拥塞状态时，公用一条网络传输路径的多个TCP连接却需要重传更多的数据包，这就好比“火上浇油”，结果只会更糟。</p>
+<p>当拥塞状况出现（或者将要出现）时，我们应该减缓TCP的发送速率，若拥塞情况有所缓解，再检测并使用新的带框。然而这是不可能做到，因为对于TCP发送方来说没有办法知晓一个中间路由器的状态。我们只能尽量像这种状态靠近。</p>
+<p>在TCP中，丢包被用作判断拥塞发生与否的指标，通常来衡量是否实施相应的措施，一般是以某种方式减缓发送。这样又存在一个新的问题，如何减缓TCP发送。之前提到，通过接收窗口和发送窗口来控制发送速率，同样，我们可以引入一个窗口控制变量，确保发送窗口大小不超过接收端接受能力和网络传输能力。</p>
+<p>反应网络传输能力的变量成为拥塞窗口（congestion window），记作cwnd。因此，发送端实际可用窗口就是接收端通知窗口awnd和拥塞窗口cwnd的较小者：</p>
+<script type="math/tex; mode=display">W=min(cwnd, awnd)</script><p>也就是说，TCP发送端发送的数据中，没有收到ACK回复的数据量不能超过W。</p>
+<h2 id="一些经典算法"><a href="#一些经典算法" class="headerlink" title="一些经典算法"></a>一些经典算法</h2><p>当一个TCP连接建立之初，还无法获知可用的传输资源，所以cwnd的初始值也无法确定。显而易见，获得cwnd的最佳值的唯一方式就是以越来越快的速率不断发送数据，直到出现数据包丢失（或网路拥塞）为止。接下来，我们讨论一些控制拥塞窗口的经典算法。</p>
+<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>当一个新的TCP连接建立或检测到由于重传超时（RTO）导致的丢包时，需要执行慢启动。TCP发送端长时间处于空闲状态也有可能调用慢启动算法。慢启动的目的是帮助TCP用拥塞避免谭旭更多可用带宽之前得到cwnd值。通常，TCP在建立新连接时执行慢启动，直至有丢包发生时执行拥塞避免算法进入稳定状态。</p>
+<p>TCP以发送一定数目的数据段开始慢启动（在SYN交换之后），成为初始窗口（Initial Window，IW）。IW的值一般设置为一个SMSS（发送方最大段大小）。每收到一个好的ACK响应，慢启动算法会以$min(N, SMSS)$来增加cwnd的值。这里的N是指未经确认的传输数据能通过这一“好的ACK”确认的字节数。所谓“好的ACK”是指新接收到的ACK号大于之前接收到ACK。</p>
+<p>因此，在接收到一个数据段的ACK之后，通常cwnd值会增加到2，接着会发送两个数据包，如果成功接收到相应的ACK，cwnd会由2变4，由4变8，以此类推。这种增长看似很快，但是与一开始就用最大可用速率发送相比，仍显缓慢。下图描述了一个典型的慢启动操作：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729201657.png" alt="慢启动算法"></p>
+<h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>在慢启动阶段，cwnd会快速增长，帮助确立一个慢启动阈值。一旦到达阈值，就意味着可能有更多可用的传输资源。如果立即全部占用这些资源，将会使共享路由器队列的其他连接出现严重的丢包和重传情况，从而影响整个网络的稳定性。</p>
+<p>为了得到更多的传输资源而不影响其他的连接，TCP实现了拥塞避免算法。一旦建立慢启动阈值，TCP会进入拥塞避免阶段。在这个阶段中，cwnd的每次增长近似于成功传输数据段大小。这种方式比慢启动的指数增长缓慢许多。准确的说，每收到一个ACK，cwnd会做如下更新：</p>
+<script type="math/tex; mode=display">cwnd_{t+1}=cwnd_t+SMSS*SMSS/cwnd_t</script><p>随着每个ACK的到达，cwnd会有小幅度的增长，我们一般认为慢启动阶段的窗口呈指数增长，而慢启动阶段的窗口随时间线性增长。这个函数也称为累加增长，因为每次接收到一个窗口内的所有数据，cwnd都会增加一个特定值（大约为一个包的大小），如下图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729202615.png" alt="拥塞避免算法"></p>
+<h3 id="快速恢复"><a href="#快速恢复" class="headerlink" title="快速恢复"></a>快速恢复</h3><p>在最早的TCP Tahoe中，只采用了慢启动和拥塞避免算法。它在连接之初处于慢启动阶段，到达阈值ssthresh后进入拥塞避免阶段，若检测到丢包，不论是因为超时还是快速重传，都会重新进入慢启动状态。在有丢包的情况下，Tahoe简单的将cwnd减为初始值（1 SMSS）以达到慢启动的目的，直至cwnd增长值ssthresh。但是这样对于有着较大的传输速率的链路来说利用率还是太低。这对这种情况提出了快速恢复机制。</p>
+<p>针对不同的情况，重新考虑是否需要重回慢启动状态。当收到3个重复ACK时，TCP不是直接进入慢启动阶段，而是快速恢复阶段。快速重传和快速恢复算法一般同时使用。快速恢复的思想是“数据包守恒”原则，即同一个时刻在网络中的数据包数量是恒定的，只有当“老”数据包离开了网络后，才能向网络中发送一个“新”的数据包，如果发送方收到一个重复的ACK，那么根据TCP的ACK机制就表明有一个数据包离开了网络，于是cwnd加1。如果能够严格按照该原则那么网络中很少会发生拥塞，事实上拥塞控制的目的也就在修正违反该原则的地方。这种方法最早应用于TCP Reno中，因此称为TCP Reno。</p>
+<p>快速恢复的主要步骤如下：</p>
+<p>1.当收到3个重复ACK时，把ssthresh设置为cwnd的一半，把cwnd设置为ssthresh的值加3，然后重传丢失的报文段，加3的原因是因为收到3个重复的ACK，表明有3个“老”的数据包离开了网络；</p>
+<p>2.再收到重复的ACK时，拥塞窗口增加1；</p>
+<p>3.当收到新的数据包的ACK时，把cwnd设置为第一步中的ssthresh的值。原因是因为该ACK确认了新的数据，说明从重复ACK时的数据都已收到，该恢复过程已经结束，可以回到恢复之前的状态了，也即再次进入拥塞避免状态。</p>
+<h2 id="TCP拥塞控制的整体流程"><a href="#TCP拥塞控制的整体流程" class="headerlink" title="TCP拥塞控制的整体流程"></a>TCP拥塞控制的整体流程</h2><p>介绍了上面三个算法后，就是在那个阶段选择哪个算法的问题了。前面我们提到了慢启动阈值ssthresh，这个值和cwnd的关系是决定采用慢启动还是拥塞避免的界限。当$cwnd<ssthresh$时采用慢启动算法；当$cwnd>ssthresh$时采用拥塞避免；当两者相等时，任何一种都可以使用。慢启动和拥塞避免之间的最大区别在于当新的ACK到达时，cwnd怎样增长。有趣的是，慢启动阈值不是固定的，而是随时间改变的。它的主要目的是在没有丢包发生的情况下，记住上一次“最好的”操作窗口估计值。换而言之，它记录的是TCP最右窗口估计值的下界。当有重传发生时（不论是超时重传还是快速重传），会将慢启动阈值减小至当前窗口大小的一半，从而减小最优窗口估计值。</ssthresh$时采用慢启动算法；当$cwnd></p>
+<p>总结TCP拥塞控制的三种经典算法，TCP拥塞控制的过程如下图：</p>
+<p><img src="/2019/07/29/TCP详解笔记/TCP/深度截图_选择区域_20190729205401.png" alt="TCP拥塞控制"></p>
+<ul>
+<li>一开始，我们初始化一个慢启动阈值ssthresh，一半初始化为awnd，即接收窗口大小。设置cwnd为1 SMSS。TCP进入慢启动状态，每接收到一个ACK，cwnd的值增加一个SMSS；</li>
+<li>当cwnd值超过ssthresh时，进入拥塞避免状态，每接收到一个窗口内的所有ACK后cwnd的值增加大约一个SMSS；</li>
+<li>无论在慢启动阶段还是在拥塞控制阶段，只要网络出现超时，就是将cwnd置为1 SMSS，ssthresh置为cwnd的一半，然后重新开始执行慢启动算法（cwnd&lt;ssthresh）；</li>
+<li>但是当收到三个重复ACK时（或者其它表明需要快速重传的信号）时，就直接进入快速恢复阶段：将ssthresh设置为cwnd的一半，再将cwnd设置为ssthresh+3×SMSS，接下来每收到一个重复的ACK就将cwnd增加一个SMSS，当收到一个好的ACK之后，将cwnd重置为目前的ssthresh，然后进入拥塞避免阶段。</li>
+</ul>
+<p>到这里这个TCP拥塞控制的流程就结束了。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>TCP/IP详解 卷1：协议</li>
+<li>CSDN博客<a href="https://blog.csdn.net/shuxnhs/article/details/80644531" target="_blank" rel="noopener">一</a>、<a href="https://blog.csdn.net/shuxnhs/article/details/80644531" target="_blank" rel="noopener">二</a></li>
+<li>还有很多……</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/17/前缀树应用之数组最大异或值/" rel="next" title="前缀树应用之数组最大异或值">
+                <i class="fa fa-chevron-left"></i> 前缀树应用之数组最大异或值
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的引入"><span class="nav-number">1.</span> <span class="nav-text">TCP的引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP连接的建立与终止"><span class="nav-number">2.</span> <span class="nav-text">TCP连接的建立与终止</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接的建立——三次握手"><span class="nav-number">2.1.</span> <span class="nav-text">TCP连接的建立——三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接的终止——四次挥手"><span class="nav-number">2.2.</span> <span class="nav-text">TCP连接的终止——四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP状态转换图"><span class="nav-number">2.3.</span> <span class="nav-text">TCP状态转换图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP超时与重传"><span class="nav-number">3.</span> <span class="nav-text">TCP超时与重传</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的超时重传"><span class="nav-number">3.1.</span> <span class="nav-text">简单的超时重传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速重传"><span class="nav-number">3.2.</span> <span class="nav-text">快速重传</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP窗口管理"><span class="nav-number">4.</span> <span class="nav-text">TCP窗口管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#延时确认"><span class="nav-number">4.1.</span> <span class="nav-text">延时确认</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nagle算法"><span class="nav-number">4.2.</span> <span class="nav-text">Nagle算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口管理"><span class="nav-number">4.3.</span> <span class="nav-text">窗口管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零窗口探测机制与TCP持续计时器"><span class="nav-number">4.4.</span> <span class="nav-text">零窗口探测机制与TCP持续计时器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">5.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞检测与拥塞窗口"><span class="nav-number">5.1.</span> <span class="nav-text">拥塞检测与拥塞窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些经典算法"><span class="nav-number">5.2.</span> <span class="nav-text">一些经典算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#慢启动"><span class="nav-number">5.2.1.</span> <span class="nav-text">慢启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞避免"><span class="nav-number">5.2.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速恢复"><span class="nav-number">5.2.3.</span> <span class="nav-text">快速恢复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP拥塞控制的整体流程"><span class="nav-number">5.3.</span> <span class="nav-text">TCP拥塞控制的整体流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz',
+        appKey: 'm8j90AEPPX5XX9lYPTH2CkkY',
+        placeholder: '真的不说点什么吗？n(*≧▽≦*)n',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz",
+                'X-LC-Key': "m8j90AEPPX5XX9lYPTH2CkkY",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
