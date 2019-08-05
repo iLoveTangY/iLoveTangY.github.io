@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.png?v=6.5.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="服务器项目介绍项目背景：去年开始准备找工作时写了一些总结性的文章，然后为了能够随时都能复习，在Github上基于Hexo搭建了个人博客，但是由于服务器在境外，访问速度比较慢。后面阿里云做活动，学生买云服务器有优惠，就买了一台云服务器，想着在云服务器上搭建个人博客。一开始用的Ngnix，用的也挺好。后面学了网络编程后就想着自己写一个服务器，然后就做了这个项目。 技术要点：  采用非阻塞I/O，Rea">
+<meta name="keywords" content="算法,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器项目总结">
+<meta property="og:url" content="http://yoursite.com/2019/08/05/服务器项目总结/index.html">
+<meta property="og:site_name" content="EnochTang">
+<meta property="og:description" content="服务器项目介绍项目背景：去年开始准备找工作时写了一些总结性的文章，然后为了能够随时都能复习，在Github上基于Hexo搭建了个人博客，但是由于服务器在境外，访问速度比较慢。后面阿里云做活动，学生买云服务器有优惠，就买了一台云服务器，想着在云服务器上搭建个人博客。一开始用的Ngnix，用的也挺好。后面学了网络编程后就想着自己写一个服务器，然后就做了这个项目。 技术要点：  采用非阻塞I/O，Rea">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-05T03:43:01.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="服务器项目总结">
+<meta name="twitter:description" content="服务器项目介绍项目背景：去年开始准备找工作时写了一些总结性的文章，然后为了能够随时都能复习，在Github上基于Hexo搭建了个人博客，但是由于服务器在境外，访问速度比较慢。后面阿里云做活动，学生买云服务器有优惠，就买了一台云服务器，想着在云服务器上搭建个人博客。一开始用的Ngnix，用的也挺好。后面学了网络编程后就想着自己写一个服务器，然后就做了这个项目。 技术要点：  采用非阻塞I/O，Rea">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/05/服务器项目总结/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>服务器项目总结 | EnochTang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EnochTang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-主页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-标签">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/服务器项目总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EnochTang">
+      <meta itemprop="description" content="个人小站">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EnochTang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器项目总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-05 11:42:04 / 修改时间：11:43:01" itemprop="dateCreated datePublished" datetime="2019-08-05T11:42:04+08:00">2019-08-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/05/服务器项目总结/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/08/05/服务器项目总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/05/服务器项目总结/" class="leancloud_visitors" data-flag-title="服务器项目总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="服务器项目"><a href="#服务器项目" class="headerlink" title="服务器项目"></a>服务器项目</h1><h2 id="介绍项目"><a href="#介绍项目" class="headerlink" title="介绍项目"></a>介绍项目</h2><p>背景：去年开始准备找工作时写了一些总结性的文章，然后为了能够随时都能复习，在Github上基于Hexo搭建了个人博客，但是由于服务器在境外，访问速度比较慢。后面阿里云做活动，学生买云服务器有优惠，就买了一台云服务器，想着在云服务器上搭建个人博客。一开始用的Ngnix，用的也挺好。后面学了网络编程后就想着自己写一个服务器，然后就做了这个项目。</p>
+<p>技术要点：</p>
+<ul>
+<li>采用非阻塞I/O，Reactor模式，基于Epoll边沿触发的I/O多路复用；</li>
+<li>使用线程池避免线程频繁创建销毁的开销；</li>
+<li>使用基于小根堆的定时器关闭超时连接；</li>
+<li>使用双缓冲技术实现了简单的异步日志系统；</li>
+<li>为了减少资源泄漏的可能，使用智能指针等RAII机制；</li>
+<li>使用eventfd来唤醒睡眠线程。</li>
+</ul>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="定时器是怎么实现的？还有什么实现方式？"><a href="#定时器是怎么实现的？还有什么实现方式？" class="headerlink" title="定时器是怎么实现的？还有什么实现方式？"></a>定时器是怎么实现的？还有什么实现方式？</h3><p>每一个事件循环中有一个定时器，用来管理本事件循环需要处理的那些Http连接，定时器直接采用STL里的优先队列来实现，优先队列中的元素是每个Http请求的超时时间。但是由于优先队列不支持随机访问，当一个连接超时时并不会直接从优先队列中弹出，而是采用类似于Lazy Delete的策略，只有这个节点前面的所有节点都被删除后这个节点才会被真正删除。</p>
+<p>还可以采用timing wheel（时间轮盘），可以采用循环队列来实现。循环队列的大小就是默认超时时间，循环队列的尾指针指向的元素就是即将超时的连接，每一秒都会向后移动尾指针的位置，然后断开当前位置的连接。当一个连接收到数据后就将其移到尾指针所指的位置，增加它的寿命。</p>
+<p>还可以采用timerfd？</p>
+<h3 id="实现一个无锁队列"><a href="#实现一个无锁队列" class="headerlink" title="实现一个无锁队列"></a>实现一个无锁队列</h3><p>采用原子指令CAS(Compare &amp; Swap)。这个操作用C语言描述就是下面这个样子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare_and_swap</span> <span class="params">(<span class="keyword">int</span> *accum, <span class="keyword">int</span> *dest, <span class="keyword">int</span> newval)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> ( *accum == *dest ) </span><br><span class="line">  &#123;</span><br><span class="line">      *dest = newval;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>意思就是说，看一看内存<code>*accum</code>里的值是不是<code>*dest</code>，如果是的话，则对其赋值<code>newval</code>。注意，前两个参数传的都是指针。</p>
+<p>入队用CAS实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">EnQueue(x) <span class="comment">//进队列</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//准备新加入的结点数据</span></span><br><span class="line">    q = <span class="keyword">new</span> record();</span><br><span class="line">    q-&gt;value = x;</span><br><span class="line">    q-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        p = tail; <span class="comment">//取链表尾指针的快照</span></span><br><span class="line">    &#125; <span class="keyword">while</span>( CAS(p-&gt;next, <span class="literal">NULL</span>, q) != TRUE); <span class="comment">//如果没有把结点链在尾指针上，再试</span></span><br><span class="line"> </span><br><span class="line">    CAS(tail, p, q); <span class="comment">//置尾结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，程序中的那个 do- while 的 Re-Try-Loop。就是说，很有可能我在准备在队列尾加入结点时，别的线程已经加成功了，于是tail指针就变了，于是我的CAS返回了false，于是程序再试，直到试成功为止。这个很像我们的抢电话热线的不停重播的情况。</p>
+<p>你会看到，为什么我们的“置尾结点”的操作不判断是否成功，因为：</p>
+<ol>
+<li>如果有一个线程T1，它的while中的CAS如果成功的话，那么其它所有的 随后线程的CAS都会失败，然后就会再循环，</li>
+<li>此时，如果T1 线程还没有更新tail指针，其它的线程继续失败，因为tail-&gt;next不是NULL了。</li>
+<li>直到T1线程更新完tail指针，于是其它的线程中的某个线程就可以得到新的tail指针，继续往下走了。</li>
+</ol>
+<p>这里有一个潜在的问题——<strong>如果T1线程在用CAS更新tail指针的之前，线程停掉或是挂掉了，那么其它线程就进入死循环了</strong>。可以做一个改进：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">EnQueue(x) <span class="comment">//进队列改良版</span></span><br><span class="line">&#123;</span><br><span class="line">    q = <span class="keyword">new</span> record();</span><br><span class="line">    q-&gt;value = x;</span><br><span class="line">    q-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line">    p = tail;</span><br><span class="line">    oldp = p</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">// **********增加的代码***********</span></span><br><span class="line">        <span class="keyword">while</span> (p-&gt;next != <span class="literal">NULL</span>)</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        <span class="comment">// **********增加的代码***********</span></span><br><span class="line">    &#125; <span class="keyword">while</span>( CAS(p.next, <span class="literal">NULL</span>, q) != TRUE); <span class="comment">//如果没有把结点链在尾上，再试</span></span><br><span class="line"> </span><br><span class="line">    CAS(tail, oldp, q); <span class="comment">//置尾结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们让每个线程，自己fetch 指针 p 到链表尾。但是这样的fetch会很影响性能。而通实际情况看下来，99.9%的情况不会有线程停转的情况，所以，更好的做法是，你可以接合上述的这两个版本，如果retry的次数超了一个值的话（比如说3次），那么，就自己fetch指针。</p>
+<p>好了，我们解决了EnQueue，我们再来看看DeQueue的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DeQueue() <span class="comment">//出队列</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        p = head;</span><br><span class="line">        <span class="keyword">if</span> (p-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> ERR_EMPTY_QUEUE;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span>( CAS(head, p, p-&gt;next) != TRUE );</span><br><span class="line">    <span class="keyword">return</span> p-&gt;next-&gt;value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，我们采用的是有Dummy Head的链表，因此返回的是<code>head-&gt;next</code>。</p>
+<p>但是这种实现还是存在着ABA问题。解决办法可以参考维基百科。</p>
+<h3 id="双缓冲异步日志是什么？为什么这样做？压力测试？"><a href="#双缓冲异步日志是什么？为什么这样做？压力测试？" class="headerlink" title="双缓冲异步日志是什么？为什么这样做？压力测试？"></a>双缓冲异步日志是什么？为什么这样做？压力测试？</h3><p>一般来说，在多线程程序中实现线程安全的日志库并不难，简单的方法就是用一个全局的互斥量保护对日志文件的I/O，但是这种情况下会造成全部线程争抢一个锁，并且由于文件读写速度较慢，会严重影响程序的效率；另外也可以每个线程单独写一个日志文件，但是这样的话主线程有可能会阻塞在磁盘的读写上，并且多个日志文件也不好进行分析。</p>
+<p>基于以上的原因，我这里采用了异步日志，也就说，用一个背景线程负责收集日志消息，并写入日志文件，其他的业务线程只管往这个日志线程发送日志消息。所谓双缓冲就是准备两个缓冲区A和B，前段负责往A填写日志消息，后端负责将B中的数据写入文件。当A写满之后，交换A和B，前段写B，后端将A的数据写入文件，如此往复。这样的好处是前端线程在新建日志消息的时候不必等待磁盘操作。实际实现采用了四个缓冲区，这样可以进一步减少前段日志的等待。</p>
+<h3 id="Epoll和Select-Poll的区别？"><a href="#Epoll和Select-Poll的区别？" class="headerlink" title="Epoll和Select/Poll的区别？"></a>Epoll和Select/Poll的区别？</h3><p>Select是通过在内核中检查存放描述符标志位的数据结构来判断是不是有事件发生的。Select处理的是描述符数组，它能监听的描述符数量有限，一般为1024个，这个系统调用只有一个接口，当有大量描述符需要监听时需要将所有的这些描述符拷贝到内核空间，如果这些描述符中有事件发生，再将所有的这些描述符拷贝回用户空间，再让用户遍历这些返回的描述符来判断哪个描述符上发生了事件。这样每次调用Select都需要做一来一回两次大量描述符的拷贝，效率非常低。Poll本质上来说和Select没有任何区别，只是去除了监听的描述符数量的限制。</p>
+<p>Epoll不同，它将调用Select中添加描述符和等待事件发生拆分为两个系统调用：<code>epoll_wait</code>和<code>epoll_ctl</code>。这样当你需要监听大量描述符时只需要在最开始的时候将描述符添加到epoll的等待队列中，后面就不需要再做这种大量描述符的拷贝工作了。<code>epoll_wait</code>返回的也是就绪的描述符，而不是所有需要监听的描述符，也就是说从内核空间拷贝到用户空间的也只是少量的就绪描述符，不像Select一样需要将所有的描述符都拷贝回来再一一判断。而且<code>epoll_wait</code>返回后要重新监听也不需要将所有的描述符重新拷贝回内核空间。</p>
+<p>另外Epoll还有LT和ET两种触发模式，能够根据需求采取不同的模式。</p>
+<h3 id="Epoll水平触发和边沿触发的区别？"><a href="#Epoll水平触发和边沿触发的区别？" class="headerlink" title="Epoll水平触发和边沿触发的区别？"></a>Epoll水平触发和边沿触发的区别？</h3><p>Level Triggered(水平触发, LT)：当被监控的文件描述符上有可读写事件发生时，epoll_wait()会通知处理程序去读写。如果这次没有把数据一次性全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait()时，它还会通知你在上没读写完的文件描述符上继续读写，当然如果你一直不去读写，它会一直通知你。</p>
+<p>Edge Triggered(边缘触发, ET)：当被监控的文件描述符上有可读写事件发生时，epoll_wait()会通知处理程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用epoll_wait()时，它不会通知你，也就是它只会通知你一次，直到该文件描述符上出现第二次可读写事件才会通知你。</p>
+<p>Epoll在实现上是采用红黑树加就绪链表的设计。当调用epoll_ctl时实际上是往红黑树中插入了一个节点，当有事件发生时内核会调用一个回调函数，将发生事件的描述符添加到就绪链表中去。如果这之后我们调用<code>epoll_wait</code>，会对就绪链表中的描述符再进行筛选，然后把准备好的的描述符拷贝到用户态空间中，在这之后，如果采用的是LT模式，会将这些就绪的描述符再次放入就绪链表，也就是说下次调用<code>epoll_wait()</code>时这些描述符仍然还在就绪链表中，这就是LT模式在一个描述符上如果有数据没有读完下次调用<code>epoll_wait()</code>还会再次通知的原因。</p>
+<p>在我的项目中使用的是边缘触发搭配非阻塞I/O。</p>
+<h3 id="一个请求到来的具体处理过程？"><a href="#一个请求到来的具体处理过程？" class="headerlink" title="一个请求到来的具体处理过程？"></a>一个请求到来的具体处理过程？</h3><p>首先，服务器启动时会在主线程，也就是主事件循环中将listenfd添加到epoll的监听队列中。当一个Http请求到来时，epoll_wait()会返回，然后在事件循环中会进行事件处理，进而异步回调注册的处理函数，在这里，是一个处理连接的成员函数。在这个函数里面，会调用accept来建立连接，从事件循环线程池中获取一个线程，也就是一个事件循环，然后将建立的连接进行封装后分配给获取的线程，最后会将这个连接加入该这个线程的epoll的监听队列中。</p>
+<p>然后如果一个已经建立连接的acceptfd可读，同样也会在该连接所属线程的epoll_wait中返回，进行事件处理，进而回调注册的处理函数，比如可读时的处理，可写时的处理等等。</p>
+<h3 id="线程的唤醒方式？什么是eventfd？优点是啥？"><a href="#线程的唤醒方式？什么是eventfd？优点是啥？" class="headerlink" title="线程的唤醒方式？什么是eventfd？优点是啥？"></a>线程的唤醒方式？什么是eventfd？优点是啥？</h3><p>一般来说，本项目中的线程都是睡眠在epoll的等待队列上的，如果要唤醒这样的一个线程，只需要该线程处理的描述符中有事件发生即可。所有可以像epoll中注册一个描述符，当你想唤醒该线程时只需要往该描述符中写入数据即可。</p>
+<p>在我的这个项目中采用的是eventfd来唤醒一个线程。eventfd 是 Linux 的一个系统调用，专门创建一个文件描述符用于事件通知。eventfd主要是用来做多进程/线程间的通信的，我这里只是用来做线程内部通信。eventfd的主要优点是节省内存并且效率高，主要是因为创建一个eventfd并不是真正创建或者打开了一个文件，只是在内核中创建了一个数据结构，内核的维护成本比较低。</p>
+<h3 id="如何检查内存泄漏？"><a href="#如何检查内存泄漏？" class="headerlink" title="如何检查内存泄漏？"></a>如何检查内存泄漏？</h3><p>我在Linux下使用的是Valgrind，它的MemoryCheck工具能够报告比较详细的内存使用信息。比如对内存的越界访问，malloc/free，new/delete不匹配等等。为了减少内存泄漏，程序中也使用了智能指针等RAII技术。</p>
+<h3 id="什么是Reactor模式？"><a href="#什么是Reactor模式？" class="headerlink" title="什么是Reactor模式？"></a>什么是Reactor模式？</h3><p>同步的事件循环+non-blocking I/O。</p>
+<h3 id="为什么用非阻塞I-O？"><a href="#为什么用非阻塞I-O？" class="headerlink" title="为什么用非阻塞I/O？"></a>为什么用非阻塞I/O？</h3><p>因为服务器的实现中采用了进程池的机制，如果使用阻塞I/O，当一个线程被Read给阻塞之后，这个线程就什么都不能干了。如果线程池中总共有n个线程，来了第n+1个长连接，那么还是没法处理。这样就没法做到高并发了。</p>
+<h3 id="Http报文字段等Http相关知识"><a href="#Http报文字段等Http相关知识" class="headerlink" title="Http报文字段等Http相关知识"></a>Http报文字段等Http相关知识</h3><h3 id="用到了那些智能指针？shared-ptr是如何实现的？"><a href="#用到了那些智能指针？shared-ptr是如何实现的？" class="headerlink" title="用到了那些智能指针？shared_ptr是如何实现的？"></a>用到了那些智能指针？shared_ptr是如何实现的？</h3><p>用到了<code>shared_ptr</code>，<code>weak_ptr</code>和<code>unique_ptr</code>。</p>
+<p><code>shared_ptr</code>通过在堆上放置一个引用计数的方式来对当前引用区域进行统计。当引用计数归零时释放内存。一个简单的实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">my_shared_ptr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T *_ptr;</span><br><span class="line">    <span class="keyword">int</span> *_ref_count;  <span class="comment">// 引用计数,必须new出来，不能是成员变量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 默认构造函数</span></span><br><span class="line">    my_shared_ptr() : _ptr(<span class="literal">nullptr</span>), _ref_count(<span class="literal">nullptr</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注意，若用一个普通指针初始化两个智能指针会出现循环引用的问题，可能会重复释放</span></span><br><span class="line">    my_shared_ptr(T *obj) : _ptr(obj), _ref_count(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拷贝构造函数，引用计数器加一，并指向同一块内存区域</span></span><br><span class="line">    my_shared_ptr(my_shared_ptr &amp;rhs) : _ptr(rhs._ptr), _ref_count(&amp;(++*rhs._ref_count))</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制运算符</span></span><br><span class="line">    my_shared_ptr&amp; <span class="keyword">operator</span>=(my_shared_ptr &amp;rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;rhs)  <span class="comment">// 处理自赋值</span></span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">        ++*rhs._ref_count;  <span class="comment">// rhs引用计数加1</span></span><br><span class="line">        <span class="keyword">if</span> (--*_ref_count == <span class="number">0</span>)  <span class="comment">// 自己引用计数减1</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">delete</span> _ptr;</span><br><span class="line">            <span class="keyword">delete</span> _ref_count;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _ptr = rhs._ptr;</span><br><span class="line">        _ref_count = rhs._ref_count;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解引用运算符</span></span><br><span class="line">    T&amp; <span class="keyword">operator</span>*()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> *_ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指针运算符</span></span><br><span class="line">    T *<span class="keyword">operator</span>-&gt;()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_ref_count == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> _ptr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~my_shared_ptr() </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_ptr &amp;&amp; --*_ref_count == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">delete</span> _ptr;</span><br><span class="line">            <span class="keyword">delete</span> _ref_count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>由于<code>shared_ptr</code>存在循环引用的问题，使用时要注意。通过<code>weak_ptr</code>可解决循环引用的问题。</p>
+<h3 id="用到了哪些锁？这些锁的区别是什么？"><a href="#用到了哪些锁？这些锁的区别是什么？" class="headerlink" title="用到了哪些锁？这些锁的区别是什么？"></a>用到了哪些锁？这些锁的区别是什么？</h3><p>项目中主要用到了互斥锁和条件变量。</p>
+<p><strong>互斥锁</strong>是一种简单的加锁的方法来控制对共享资源的访问，互斥锁只有两种状态,即<strong>上锁(lock)和解锁(unlock)</strong>。如果一个线程锁定了一个互斥量，在它解除锁定之前，没有其他线程可以锁定这个互斥量。如果一个线程已经锁定了一个互斥量，第二个线程又试图去锁定这个互斥量，则第二个线程将被挂起（不占用任何cpu资源），直到第一个线程解除对这个互斥量的锁定为止，第二个线程则被唤醒并继续执行，同时锁定这个互斥量。</p>
+<p><strong>条件变量</strong>用来等待某件事情发生，主要包括两个动作：一个线程等待”条件变量的条件成立”而挂起；另一个线程使”条件成立”（给出条件成立信号）。为了防止竞争，条件变量的使用总是和一个互斥锁结合在一起。</p>
+<h3 id="如何解决死锁？"><a href="#如何解决死锁？" class="headerlink" title="如何解决死锁？"></a>如何解决死锁？</h3><p>死锁的出现有四个必要条件：</p>
+<ul>
+<li>互斥使用</li>
+<li>不可抢占：资源只能自愿放弃</li>
+<li>请求和保持：进程必须占有资源，再去申请</li>
+<li>循环等待：在资源分配图中存在一个环路</li>
+</ul>
+<p>理论上来说，解决死锁有很多办法，比如死锁预防：可以一次性申请所有需要的资源，但是它需要你能预知未来，还可以对资源排序，资源申请必须按序进行，但是这种方法会造成资源的利用率低；再还有死锁避免的银行家算法：就是判断此次的资源请求是否会引起死锁，但是每次资源申请时都执行这个算法效率太低了。现在一般来说个人的PC操作系统都是采用的死锁忽略的方式。</p>
+<h3 id="如何进行压力测试？"><a href="#如何进行压力测试？" class="headerlink" title="如何进行压力测试？"></a>如何进行压力测试？</h3><p>在这个项目中使用WebBench做了一个简单的HTTP echo测试。测试结果与Muduo对比。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/29/TCP详解/" rel="next" title="TCP详解">
+                <i class="fa fa-chevron-left"></i> TCP详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="EnochTang">
+            
+              <p class="site-author-name" itemprop="name">EnochTang</p>
+              <p class="site-description motion-element" itemprop="description">个人小站</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/iLoveTangY" title="GitHub &rarr; https://github.com/iLoveTangY" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/ytang007@163.com" title="E-Mail &rarr; ytang007@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器项目"><span class="nav-number">1.</span> <span class="nav-text">服务器项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍项目"><span class="nav-number">1.1.</span> <span class="nav-text">介绍项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">1.2.</span> <span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定时器是怎么实现的？还有什么实现方式？"><span class="nav-number">1.2.1.</span> <span class="nav-text">定时器是怎么实现的？还有什么实现方式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现一个无锁队列"><span class="nav-number">1.2.2.</span> <span class="nav-text">实现一个无锁队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双缓冲异步日志是什么？为什么这样做？压力测试？"><span class="nav-number">1.2.3.</span> <span class="nav-text">双缓冲异步日志是什么？为什么这样做？压力测试？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Epoll和Select-Poll的区别？"><span class="nav-number">1.2.4.</span> <span class="nav-text">Epoll和Select/Poll的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Epoll水平触发和边沿触发的区别？"><span class="nav-number">1.2.5.</span> <span class="nav-text">Epoll水平触发和边沿触发的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个请求到来的具体处理过程？"><span class="nav-number">1.2.6.</span> <span class="nav-text">一个请求到来的具体处理过程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程的唤醒方式？什么是eventfd？优点是啥？"><span class="nav-number">1.2.7.</span> <span class="nav-text">线程的唤醒方式？什么是eventfd？优点是啥？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何检查内存泄漏？"><span class="nav-number">1.2.8.</span> <span class="nav-text">如何检查内存泄漏？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Reactor模式？"><span class="nav-number">1.2.9.</span> <span class="nav-text">什么是Reactor模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么用非阻塞I-O？"><span class="nav-number">1.2.10.</span> <span class="nav-text">为什么用非阻塞I/O？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http报文字段等Http相关知识"><span class="nav-number">1.2.11.</span> <span class="nav-text">Http报文字段等Http相关知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用到了那些智能指针？shared-ptr是如何实现的？"><span class="nav-number">1.2.12.</span> <span class="nav-text">用到了那些智能指针？shared_ptr是如何实现的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用到了哪些锁？这些锁的区别是什么？"><span class="nav-number">1.2.13.</span> <span class="nav-text">用到了哪些锁？这些锁的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何解决死锁？"><span class="nav-number">1.2.14.</span> <span class="nav-text">如何解决死锁？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何进行压力测试？"><span class="nav-number">1.2.15.</span> <span class="nav-text">如何进行压力测试？</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EnochTang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz',
+        appKey: 'm8j90AEPPX5XX9lYPTH2CkkY',
+        placeholder: '真的不说点什么吗？n(*≧▽≦*)n',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "pzkWbX0BctrHGXtuYk89bhtE-gzGzoHsz",
+                'X-LC-Key': "m8j90AEPPX5XX9lYPTH2CkkY",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
