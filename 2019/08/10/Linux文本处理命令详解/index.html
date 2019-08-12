@@ -106,25 +106,32 @@
 
 
 
-  <meta name="description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
-<meta name="keywords" content="前缀树,贪心">
+  <meta name="description" content="数据流重定向 标准输入(stdin)：代码为0，使用&amp;lt;或&amp;lt;&amp;lt; 标准输出(stdout)：代码为1，使用&amp;gt;或&amp;gt;&amp;gt; 标准错误输出(stderr)：代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;  &amp;gt;与&amp;gt;&amp;gt;一个表示替换，一个表示追加。替换的意思是如果原文件已经存在，则会删除原文件的内容从头开始重新写入；追加则是从原文件的结束地方继续写入。 例如下面的命">
+<meta name="keywords" content="文本处理,Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前缀树应用之数组最大异或值">
-<meta property="og:url" content="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/index.html">
+<meta property="og:title" content="Linux文本处理命令详解">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/index.html">
 <meta property="og:site_name" content="EnochTang">
-<meta property="og:description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
+<meta property="og:description" content="数据流重定向 标准输入(stdin)：代码为0，使用&amp;lt;或&amp;lt;&amp;lt; 标准输出(stdout)：代码为1，使用&amp;gt;或&amp;gt;&amp;gt; 标准错误输出(stderr)：代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;  &amp;gt;与&amp;gt;&amp;gt;一个表示替换，一个表示追加。替换的意思是如果原文件已经存在，则会删除原文件的内容从头开始重新写入；追加则是从原文件的结束地方继续写入。 例如下面的命">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-17T08:36:17.229Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565405789925.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565406926744.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565407190903.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565407838334.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565571574832.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565571667374.png">
+<meta property="og:updated_time" content="2019-08-12T04:37:03.344Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前缀树应用之数组最大异或值">
-<meta name="twitter:description" content="题目描述见数组中两个数的最大异或值。 解题思路这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。 代码如下： 1234567">
+<meta name="twitter:title" content="Linux文本处理命令详解">
+<meta name="twitter:description" content="数据流重定向 标准输入(stdin)：代码为0，使用&amp;lt;或&amp;lt;&amp;lt; 标准输出(stdout)：代码为1，使用&amp;gt;或&amp;gt;&amp;gt; 标准错误输出(stderr)：代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;  &amp;gt;与&amp;gt;&amp;gt;一个表示替换，一个表示追加。替换的意思是如果原文件已经存在，则会删除原文件的内容从头开始重新写入；追加则是从原文件的结束地方继续写入。 例如下面的命">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565405789925.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/Linux文本处理命令详解/">
 
 
 
@@ -134,7 +141,7 @@
   };
 </script>
 
-  <title>前缀树应用之数组最大异或值 | EnochTang</title>
+  <title>Linux文本处理命令详解 | EnochTang</title>
   
 
 
@@ -350,7 +357,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/前缀树应用之数组最大异或值/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Linux文本处理命令详解/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EnochTang">
@@ -367,7 +374,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">前缀树应用之数组最大异或值
+          <h1 class="post-title" itemprop="name headline">Linux文本处理命令详解
               
             
           </h1>
@@ -392,34 +399,28 @@
                 
               
 
-              <time title="创建时间：2019-05-17 16:31:04 / 修改时间：16:36:17" itemprop="dateCreated datePublished" datetime="2019-05-17T16:31:04+08:00">2019-05-17</time>
+              <time title="创建时间：2019-08-10 10:45:58" itemprop="dateCreated datePublished" datetime="2019-08-10T10:45:58+08:00">2019-08-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-12 12:37:03" itemprop="dateModified" datetime="2019-08-12T12:37:03+08:00">2019-08-12</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -429,8 +430,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/17/前缀树应用之数组最大异或值/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/17/前缀树应用之数组最大异或值/" itemprop="commentCount"></span>
+                <a href="/2019/08/10/Linux文本处理命令详解/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/08/10/Linux文本处理命令详解/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -438,7 +439,7 @@
 
           
           
-             <span id="/2019/05/17/前缀树应用之数组最大异或值/" class="leancloud_visitors" data-flag-title="前缀树应用之数组最大异或值">
+             <span id="/2019/08/10/Linux文本处理命令详解/" class="leancloud_visitors" data-flag-title="Linux文本处理命令详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -469,10 +470,47 @@
       
 
       
-        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>见<a href="https://leetcode-cn.com/problems/maximum-xor-of-two-numbers-in-an-array/" target="_blank" rel="noopener">数组中两个数的最大异或值</a>。</p>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>这道题要求$O(N)$的时间复杂度，显然不能用暴力解。既然提示中提到了树，那我们可以用前缀树试试。前缀树中保存数字二进制表示中的每一位。遍历数组，将每个数插入到前缀树中，然后再遍历一次，在前缀树中找出和当前值异或出来最大的结果。在前缀树中寻找的过程按照如下原则：符号位尽量为0，其他位尽量为1，这样我们得到的结果就能是最大的。</p>
-<p>代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;TrieNode*&gt; nexts = &#123;<span class="literal">nullptr</span>, <span class="literal">nullptr</span>&#125;;  <span class="comment">// 0, 1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TrieNode* head = <span class="keyword">new</span> TrieNode();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        TrieNode* cur = head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> move = <span class="number">31</span>; move &gt;= <span class="number">0</span>; move--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> path = ((num &gt;&gt; move) &amp; <span class="number">1</span>);                                                      <span class="comment">// 1, 0  得到第move位上的数字，只能是1或者0</span></span><br><span class="line">            cur-&gt;nexts[path] = cur-&gt;nexts[path] == <span class="literal">nullptr</span> ? <span class="keyword">new</span> TrieNode() : cur-&gt;nexts[path];  <span class="comment">// 如果没有分支，建一个出来</span></span><br><span class="line">            cur = cur-&gt;nexts[path];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回Trie中跟num异或起来最大的和</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">max_xor</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        TrieNode* cur = head;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> move = <span class="number">31</span>; move &gt;= <span class="number">0</span>; --move)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> path = ((num &gt;&gt; move) &amp; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">int</span> best = move == <span class="number">31</span> ? path : (path ^ <span class="number">1</span>);  <span class="comment">// 符号为变0，其它位变1</span></span><br><span class="line">            best = cur-&gt;nexts[best] != <span class="literal">nullptr</span> ? best : (best ^ <span class="number">1</span>);</span><br><span class="line">            res |= (path ^ best) &lt;&lt; move;</span><br><span class="line">            cur = cur-&gt;nexts[best];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMaximumXOR</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = INT_MIN;</span><br><span class="line">        Trie t;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> n : nums)</span><br><span class="line">            t.add(n);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> n : nums)</span><br><span class="line">            res = max(res, t.max_xor(n));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h1 id="数据流重定向"><a href="#数据流重定向" class="headerlink" title="数据流重定向"></a>数据流重定向</h1><ul>
+<li>标准输入(<code>stdin</code>)：代码为<code>0</code>，使用<code>&lt;</code>或<code>&lt;&lt;</code></li>
+<li>标准输出(<code>stdout</code>)：代码为<code>1</code>，使用<code>&gt;</code>或<code>&gt;&gt;</code></li>
+<li>标准错误输出(<code>stderr</code>)：代码为<code>2</code>，使用<code>2&gt;</code>或<code>2&gt;&gt;</code></li>
+</ul>
+<p><code>&gt;</code>与<code>&gt;&gt;</code>一个表示替换，一个表示追加。替换的意思是如果原文件已经存在，则会删除原文件的内容从头开始重新写入；追加则是从原文件的结束地方继续写入。</p>
+<p>例如下面的命令可以将<code>find</code>的结果根据是标准输出还是标注错误写入到不同的文件：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565405789925.png" alt="1565405789925"></p>
+<h1 id="命令执行的判断依据：-、-、-amp-amp-、"><a href="#命令执行的判断依据：-、-、-amp-amp-、" class="headerlink" title="命令执行的判断依据：;、,、&amp;&amp;、||"></a>命令执行的判断依据：<code>;</code>、<code>,</code>、<code>&amp;&amp;</code>、<code>||</code></h1><ul>
+<li><code>cmd1;cmd2</code>：执行完<code>cmd1</code>后马上执行<code>cmd2</code></li>
+<li><code>cmd1 &amp;&amp; cmd2</code>：如果<code>cmd1</code>执行完毕且正确执行（<code>$? == 0</code>），则开始执行<code>cmd2</code>，否则如果<code>$? != 0</code>，则<code>cmd2</code>不执行。</li>
+<li><code>cmd1 || cmd2</code>：如果<code>cmd1</code>执行完毕且正确执行（<code>$? == 0</code>），则不执行<code>cmd2</code>，否则执行<code>cmd2</code>。</li>
+</ul>
+<p>例1：使用<code>ls</code>查阅目录<code>/tmp/abc</code>是否存在，如果不存在则创建目录</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565406926744.png" alt="1565406926744"></p>
+<p>例2：不管<code>/tmp/abc</code>是否存在，都要在其下创建文件<code>hehe</code></p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565407190903.png" alt="1565407190903"></p>
+<p>例3：以<code>ls</code>测试<code>/tmp/something</code>是否存在，如果存在输出<code>exist</code>，否则输出<code>not exist</code></p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565407838334.png" alt="1565407838334"></p>
+<h1 id="选取命令：cut、grep"><a href="#选取命令：cut、grep" class="headerlink" title="选取命令：cut、grep"></a>选取命令：<code>cut</code>、<code>grep</code></h1><h2 id="cut"><a href="#cut" class="headerlink" title="cut"></a><code>cut</code></h2><p>就是切，讲一段数据经过处理后取出我们想要的那部分。<code>cut</code>有如下的几个参数：</p>
+<ul>
+<li><code>-d</code>：后面接分隔字符，与<code>-f</code>一起使用</li>
+<li><code>-f</code>：依据<code>-d</code>的分隔结果将一段信息切成数段，用<code>-f</code>取出指定的段</li>
+<li><code>-c</code>：以字符为单位取出固定的字符区间</li>
+</ul>
+<p>例1：取出<code>$PATH</code>中第五个路径</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565571574832.png" alt="1565571574832"></p>
+<p>例2：取出<code>export</code>命令的输出中第12个字符之后的所有字符</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1565571667374.png" alt="1565571667374"></p>
+<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a><code>grep</code></h2><p>TODO</p>
+<h1 id="排序命令：sort、wc、uniq"><a href="#排序命令：sort、wc、uniq" class="headerlink" title="排序命令：sort、wc、uniq"></a>排序命令：<code>sort</code>、<code>wc</code>、<code>uniq</code></h1><h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><p>很明显，<code>sort</code>使用来排序的。它的参数如下：</p>
+<ul>
+<li><code>-f</code>：忽略大小写的差异</li>
+<li><code>-b</code>：忽略最前面的空格</li>
+<li><code>-M</code>：以月份的名字来排序</li>
+<li><code>-n</code>：以数字来排序</li>
+<li><code>-r</code>：反向排序</li>
+<li><code>-u</code>：就是uniq，相同的数据中仅出现一行</li>
+<li><code>-t</code>：分隔符，默认是[Tab]</li>
+<li><code>-k</code>：以哪个区间来进行排序</li>
+</ul>
 
       
     </div>
@@ -496,9 +534,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前缀树/" rel="tag"># 前缀树</a>
+            <a href="/tags/文本处理/" rel="tag"># 文本处理</a>
           
-            <a href="/tags/贪心/" rel="tag"># 贪心</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -511,8 +549,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/数组中异或和为0的子数组/" rel="next" title="数组中异或和为0的子数组">
-                <i class="fa fa-chevron-left"></i> 数组中异或和为0的子数组
+              <a href="/2019/08/05/服务器项目总结/" rel="next" title="服务器项目总结">
+                <i class="fa fa-chevron-left"></i> 服务器项目总结
               </a>
             
           </div>
@@ -520,10 +558,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/29/TCP详解/" rel="prev" title="TCP详解">
-                TCP详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -735,7 +769,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据流重定向"><span class="nav-number">1.</span> <span class="nav-text">数据流重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令执行的判断依据：-、-、-amp-amp-、"><span class="nav-number">2.</span> <span class="nav-text">命令执行的判断依据：;、,、&amp;&amp;、||</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选取命令：cut、grep"><span class="nav-number">3.</span> <span class="nav-text">选取命令：cut、grep</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cut"><span class="nav-number">3.1.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">3.2.</span> <span class="nav-text">grep</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序命令：sort、wc、uniq"><span class="nav-number">4.</span> <span class="nav-text">排序命令：sort、wc、uniq</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-number">4.1.</span> <span class="nav-text">sort</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1015,30 +1049,6 @@
   
   
 
-  
-    
-      <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      },
-      TeX: {equationNumbers: { autoNumber: "AMS" }}
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-      var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-    
   
 
 
