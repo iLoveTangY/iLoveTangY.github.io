@@ -120,7 +120,23 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565407838334.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565571574832.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1565571667374.png">
-<meta property="og:updated_time" content="2019-08-12T04:37:03.344Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566387734058.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566387777041.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566387841537.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566388707068.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566384416863.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566384531788.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566384621132.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566385413688.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566385661307.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566391229258.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566391400746.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566391544673.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566391659352.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566391746431.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566392136318.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/10/Linux文本处理命令详解/1566392943096.png">
+<meta property="og:updated_time" content="2019-08-21T13:18:14.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux文本处理命令详解">
 <meta name="twitter:description" content="数据流重定向 标准输入(stdin)：代码为0，使用&amp;lt;或&amp;lt;&amp;lt; 标准输出(stdout)：代码为1，使用&amp;gt;或&amp;gt;&amp;gt; 标准错误输出(stderr)：代码为2，使用2&amp;gt;或2&amp;gt;&amp;gt;  &amp;gt;与&amp;gt;&amp;gt;一个表示替换，一个表示追加。替换的意思是如果原文件已经存在，则会删除原文件的内容从头开始重新写入；追加则是从原文件的结束地方继续写入。 例如下面的命">
@@ -416,7 +432,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-12 12:37:03" itemprop="dateModified" datetime="2019-08-12T12:37:03+08:00">2019-08-12</time>
+                <time title="修改时间：2019-08-21 21:18:14" itemprop="dateModified" datetime="2019-08-21T21:18:14+08:00">2019-08-21</time>
               
             
           </span>
@@ -499,7 +515,30 @@
 <p><img src="/2019/08/10/Linux文本处理命令详解/1565571574832.png" alt="1565571574832"></p>
 <p>例2：取出<code>export</code>命令的输出中第12个字符之后的所有字符</p>
 <p><img src="/2019/08/10/Linux文本处理命令详解/1565571667374.png" alt="1565571667374"></p>
-<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a><code>grep</code></h2><p>TODO</p>
+<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a><code>grep</code></h2><p><code>grep</code>命令的作用是分析一行信息，若其中有我们所需的信息就将这一行拿出来。基础的语法如下：</p>
+<p><code>grep [-acinv] [--color=auto] &#39;查找字符串&#39; filename</code></p>
+<ul>
+<li><code>-a</code>：将binary文件以text文件的方式查找数据</li>
+<li><code>-c</code>：计算找到的‘查找字符串’的次数</li>
+<li><code>-i</code>：忽略大小写</li>
+<li><code>-n</code>：顺便输出行号</li>
+<li><code>-v</code>：反向选择，即显示出没有‘查找字符串’内容的那些行</li>
+<li><code>--color=auto</code>：将找到的关键字部分加上颜色显示</li>
+</ul>
+<p>例1：在<code>last</code>命令的输出中将出现当前登录用户名的行取出：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566387734058.png" alt="1566387734058"></p>
+<p>例2：与例1相反，没有当前用户名的行取出：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566387777041.png" alt="1566387777041"></p>
+<p>例3：在<code>last</code>命令的输出中，只要有当前用户名就取出，并且只取第一列：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566387841537.png" alt="1566387841537"></p>
+<h3 id="grep的高级用法"><a href="#grep的高级用法" class="headerlink" title="grep的高级用法"></a><code>grep</code>的高级用法</h3><p><code>grep [-A] [-B] [--color=auto] &#39;搜寻字符串&#39; filename</code></p>
+<ul>
+<li><code>-A</code>，后面可加数字，是after的意思，表示除了列出该行外，后续的n行也列出来</li>
+<li><code>-B</code>，后面可加数字，是before的意思，表示除了列出该行外，前面的n行也列出来</li>
+</ul>
+<p>例1：用<code>dmesg</code>列出内核信息，再以<code>grep</code>找出含有eno的那行，并且同时列出行号，列出前2行与后3行：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566388707068.png" alt="1566388707068"></p>
+<p>注意红框框出来的部分。</p>
 <h1 id="排序命令：sort、wc、uniq"><a href="#排序命令：sort、wc、uniq" class="headerlink" title="排序命令：sort、wc、uniq"></a>排序命令：<code>sort</code>、<code>wc</code>、<code>uniq</code></h1><h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a><code>sort</code></h2><p>很明显，<code>sort</code>使用来排序的。它的参数如下：</p>
 <ul>
 <li><code>-f</code>：忽略大小写的差异</li>
@@ -511,6 +550,69 @@
 <li><code>-t</code>：分隔符，默认是[Tab]</li>
 <li><code>-k</code>：以哪个区间来进行排序</li>
 </ul>
+<p>例1：个人账号都记录在<code>/etc/passwd</code>下，请按账号名进行排序</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566384416863.png" alt="1566384416863"></p>
+<p>可以看到是按照第一个字母来排序的，也就是从<code>a</code>开始排到最后。</p>
+<p>例2：<code>/etc/passwd</code>是以<code>:</code>来分隔的，请按第三列来排序：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566384531788.png" alt="1566384531788"></p>
+<p>可以看到确实是按第三列来排序了，不过却不是我们想要的按照数字大小来排序，而是按照ASCII码来排序的，如果需要按照数字来排序需要加上<code>-n</code>选项，如下：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566384621132.png" alt="1566384621132"></p>
+<h2 id="wc"><a href="#wc" class="headerlink" title="wc"></a><code>wc</code></h2><p>如果我们想知道某个文件中有多少行？多少字？多少字符的话可以怎么做呢？可以利用<code>wc</code>这个命令来完成。参数如下：</p>
+<ul>
+<li><code>-l</code>：仅列出行</li>
+<li><code>-w</code>：仅列出多少字（英文单词）</li>
+<li><code>-m</code>：多少字符</li>
+</ul>
+<p>例1：<code>/etc/passwd</code>中有多少字、行、字符数？</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566385413688.png" alt="1566385413688"></p>
+<p>三个数字分别表示行数、字数和字符数。</p>
+<h2 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a><code>uniq</code></h2><p>如果排序完成，想将重复的数据仅列出一个显示该怎么做？可以使用<code>uniq</code>，参数如下：</p>
+<ul>
+<li><code>-i</code>：忽略大小写字符的不同</li>
+<li><code>-c</code>：进行计数</li>
+</ul>
+<p>例1：使用<code>last</code>命令取出账号列，然后排序后去重：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566385661307.png" alt="1566385661307"></p>
+<h1 id="文本处理大杀器——sed与awk"><a href="#文本处理大杀器——sed与awk" class="headerlink" title="文本处理大杀器——sed与awk"></a>文本处理大杀器——<code>sed</code>与<code>awk</code></h1><h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a><code>sed</code></h2><p><code>sed [-nefr] [动作]</code></p>
+<ul>
+<li><code>-n</code>：使用安静模式。在一般sed的用法中，所有来自STDIN的数据一般都会被列出到屏幕上，但是如果加上<code>-n</code>参数后，则只有经过sed特殊处理的那一行才会被列出来</li>
+<li><code>-e</code>：直接在命令行模式上进行<code>sed</code>的动作编辑</li>
+<li><code>-f</code>：直接将<code>sed</code>的动作写在一个文件内，<code>-f filename</code>则可以执行filename内的<code>sed</code>动作</li>
+<li><code>-r</code>：支持扩展型的正则表达式语法（默认是基础正则表达式语法）</li>
+<li><code>-i</code>：直接修改读取的文件内容，而不是由屏幕输出</li>
+</ul>
+<p>动作说明：<code>[n1, [n2]] function</code></p>
+<p><code>n1, n2</code>：不一定会存在，一般代表选择进行的动作行数。距离说来，如果我的动作需要在10到20行之间进行，则使用<code>10,20 [动作行为]</code></p>
+<p><code>function</code>有如下这些参数：</p>
+<ul>
+<li><code>a</code>：新增，<code>a</code>的后面可以接字符串，而这些字符串会在新的一行出现（目前的下一行）</li>
+<li><code>c</code>：替换，<code>c</code>的后面可以接字符串，这些字符串可以替换<code>[n1, n2]</code>之间的行</li>
+<li><code>d</code>：删除，因为是删除，<code>d</code>后面通常不接任何参数</li>
+<li><code>i</code>：插入，<code>i</code>的后面也可以接字符串，而这些字符串会在新的一行出现（目前的上一行）</li>
+<li><code>p</code>：打印，将某个选择的数据打印出来，通常<code>p</code>会和参数<code>sed -n</code>一起运行</li>
+<li><code>s</code>：替换，可以直接进行替换的工作。通常这个<code>s</code>的动作可以搭配正则表达式。例如 1,20s/old/new/g就是。</li>
+</ul>
+<p>例1：将<code>/etc/passwd</code>的内容列出，并打印出行号，同时删掉第2-5行：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566391229258.png" alt="1566391229258"></p>
+<p>注意，<code>sed</code>后面执行的动作，一定要用单引号括住。</p>
+<p>例2：承上例，在第二行后（即加在第三行）加上“drink tea？”字样：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566391400746.png" alt="1566391400746"></p>
+<p>例3：承上例，在第二行后增加两行，“Drink Tea？”与“Drink Beer？”：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566391544673.png" alt="1566391544673"></p>
+<p>重点是那个反斜杠，通过它我们就能添加不止一行。</p>
+<p>例4：承上例，将第2-5行的内容替换为“No 2-5 number”：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566391659352.png" alt="1566391659352"></p>
+<p>例5：仅列出文件<code>/etc/passwd</code>内的第5-7行：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566391746431.png" alt="1566391746431"></p>
+<p>注意<code>-n</code>的使用。</p>
+<p>例6：从<code>ifconfig eno1</code>命令的输出中提取出IP地址：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566392136318.png" alt="1566392136318"></p>
+<p><code>grep &#39;inet &#39;</code>提取出ip地址所在那一行，然后使用<code>sed</code>命令删除ip地址前面和后面的字符的字符（使用替换指令将其余字符替换为空）。</p>
+<h2 id="awk"><a href="#awk" class="headerlink" title="awk"></a><code>awk</code></h2><p>相较于<code>sed</code>通常用于一整行的处理，<code>awk</code>比较倾向于将一行分成数个“字段”来处理。因此，<code>awk</code>相当适合处理小型的数据。使用方法如下：</p>
+<p><code>awk &#39;条件类型1{动作1} 条件类型2{动作2} ...&#39; filename</code></p>
+<p><code>awk</code>主要处理每一行的字段内的数据，而默认的字段的分隔符为空格键或TAB键。</p>
+<p>例1：在<code>last</code>命令的输出中取出第一列和第三列，中间以TAB隔开：</p>
+<p><img src="/2019/08/10/Linux文本处理命令详解/1566392943096.png" alt="1566392943096"></p>
 
       
     </div>
@@ -558,6 +660,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/23/插入最少的字符使给定字符串变为回文/" rel="prev" title="插入最少的字符使给定字符串变为回文">
+                插入最少的字符使给定字符串变为回文 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -632,7 +738,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -708,7 +814,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -769,7 +877,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据流重定向"><span class="nav-number">1.</span> <span class="nav-text">数据流重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令执行的判断依据：-、-、-amp-amp-、"><span class="nav-number">2.</span> <span class="nav-text">命令执行的判断依据：;、,、&amp;&amp;、||</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选取命令：cut、grep"><span class="nav-number">3.</span> <span class="nav-text">选取命令：cut、grep</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cut"><span class="nav-number">3.1.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">3.2.</span> <span class="nav-text">grep</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序命令：sort、wc、uniq"><span class="nav-number">4.</span> <span class="nav-text">排序命令：sort、wc、uniq</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-number">4.1.</span> <span class="nav-text">sort</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据流重定向"><span class="nav-number">1.</span> <span class="nav-text">数据流重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令执行的判断依据：-、-、-amp-amp-、"><span class="nav-number">2.</span> <span class="nav-text">命令执行的判断依据：;、,、&amp;&amp;、||</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选取命令：cut、grep"><span class="nav-number">3.</span> <span class="nav-text">选取命令：cut、grep</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cut"><span class="nav-number">3.1.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">3.2.</span> <span class="nav-text">grep</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep的高级用法"><span class="nav-number">3.2.1.</span> <span class="nav-text">grep的高级用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序命令：sort、wc、uniq"><span class="nav-number">4.</span> <span class="nav-text">排序命令：sort、wc、uniq</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-number">4.1.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wc"><span class="nav-number">4.2.</span> <span class="nav-text">wc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uniq"><span class="nav-number">4.3.</span> <span class="nav-text">uniq</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文本处理大杀器——sed与awk"><span class="nav-number">5.</span> <span class="nav-text">文本处理大杀器——sed与awk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sed"><span class="nav-number">5.1.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk"><span class="nav-number">5.2.</span> <span class="nav-text">awk</span></a></li></ol></li></ol></div>
             
 
           </div>
